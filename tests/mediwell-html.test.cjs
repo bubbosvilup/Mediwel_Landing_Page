@@ -7,6 +7,8 @@ const html = readFileSync(resolve(__dirname, '..', 'index.html'), 'utf8');
 const text = html.replace(/\s+/g, ' ');
 const cssPath = resolve(__dirname, '..', 'styles', 'mediwell-premium-balanced.css');
 const css = existsSync(cssPath) ? readFileSync(cssPath, 'utf8') : '';
+const assetsDir = resolve(__dirname, '..', 'assets', 'mediwell');
+const assetSourcesPath = resolve(assetsDir, 'README.md');
 
 test('keeps the reset document unstyled and WordPress-embeddable', () => {
   assert.doesNotMatch(html, /<style[\s>]/i);
@@ -22,7 +24,8 @@ test('uses the client hero and pricing copy without forbidden wording or individ
   assert.doesNotMatch(text, /mezzi pubblici/i);
   assert.doesNotMatch(text, /Studio (Medico )?(Uno|Due|Tre|Quattro|Cinque|[1-5])/i);
   assert.match(text, /Apertura il 2 settembre 2026 a Faenza: riserva ora il tuo studio in anteprima/);
-  assert.match(text, /ottimizza i costi, azzera gli sprechi e blocca la tua giornata ideale prima del lancio ufficiale/i);
+  assert.match(text, /Il tuo nuovo studio sanitario a giornata a Faenza\./i);
+  assert.doesNotMatch(text, /: ottimizza i costi, azzera gli sprechi e blocca la tua giornata ideale prima del lancio ufficiale/i);
   assert.match(text, /Il modello: condivisione intelligente e tariffe trasparenti/);
   assert.match(text, /da euro 76,00 a euro 98,00 al giorno, IVA inclusa/i);
   assert.match(text, /prenotazioni avvengono esclusivamente a giornata intera/i);
@@ -95,4 +98,20 @@ test('loads an isolated responsive and accessible premium CSS variant', () => {
   assert.match(css, /@media\s*\(min-width:\s*768px\)/i);
   assert.match(css, /@media\s*\(min-width:\s*1024px\)/i);
   assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)/i);
+});
+
+test('uses local documented photography and progressive reveal hooks', () => {
+  for (const asset of [
+    'mediwell-hero-designed-waiting-room.jpg',
+    'mediwell-studio-treatment-room.jpg',
+    'mediwell-location-waiting-room.jpg'
+  ]) {
+    assert.ok(existsSync(resolve(assetsDir, asset)), `expected ${asset}`);
+    assert.match(html, new RegExp(`assets/mediwell/${asset}`));
+  }
+
+  assert.ok(existsSync(assetSourcesPath), 'expected documented photo sources');
+  assert.match(html, /class="[^"]*mw-hero-visual/i);
+  assert.match(html, /class="[^"]*mw-reveal/i);
+  assert.match(html, /IntersectionObserver/);
 });
