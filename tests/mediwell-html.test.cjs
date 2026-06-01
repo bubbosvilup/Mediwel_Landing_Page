@@ -6,12 +6,39 @@ const { resolve } = require('node:path');
 const html = readFileSync(resolve(__dirname, '..', 'index.html'), 'utf8');
 const text = html.replace(/\s+/g, ' ');
 const cssPath = resolve(__dirname, '..', 'styles', 'mediwell-premium-balanced.css');
-const css = existsSync(cssPath) ? readFileSync(cssPath, 'utf8') : '';
+const css = html.match(/<style id="mediwell-styles">([\s\S]*?)<\/style>/i)?.[1] || '';
 const assetsDir = resolve(__dirname, '..', 'assets', 'mediwell');
 const assetSourcesPath = resolve(assetsDir, 'README.md');
+const stylesDir = resolve(__dirname, '..', 'styles');
 
-test('keeps the reset document unstyled and WordPress-embeddable', () => {
-  assert.doesNotMatch(html, /<style[\s>]/i);
+function collectCssFiles(dir) {
+  if (!existsSync(dir)) {
+    return [];
+  }
+
+  const entries = [];
+  for (const entry of require('node:fs').readdirSync(dir, { withFileTypes: true })) {
+    const entryPath = resolve(dir, entry.name);
+    if (entry.isDirectory()) {
+      if (entry.name === 'node_modules') {
+        continue;
+      }
+      entries.push(...collectCssFiles(entryPath));
+    } else if (entry.isFile() && entry.name.endsWith('.css')) {
+      entries.push(entryPath);
+    }
+  }
+
+  return entries;
+}
+
+test('keeps HTML CSS and safe JavaScript embedded in one WordPress-compatible page', () => {
+  assert.match(html, /<style id="mediwell-styles">[\s\S]*?<\/style>/i);
+  assert.match(html, /<script>[\s\S]*?IntersectionObserver[\s\S]*?<\/script>/i);
+  assert.doesNotMatch(html, /<link\s+rel="stylesheet"/i);
+  assert.doesNotMatch(html, /@import/i);
+  assert.equal(existsSync(cssPath), false);
+  assert.deepEqual(collectCssFiles(stylesDir), []);
   assert.doesNotMatch(html, /<nav[\s>]/i);
   assert.doesNotMatch(html, /<footer[\s>]/i);
   assert.match(html, /COLORI PRINCIPALI DEL DESIGN PRECEDENTE/);
@@ -83,11 +110,7 @@ test('keeps WhatsApp outside the demonstrative required-fields form', () => {
   assert.match(html, /data-demo="true"/);
 });
 
-test('loads an isolated responsive and accessible premium CSS variant', () => {
-  assert.match(
-    html,
-    /<link\s+rel="stylesheet"\s+href="styles\/mediwell-premium-balanced\.css">/i
-  );
+test('keeps the inline premium variant responsive and accessible', () => {
   assert.ok(css, 'expected the isolated premium CSS variant');
   assert.match(css, /--mw-blue:\s*#0c4b80/i);
   assert.match(css, /--mw-pink:\s*#c1517f/i);
