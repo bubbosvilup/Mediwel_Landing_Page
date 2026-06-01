@@ -90,6 +90,7 @@ test('loads an isolated responsive and accessible premium CSS variant', () => {
   assert.match(css, /--mw-pink:\s*#c1517f/i);
   assert.match(css, /--mw-green:\s*#51c193/i);
   assert.match(css, /aside\s*\{[\s\S]*position:\s*fixed/i);
+  assert.match(css, /#costi\s*\{[^}]*overflow:\s*hidden/i);
   assert.match(css, /:focus-visible/i);
   assert.match(css, /@media\s*\(min-width:\s*768px\)/i);
   assert.match(css, /@media\s*\(min-width:\s*1024px\)/i);
