@@ -1,10 +1,12 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { readFileSync } = require('node:fs');
+const { existsSync, readFileSync } = require('node:fs');
 const { resolve } = require('node:path');
 
 const html = readFileSync(resolve(__dirname, '..', 'index.html'), 'utf8');
 const text = html.replace(/\s+/g, ' ');
+const cssPath = resolve(__dirname, '..', 'styles', 'mediwell-premium-balanced.css');
+const css = existsSync(cssPath) ? readFileSync(cssPath, 'utf8') : '';
 
 test('keeps the reset document unstyled and WordPress-embeddable', () => {
   assert.doesNotMatch(html, /<style[\s>]/i);
@@ -76,4 +78,20 @@ test('keeps WhatsApp outside the demonstrative required-fields form', () => {
   assert.match(form, /Professione o Specializzazione/i);
   assert.match(form, /Numero di Telefono o WhatsApp/i);
   assert.match(html, /data-demo="true"/);
+});
+
+test('loads an isolated responsive and accessible premium CSS variant', () => {
+  assert.match(
+    html,
+    /<link\s+rel="stylesheet"\s+href="styles\/mediwell-premium-balanced\.css">/i
+  );
+  assert.ok(css, 'expected the isolated premium CSS variant');
+  assert.match(css, /--mw-blue:\s*#0c4b80/i);
+  assert.match(css, /--mw-pink:\s*#c1517f/i);
+  assert.match(css, /--mw-green:\s*#51c193/i);
+  assert.match(css, /aside\s*\{[\s\S]*position:\s*fixed/i);
+  assert.match(css, /:focus-visible/i);
+  assert.match(css, /@media\s*\(min-width:\s*768px\)/i);
+  assert.match(css, /@media\s*\(min-width:\s*1024px\)/i);
+  assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)/i);
 });
