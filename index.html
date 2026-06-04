@@ -146,20 +146,10 @@ p {
   text-decoration: none;
 }
 
-.mw-brand span span {
-  color: var(--mw-pink);
-}
-
-.mw-brand-mark {
-  display: grid;
-  width: 36px;
-  height: 36px;
-  place-items: center;
-  border-radius: 50%;
-  background: var(--mw-blue);
-  color: var(--mw-white);
-  font-size: 0.9rem;
-  letter-spacing: 0;
+.mw-brand-logo {
+  width: 132px;
+  height: auto;
+  object-fit: contain;
 }
 
 .mw-header-meta {
@@ -362,6 +352,14 @@ main > section {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.mw-photo-shell picture,
+.mw-space-photo picture,
+.mw-location-photo picture {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .mw-photo-label {
@@ -957,6 +955,10 @@ body > aside a {
     padding-left: 24px;
   }
 
+  .mw-brand-logo {
+    width: 154px;
+  }
+
   main > section {
     padding: 104px 28px;
   }
@@ -1196,8 +1198,7 @@ body > aside a {
   <header class="mw-site-header">
     <div class="mw-header-inner">
       <a class="mw-brand" href="#hero" aria-label="MediWell, torna all'inizio">
-        <span class="mw-brand-mark">M</span>
-        <span>MEDI<span>WELL</span></span>
+        <img class="mw-brand-logo" src="https://mediwell.it/wp-content/uploads/2026/04/cropped-Master_2500x1000.png" alt="MediWell Polistudio" width="250" height="100" decoding="async">
       </a>
       <p class="mw-header-meta">Faenza <span>02.09.26</span></p>
       <a class="mw-header-cta" href="#interesse">Riserva anteprima</a>
@@ -1236,12 +1237,17 @@ body > aside a {
 
         <div class="mw-hero-visual mw-reveal">
           <div class="mw-photo-shell">
-            <img
-              src="assets/mediwell/mediwell-hero-designed-waiting-room.jpg"
-              alt="Sala d'attesa contemporanea con sedute rosa, parete verde e rivestimento in legno"
-              width="1800"
-              height="1200"
-            >
+            <picture>
+              <source srcset="assets/mediwell/mediwell-hero-designed-waiting-room.webp" type="image/webp">
+              <img
+                src="assets/mediwell/mediwell-hero-designed-waiting-room.jpg"
+                alt="Sala d'attesa contemporanea con sedute rosa, parete verde e rivestimento in legno"
+                width="1800"
+                height="1200"
+                decoding="async"
+                fetchpriority="high"
+              >
+            </picture>
           </div>
           <p class="mw-photo-label"><span>01</span> Spazi che lavorano per te</p>
           <div class="mw-hero-stamp">
@@ -1285,13 +1291,17 @@ body > aside a {
     <section id="studi" aria-labelledby="studi-title">
       <div class="mw-space-layout">
         <figure class="mw-space-photo mw-reveal">
-          <img
-            src="assets/mediwell/mediwell-studio-treatment-room.jpg"
-            alt="Studio sanitario luminoso con lettino elettrico e scrivania"
-            loading="lazy"
-            width="1600"
-            height="1067"
-          >
+          <picture>
+            <source srcset="assets/mediwell/mediwell-studio-treatment-room.webp" type="image/webp">
+            <img
+              src="assets/mediwell/mediwell-studio-treatment-room.jpg"
+              alt="Studio sanitario luminoso con lettino elettrico e scrivania"
+              loading="lazy"
+              width="1600"
+              height="1067"
+              decoding="async"
+            >
+          </picture>
           <figcaption><span>02</span> Pronto all'uso</figcaption>
         </figure>
         <div class="mw-space-copy mw-reveal">
@@ -1421,13 +1431,17 @@ body > aside a {
           <p class="mw-address">Via Fornarina 12/D <span>Faenza</span></p>
         </div>
         <figure class="mw-location-photo mw-reveal">
-          <img
-            src="assets/mediwell/mediwell-location-waiting-room.jpg"
-            alt="Sala d'attesa sanitaria luminosa con sedute e reception"
-            loading="lazy"
-            width="1600"
-            height="1067"
-          >
+          <picture>
+            <source srcset="assets/mediwell/mediwell-location-waiting-room.webp" type="image/webp">
+            <img
+              src="assets/mediwell/mediwell-location-waiting-room.jpg"
+              alt="Sala d'attesa sanitaria luminosa con sedute e reception"
+              loading="lazy"
+              width="1600"
+              height="1067"
+              decoding="async"
+            >
+          </picture>
           <figcaption><strong>100</strong><span>metri dal parcheggio gratuito</span></figcaption>
         </figure>
       </div>

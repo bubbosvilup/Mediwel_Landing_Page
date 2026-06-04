@@ -138,3 +138,42 @@ test('uses local documented photography and progressive reveal hooks', () => {
   assert.match(html, /class="[^"]*mw-reveal/i);
   assert.match(html, /IntersectionObserver/);
 });
+
+test('uses the official logo and modern responsive photography markup', () => {
+  assert.match(
+    html,
+    /<img class="mw-brand-logo" src="https:\/\/mediwell\.it\/wp-content\/uploads\/2026\/04\/cropped-Master_2500x1000\.png"/
+  );
+  assert.doesNotMatch(html, /class="mw-brand-mark"/);
+  const heroShell = html.match(/<div class="mw-photo-shell">[\s\S]*?<\/div>/)?.[0] || '';
+  assert.ok(heroShell, 'expected hero image shell');
+  const heroPicture = heroShell.match(
+    /<picture>[\s\S]*?<source srcset="assets\/mediwell\/mediwell-hero-designed-waiting-room\.webp" type="image\/webp">[\s\S]*?<img[\s\S]*?src="assets\/mediwell\/mediwell-hero-designed-waiting-room\.jpg"[\s\S]*?alt="Sala d'attesa contemporanea con sedute rosa, parete verde e rivestimento in legno"[\s\S]*?decoding="async"[\s\S]*?fetchpriority="high"[\s\S]*?<\/picture>/
+  )?.[0] || '';
+  assert.ok(heroPicture, 'expected hero picture block');
+  assert.doesNotMatch(heroPicture, /loading="lazy"/);
+
+  const studioFigure = html.match(/<figure class="mw-space-photo mw-reveal">[\s\S]*?<\/figure>/)?.[0] || '';
+  assert.ok(studioFigure, 'expected studio figure');
+  const studioPicture = studioFigure.match(
+    /<picture>[\s\S]*?<source srcset="assets\/mediwell\/mediwell-studio-treatment-room\.webp" type="image\/webp">[\s\S]*?<img[\s\S]*?src="assets\/mediwell\/mediwell-studio-treatment-room\.jpg"[\s\S]*?alt="Studio sanitario luminoso con lettino elettrico e scrivania"[\s\S]*?loading="lazy"[\s\S]*?decoding="async"[\s\S]*?<\/picture>/
+  )?.[0] || '';
+  assert.ok(studioPicture, 'expected studio picture block');
+  assert.doesNotMatch(studioPicture, /fetchpriority="high"/);
+
+  const locationFigure = html.match(/<figure class="mw-location-photo mw-reveal">[\s\S]*?<\/figure>/)?.[0] || '';
+  assert.ok(locationFigure, 'expected location figure');
+  const locationPicture = locationFigure.match(
+    /<picture>[\s\S]*?<source srcset="assets\/mediwell\/mediwell-location-waiting-room\.webp" type="image\/webp">[\s\S]*?<img[\s\S]*?src="assets\/mediwell\/mediwell-location-waiting-room\.jpg"[\s\S]*?alt="Sala d'attesa sanitaria luminosa con sedute e reception"[\s\S]*?loading="lazy"[\s\S]*?decoding="async"[\s\S]*?<\/picture>/
+  )?.[0] || '';
+  assert.ok(locationPicture, 'expected location picture block');
+  assert.doesNotMatch(locationPicture, /fetchpriority="high"/);
+
+  for (const asset of [
+    'mediwell-hero-designed-waiting-room.webp',
+    'mediwell-studio-treatment-room.webp',
+    'mediwell-location-waiting-room.webp'
+  ]) {
+    assert.ok(existsSync(resolve(assetsDir, asset)), `expected ${asset}`);
+  }
+});
