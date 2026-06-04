@@ -1162,21 +1162,82 @@ body > aside a {
   *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
     animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+  }
+
+  .mw-motion-ready .mw-reveal,
+  .mw-motion-ready .mw-reveal-stagger > *,
+  .mw-motion-ready .mw-countdown-reveal {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 
-.mw-motion-ready .mw-reveal {
+.mw-motion-ready .mw-reveal:not(.mw-reveal-stagger) {
+  --mw-reveal-x: 0;
+  --mw-reveal-y: 24px;
   opacity: 0;
-  transform: translateY(30px);
+  transform: translate3d(var(--mw-reveal-x), var(--mw-reveal-y), 0);
   transition:
-    opacity 650ms ease,
-    transform 650ms ease;
+    opacity 720ms ease,
+    transform 720ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-.mw-motion-ready .mw-reveal.is-visible {
+.mw-motion-ready .mw-reveal-left {
+  --mw-reveal-x: -28px;
+  --mw-reveal-y: 0;
+}
+
+.mw-motion-ready .mw-reveal-right {
+  --mw-reveal-x: 28px;
+  --mw-reveal-y: 0;
+}
+
+.mw-motion-ready .mw-reveal-up {
+  --mw-reveal-x: 0;
+  --mw-reveal-y: 24px;
+}
+
+.mw-motion-ready .mw-reveal.is-visible:not(.mw-reveal-stagger) {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
+}
+
+.mw-motion-ready .mw-reveal-stagger > * {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  transition:
+    opacity 640ms ease var(--mw-item-delay, 0ms),
+    transform 640ms cubic-bezier(0.2, 0.7, 0.2, 1) var(--mw-item-delay, 0ms);
+}
+
+.mw-motion-ready .mw-reveal-stagger.is-visible > * {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.mw-motion-ready .mw-launch-copy .mw-countdown-reveal {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  transition:
+    opacity 600ms ease 140ms,
+    transform 600ms cubic-bezier(0.2, 0.7, 0.2, 1) 140ms;
+}
+
+.mw-motion-ready .mw-launch-copy.is-visible .mw-countdown-reveal {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mw-space-photo img,
+  .mw-location-photo img {
+    transition:
+      transform 520ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      box-shadow 520ms ease;
+  }
 }
   </style>
   <title>MediWell | Studi sanitari a giornata a Faenza</title>
@@ -1208,7 +1269,7 @@ body > aside a {
   <main>
     <section id="hero" aria-labelledby="hero-title">
       <div class="mw-hero-layout">
-        <div class="mw-hero-copy mw-reveal">
+        <div class="mw-hero-copy mw-reveal mw-reveal-up">
           <p class="mw-kicker">Apertura il 2 settembre 2026 a Faenza: riserva ora il tuo studio in anteprima</p>
           <h1 id="hero-title">Il tuo nuovo studio sanitario a giornata a Faenza.</h1>
           <p class="mw-hero-lede">
@@ -1235,7 +1296,7 @@ body > aside a {
           </div>
         </div>
 
-        <div class="mw-hero-visual mw-reveal">
+        <div class="mw-hero-visual mw-reveal mw-reveal-right">
           <div class="mw-photo-shell">
             <picture>
               <source srcset="assets/mediwell/mediwell-hero-designed-waiting-room.webp" type="image/webp">
@@ -1290,7 +1351,7 @@ body > aside a {
 
     <section id="studi" aria-labelledby="studi-title">
       <div class="mw-space-layout">
-        <figure class="mw-space-photo mw-reveal">
+        <figure class="mw-space-photo mw-reveal mw-reveal-left">
           <picture>
             <source srcset="assets/mediwell/mediwell-studio-treatment-room.webp" type="image/webp">
             <img
@@ -1304,7 +1365,7 @@ body > aside a {
           </picture>
           <figcaption><span>02</span> Pronto all'uso</figcaption>
         </figure>
-        <div class="mw-space-copy mw-reveal">
+        <div class="mw-space-copy mw-reveal mw-reveal-right">
           <p class="mw-section-index"><span>02</span> Gli spazi</p>
           <h2 id="studi-title">Gli spazi: arredi a regolazione elettrica in un contesto esclusivo</h2>
           <p>
@@ -1341,7 +1402,7 @@ body > aside a {
           è progettato per garantirti la massima indipendenza in tre semplici passaggi:
         </p>
       </div>
-      <ol class="mw-tech-path mw-reveal">
+      <ol class="mw-tech-path mw-reveal mw-reveal-stagger">
         <li>
           <strong>Prenotazione online:</strong>
           <p>
@@ -1418,7 +1479,7 @@ body > aside a {
 
     <section id="posizione" aria-labelledby="posizione-title">
       <div class="mw-location-layout">
-        <div class="mw-location-copy mw-reveal">
+        <div class="mw-location-copy mw-reveal mw-reveal-left">
           <p class="mw-section-index"><span>05</span> Faenza</p>
           <h2 id="posizione-title">Dove siamo: posizione strategica a Faenza senza stress da parcheggio</h2>
           <p>
@@ -1430,7 +1491,7 @@ body > aside a {
           </p>
           <p class="mw-address">Via Fornarina 12/D <span>Faenza</span></p>
         </div>
-        <figure class="mw-location-photo mw-reveal">
+        <figure class="mw-location-photo mw-reveal mw-reveal-right">
           <picture>
             <source srcset="assets/mediwell/mediwell-location-waiting-room.webp" type="image/webp">
             <img
@@ -1448,12 +1509,12 @@ body > aside a {
     </section>
 
     <section id="lancio" aria-labelledby="lancio-title">
-      <div class="mw-launch-layout mw-reveal">
-        <div>
+      <div class="mw-launch-layout">
+        <div class="mw-launch-date mw-reveal mw-reveal-left">
           <p class="mw-section-index"><span>06</span> Apertura ufficiale</p>
           <h2 id="lancio-title">02<span>.</span>09<span>.</span>26</h2>
         </div>
-        <div class="mw-launch-copy">
+        <div class="mw-launch-copy mw-reveal mw-reveal-right">
           <p>
             L'apertura è fissata per il 2 settembre 2026. Il sistema di prenotazione
             online su <a href="https://www.mediwell.it">www.mediwell.it</a> sarà attivo
@@ -1461,7 +1522,7 @@ body > aside a {
             ottenere l'accesso prioritario e bloccare l'esclusiva sulle giornate
             disponibili prima dei tuoi colleghi.
           </p>
-          <div id="countdown" aria-live="polite">
+          <div id="countdown" class="mw-countdown-reveal" aria-live="polite">
             <p>
               Mancano
               <span id="countdown-days">--</span> giorni,
@@ -1478,7 +1539,7 @@ body > aside a {
 
     <section id="interesse" aria-labelledby="interesse-title">
       <div class="mw-interest-layout">
-        <div class="mw-interest-copy mw-reveal">
+        <div class="mw-interest-copy mw-reveal mw-reveal-left">
           <p class="mw-section-index"><span>07</span> Anteprima riservata</p>
           <h2 id="interesse-title">Richiedi l'anteprima e prenota il tuo studio in anticipo</h2>
           <p>
@@ -1503,7 +1564,7 @@ body > aside a {
           </p>
         </div>
 
-        <form id="interest-form" class="mw-reveal" data-demo="true">
+        <form id="interest-form" class="mw-reveal mw-reveal-right" data-demo="true">
           <h3>Compila il modulo per bloccare la tua precedenza:</h3>
           <p>
             <label for="nome-cognome">Nome e Cognome *</label><br>
@@ -1599,6 +1660,12 @@ body > aside a {
 
     (function () {
       var items = document.querySelectorAll('.mw-reveal');
+
+      document.querySelectorAll('.mw-reveal-stagger').forEach(function (group) {
+        Array.prototype.forEach.call(group.children, function (item, index) {
+          item.style.setProperty('--mw-item-delay', (index * 110) + 'ms');
+        });
+      });
 
       if (!('IntersectionObserver' in window)) {
         items.forEach(function (item) {

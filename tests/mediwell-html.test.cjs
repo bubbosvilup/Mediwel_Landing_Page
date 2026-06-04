@@ -139,6 +139,17 @@ test('uses local documented photography and progressive reveal hooks', () => {
   assert.match(html, /IntersectionObserver/);
 });
 
+test('adds selective motion while preserving reduced-motion support', () => {
+  assert.match(html, /mw-reveal-left/);
+  assert.match(html, /mw-reveal-right/);
+  assert.match(html, /mw-reveal-stagger/);
+  assert.match(html, /mw-launch-date/);
+  assert.match(html, /mw-countdown-reveal/);
+  assert.match(css, /--mw-item-delay/);
+  assert.match(html, /style\.setProperty\('--mw-item-delay'/);
+  assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)/i);
+});
+
 test('uses the official logo and modern responsive photography markup', () => {
   assert.match(
     html,
@@ -153,7 +164,7 @@ test('uses the official logo and modern responsive photography markup', () => {
   assert.ok(heroPicture, 'expected hero picture block');
   assert.doesNotMatch(heroPicture, /loading="lazy"/);
 
-  const studioFigure = html.match(/<figure class="mw-space-photo mw-reveal">[\s\S]*?<\/figure>/)?.[0] || '';
+  const studioFigure = html.match(/<figure class="[^"]*\bmw-space-photo\b[^"]*">[\s\S]*?<\/figure>/)?.[0] || '';
   assert.ok(studioFigure, 'expected studio figure');
   const studioPicture = studioFigure.match(
     /<picture>[\s\S]*?<source srcset="assets\/mediwell\/mediwell-studio-treatment-room\.webp" type="image\/webp">[\s\S]*?<img[\s\S]*?src="assets\/mediwell\/mediwell-studio-treatment-room\.jpg"[\s\S]*?alt="Studio sanitario luminoso con lettino elettrico e scrivania"[\s\S]*?loading="lazy"[\s\S]*?decoding="async"[\s\S]*?<\/picture>/
@@ -161,7 +172,7 @@ test('uses the official logo and modern responsive photography markup', () => {
   assert.ok(studioPicture, 'expected studio picture block');
   assert.doesNotMatch(studioPicture, /fetchpriority="high"/);
 
-  const locationFigure = html.match(/<figure class="mw-location-photo mw-reveal">[\s\S]*?<\/figure>/)?.[0] || '';
+  const locationFigure = html.match(/<figure class="[^"]*\bmw-location-photo\b[^"]*">[\s\S]*?<\/figure>/)?.[0] || '';
   assert.ok(locationFigure, 'expected location figure');
   const locationPicture = locationFigure.match(
     /<picture>[\s\S]*?<source srcset="assets\/mediwell\/mediwell-location-waiting-room\.webp" type="image\/webp">[\s\S]*?<img[\s\S]*?src="assets\/mediwell\/mediwell-location-waiting-room\.jpg"[\s\S]*?alt="Sala d'attesa sanitaria luminosa con sedute e reception"[\s\S]*?loading="lazy"[\s\S]*?decoding="async"[\s\S]*?<\/picture>/

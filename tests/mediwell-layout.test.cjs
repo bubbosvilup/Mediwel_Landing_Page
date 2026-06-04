@@ -167,3 +167,81 @@ test('keeps hero and launch typography within the refined layout bounds', async 
     `desktop overlap: ${desktop.overlap}, dateBox=${JSON.stringify(desktop.dateBox)}, copyBox=${JSON.stringify(desktop.copyBox)}`
   );
 });
+
+test('disables reveal transitions when reduced motion is requested', async () => {
+  const page = await browser.newPage({
+    viewport: { width: 390, height: 844 },
+    reducedMotion: 'reduce'
+  });
+
+  await page.goto(baseUrl, { waitUntil: 'networkidle' });
+
+  const motionState = await page.evaluate(() => {
+    function toMilliseconds(value) {
+      const trimmed = value.trim();
+      if (!trimmed) {
+        return 0;
+      }
+
+      if (trimmed.endsWith('ms')) {
+        return parseFloat(trimmed);
+      }
+
+      if (trimmed.endsWith('s')) {
+        return parseFloat(trimmed) * 1000;
+      }
+
+      return Number.NaN;
+    }
+
+    function parseTimeList(value) {
+      return value
+        .split(',')
+        .map(toMilliseconds)
+        .filter((entry) => Number.isFinite(entry));
+    }
+
+    const selectors = ['.mw-reveal', '.mw-reveal-stagger > *', '.mw-countdown-reveal'];
+    const sampled = selectors.flatMap((selector) =>
+      Array.from(document.querySelectorAll(selector)).map((element) => {
+        const style = getComputedStyle(element);
+        const durations = parseTimeList(style.transitionDuration);
+        const delays = parseTimeList(style.transitionDelay);
+
+        return {
+          selector,
+          transitionDuration: style.transitionDuration,
+          transitionDelay: style.transitionDelay,
+          opacity: parseFloat(style.opacity),
+          maxDuration: durations.length ? Math.max(...durations) : 0,
+          maxDelay: delays.length ? Math.max(...delays) : 0
+        };
+      })
+    );
+
+    return {
+      count: sampled.length,
+      maxDuration: sampled.length ? Math.max(...sampled.map((entry) => entry.maxDuration)) : 0,
+      maxDelay: sampled.length ? Math.max(...sampled.map((entry) => entry.maxDelay)) : 0,
+      hidden: sampled.filter((entry) => entry.opacity <= 0.01),
+      sampled
+    };
+  });
+
+  await page.close();
+
+  assert.ok(motionState.count > 0, 'expected to sample reduced-motion elements');
+  assert.ok(
+    motionState.maxDuration <= 0.01,
+    `expected max transition duration <= 0.01ms, got ${motionState.maxDuration}ms from ${JSON.stringify(motionState.sampled)}`
+  );
+  assert.ok(
+    motionState.maxDelay <= 0.01,
+    `expected max transition delay <= 0.01ms, got ${motionState.maxDelay}ms from ${JSON.stringify(motionState.sampled)}`
+  );
+  assert.deepEqual(
+    motionState.hidden,
+    [],
+    `expected reduced-motion elements to remain visible after load: ${JSON.stringify(motionState.hidden)}`
+  );
+});
