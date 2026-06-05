@@ -50,11 +50,13 @@ test('uses the client hero and pricing copy without forbidden wording or individ
   assert.doesNotMatch(text, /\bcertificat\w*\b/i);
   assert.doesNotMatch(text, /mezzi pubblici/i);
   assert.doesNotMatch(text, /Studio (Medico )?(Uno|Due|Tre|Quattro|Cinque|[1-5])/i);
-  assert.match(text, /Apertura il 2 settembre 2026 a Faenza: riserva ora il tuo studio in anteprima/);
-  assert.match(text, /Il tuo nuovo studio sanitario a giornata a Faenza\./i);
+  assert.match(text, /Nuova apertura a Faenza/i);
+  assert.match(text, /2 settembre 2026/i);
+  assert.match(text, /Studi sanitari pronti all'uso, prenotabili a giornata\./i);
+  assert.match(html, /class="mw-kicker"[\s\S]*?<strong>Nuova apertura a Faenza<\/strong>/i);
   assert.doesNotMatch(text, /: ottimizza i costi, azzera gli sprechi e blocca la tua giornata ideale prima del lancio ufficiale/i);
   assert.match(text, /Il modello: condivisione intelligente e tariffe trasparenti/);
-  assert.match(text, /da euro 76,00 a euro 98,00 al giorno, IVA inclusa/i);
+  assert.match(text, /Fino a €98,00 al giorno · IVA inclusa/i);
   assert.match(text, /prenotazioni avvengono esclusivamente a giornata intera/i);
   assert.match(text, /non è richiesto alcun investimento iniziale/i);
 });

@@ -90,9 +90,10 @@ h3 {
 }
 
 h1 {
-  margin-bottom: 24px;
-  font-size: clamp(2.85rem, 10vw, 6.1rem);
-  line-height: 0.98;
+  max-width: 660px;
+  margin-bottom: 22px;
+  font-size: clamp(2.35rem, 7.2vw, 4.7rem);
+  line-height: 1.04;
 }
 
 h2 {
@@ -195,6 +196,38 @@ main > section {
   letter-spacing: 0.18em;
   line-height: 1.55;
   text-transform: uppercase;
+}
+
+.mw-kicker {
+  display: inline-flex;
+  max-width: 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  margin-bottom: 22px;
+  padding: 10px 13px;
+  border: 1px solid rgba(193, 81, 127, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 14px 32px rgba(5, 36, 62, 0.08);
+  color: var(--mw-blue-dark);
+  font-size: clamp(0.72rem, 2.4vw, 0.86rem);
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+}
+
+.mw-kicker strong {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--mw-pink);
+  color: var(--mw-white);
+  letter-spacing: 0.1em;
+}
+
+.mw-kicker span {
+  color: var(--mw-blue);
 }
 
 .mw-section-index span {
@@ -1282,7 +1315,7 @@ form > p:nth-last-of-type(2) {
 
 @media (min-width: 1200px) {
   h1 {
-    font-size: 6.55rem;
+    font-size: 4.45rem;
   }
 
   .mw-hero-layout {
@@ -1409,8 +1442,8 @@ form > p:nth-last-of-type(2) {
     <section id="hero" aria-labelledby="hero-title">
       <div class="mw-hero-layout">
         <div class="mw-hero-copy mw-reveal mw-reveal-up">
-          <p class="mw-kicker">Apertura il 2 settembre 2026 a Faenza: riserva ora il tuo studio in anteprima</p>
-          <h1 id="hero-title">Il tuo nuovo studio sanitario in affitto a giornata.</h1>
+          <p class="mw-kicker"><strong>Nuova apertura a Faenza</strong> <span>2 settembre 2026</span> Anteprima prenotazioni aperta</p>
+          <h1 id="hero-title">Studi sanitari pronti all'uso, prenotabili a giornata.</h1>
           <p class="mw-hero-lede">
             È in arrivo uno spazio all'avanguardia composto da 5 studi esclusivi,
             progettati per medici, fisioterapisti e tutti gli operatori sanitari e del
