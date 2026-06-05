@@ -34,7 +34,7 @@ JPG files remain as `<picture>` fallbacks.
 
 The GitHub Pages preview references the supplied WordPress logo:
 
-`https://mediwell.it/wp-content/uploads/2026/04/cropped-Master_2500x1000.png`
+`https://mediwell.it/wp-content/uploads/2026/06/logoMedi_Centrato.png`
 
 During WordPress integration, upload a cropped and resized derivative and replace
 the preview URL with the Media Library URL.

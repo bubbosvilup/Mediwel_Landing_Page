@@ -110,6 +110,14 @@ test('keeps WhatsApp outside the demonstrative required-fields form', () => {
   assert.match(html, /data-demo="true"/);
 });
 
+test('keeps the WhatsApp contact fixed when embedded inside WordPress content', () => {
+  assert.match(html, /<aside class="mw-floating-contact" aria-label="Contatto rapido">/);
+  assert.match(css, /\.mw-floating-contact\s*\{[\s\S]*position:\s*fixed/i);
+  assert.match(css, /\.mw-floating-contact\s+a\s*\{[\s\S]*width:\s*56px[\s\S]*height:\s*56px/i);
+  assert.match(css, /\.mw-floating-contact\s+svg\s*\{[\s\S]*width:\s*25px[\s\S]*height:\s*25px/i);
+  assert.doesNotMatch(css, /body\s*>\s*aside/);
+});
+
 test('keeps the inline premium variant responsive and accessible', () => {
   assert.ok(css, 'expected the isolated premium CSS variant');
   assert.match(css, /--mw-blue:\s*#0c4b80/i);
@@ -153,7 +161,7 @@ test('adds selective motion while preserving reduced-motion support', () => {
 test('uses the official logo and modern responsive photography markup', () => {
   assert.match(
     html,
-    /<img class="mw-brand-logo" src="https:\/\/mediwell\.it\/wp-content\/uploads\/2026\/04\/cropped-Master_2500x1000\.png"/
+    /<img class="mw-brand-logo" src="https:\/\/mediwell\.it\/wp-content\/uploads\/2026\/06\/logoMedi_Centrato\.png"/
   );
   assert.doesNotMatch(html, /class="mw-brand-mark"/);
   const heroShell = html.match(/<div class="mw-photo-shell">[\s\S]*?<\/div>/)?.[0] || '';

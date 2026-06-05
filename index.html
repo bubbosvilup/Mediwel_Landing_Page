@@ -484,15 +484,18 @@ main > section {
 
 .mw-price-card {
   align-self: end;
-  padding: 26px;
+  overflow: hidden;
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 24px;
-  background: var(--mw-blue-dark);
+  background:
+    radial-gradient(circle at 90% 12%, rgba(81, 193, 147, 0.22), transparent 9rem),
+    linear-gradient(145deg, var(--mw-blue-dark), var(--mw-blue-ink));
   box-shadow: var(--mw-shadow-soft);
   color: var(--mw-white);
 }
 
-.mw-price-card p,
-.mw-price-card small {
+.mw-price-card p {
   display: block;
   margin: 0;
   font-size: 0.72rem;
@@ -502,19 +505,59 @@ main > section {
   text-transform: uppercase;
 }
 
-.mw-price-card strong {
-  display: block;
-  margin: 10px 0;
+.mw-price-card .mw-price-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 22px 0 14px;
   color: var(--mw-green);
-  font-size: clamp(4.6rem, 22vw, 7rem);
-  letter-spacing: -0.12em;
-  line-height: 0.88;
+  font-weight: 900;
+  line-height: 0.9;
 }
 
-.mw-price-card strong span {
-  color: var(--mw-white);
-  font-size: 0.9rem;
-  letter-spacing: 0;
+.mw-price-card .mw-price-from,
+.mw-price-card .mw-price-cents {
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.mw-price-card .mw-price-from {
+  align-self: center;
+  padding: 6px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+}
+
+.mw-price-card .mw-price-symbol {
+  font-size: clamp(2.2rem, 8vw, 3.2rem);
+  letter-spacing: -0.08em;
+}
+
+.mw-price-card .mw-price-euros {
+  font-size: clamp(3.6rem, 15vw, 5rem);
+  letter-spacing: -0.09em;
+}
+
+.mw-price-card .mw-price-cents {
+  align-self: flex-end;
+  margin-bottom: 7px;
+}
+
+.mw-price-card small {
+  display: inline-flex;
+  margin-top: 6px;
+  padding: 9px 11px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+  text-transform: uppercase;
 }
 
 #studi {
@@ -675,6 +718,18 @@ main > section {
   backdrop-filter: blur(14px);
 }
 
+.mw-benefits-grid .mw-benefits-photo {
+  overflow: hidden;
+  padding: 0;
+}
+
+.mw-benefits-grid .mw-benefits-photo img {
+  width: 100%;
+  height: 100%;
+  min-height: 250px;
+  object-fit: cover;
+}
+
 .mw-benefits-grid article > span {
   display: block;
   margin-bottom: 36px;
@@ -750,6 +805,40 @@ main > section {
   text-transform: uppercase;
 }
 
+.mw-location-map {
+  position: relative;
+  min-height: 360px;
+  overflow: hidden;
+  border-radius: 24px 120px 24px 24px;
+  box-shadow: var(--mw-shadow);
+}
+
+.mw-location-map iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+  border: 0;
+}
+
+.mw-location-map figcaption {
+  position: absolute;
+  bottom: 18px;
+  left: 18px;
+  max-width: 250px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  background: var(--mw-white);
+  box-shadow: var(--mw-shadow-soft);
+  color: var(--mw-blue);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
 #lancio {
   background:
     linear-gradient(90deg, transparent 49.8%, rgba(255, 255, 255, 0.1) 50%, transparent 50.2%),
@@ -786,6 +875,15 @@ main > section {
 
 .mw-launch-copy a:not(.mw-button) {
   color: var(--mw-white);
+}
+
+#lancio .mw-button-light {
+  color: var(--mw-blue-dark);
+}
+
+#lancio .mw-button-light:hover {
+  color: var(--mw-blue-dark);
+  background: var(--mw-blue-pale);
 }
 
 #countdown {
@@ -908,33 +1006,40 @@ form > p:nth-last-of-type(2) {
   font-weight: 800;
 }
 
-body > aside {
+.mw-floating-contact {
   position: fixed;
   right: 16px;
   bottom: 16px;
   z-index: 30;
 }
 
-body > aside a {
+.mw-floating-contact a {
   display: inline-flex;
-  min-height: 48px;
+  width: 56px;
+  height: 56px;
+  min-height: 56px;
   align-items: center;
   justify-content: center;
-  padding: 11px 15px;
+  padding: 0;
   border: 2px solid rgba(255, 255, 255, 0.86);
-  border-radius: 999px;
+  border-radius: 50%;
   background: var(--mw-green);
   box-shadow: 0 14px 30px rgba(35, 102, 71, 0.28);
-  color: #153f2d;
-  font-size: 0.78rem;
+  color: var(--mw-white);
   text-decoration: none;
+}
+
+.mw-floating-contact svg {
+  width: 25px;
+  height: 25px;
+  flex: 0 0 auto;
 }
 
 @media (hover: hover) {
   .mw-button:hover,
   .mw-header-cta:hover,
   form button:hover,
-  body > aside a:hover {
+  .mw-floating-contact a:hover {
     transform: translateY(-3px);
   }
 
@@ -1047,6 +1152,11 @@ body > aside a {
     padding: 132px 32px;
   }
 
+  #costi {
+    padding-top: 78px;
+    padding-bottom: 112px;
+  }
+
   .mw-header-inner {
     padding-right: 12px;
     padding-left: 16px;
@@ -1095,13 +1205,37 @@ body > aside a {
   }
 
   .mw-editorial-grid {
-    grid-template-columns: 150px minmax(0, 1fr) 320px;
-    align-items: end;
-    gap: 38px;
+    grid-template-columns: minmax(0, 720px) minmax(340px, 390px);
+    align-items: center;
+    gap: 54px;
+    justify-content: center;
+  }
+
+  .mw-editorial-grid > .mw-section-index {
+    grid-column: 1 / -1;
+    margin-bottom: -22px;
+  }
+
+  .mw-editorial-copy {
+    max-width: 720px;
   }
 
   .mw-editorial-grid .mw-price-card {
-    grid-column: auto;
+    grid-column: 2;
+    align-self: center;
+    width: 100%;
+    max-width: 390px;
+    justify-self: start;
+    padding: 32px;
+  }
+
+  .mw-price-card .mw-price-main {
+    margin-top: 24px;
+    margin-bottom: 18px;
+  }
+
+  .mw-price-card .mw-price-euros {
+    font-size: 4.35rem;
   }
 
   .mw-space-layout,
@@ -1130,6 +1264,11 @@ body > aside a {
   .mw-location-photo figcaption {
     bottom: 28px;
     left: -30px;
+  }
+
+  .mw-location-map,
+  .mw-location-map iframe {
+    min-height: 610px;
   }
 
   .mw-launch-layout {
@@ -1259,7 +1398,7 @@ body > aside a {
   <header class="mw-site-header">
     <div class="mw-header-inner">
       <a class="mw-brand" href="#hero" aria-label="MediWell, torna all'inizio">
-        <img class="mw-brand-logo" src="https://mediwell.it/wp-content/uploads/2026/04/cropped-Master_2500x1000.png" alt="MediWell Polistudio" width="250" height="100" decoding="async">
+        <img class="mw-brand-logo" src="https://mediwell.it/wp-content/uploads/2026/06/logoMedi_Centrato.png" alt="MediWell Polistudio" width="250" height="100" decoding="async">
       </a>
       <p class="mw-header-meta">Faenza <span>02.09.26</span></p>
       <a class="mw-header-cta" href="#interesse">Riserva anteprima</a>
@@ -1271,7 +1410,7 @@ body > aside a {
       <div class="mw-hero-layout">
         <div class="mw-hero-copy mw-reveal mw-reveal-up">
           <p class="mw-kicker">Apertura il 2 settembre 2026 a Faenza: riserva ora il tuo studio in anteprima</p>
-          <h1 id="hero-title">Il tuo nuovo studio sanitario a giornata a Faenza.</h1>
+          <h1 id="hero-title">Il tuo nuovo studio sanitario in affitto a giornata.</h1>
           <p class="mw-hero-lede">
             È in arrivo uno spazio all'avanguardia composto da 5 studi esclusivi,
             progettati per medici, fisioterapisti e tutti gli operatori sanitari e del
@@ -1298,17 +1437,14 @@ body > aside a {
 
         <div class="mw-hero-visual mw-reveal mw-reveal-right">
           <div class="mw-photo-shell">
-            <picture>
-              <source srcset="assets/mediwell/mediwell-hero-designed-waiting-room.webp" type="image/webp">
-              <img
-                src="assets/mediwell/mediwell-hero-designed-waiting-room.jpg"
-                alt="Sala d'attesa contemporanea con sedute rosa, parete verde e rivestimento in legno"
-                width="1800"
-                height="1200"
-                decoding="async"
-                fetchpriority="high"
-              >
-            </picture>
+            <img
+              src="https://mediwell.it/wp-content/uploads/2026/06/sala_attesa_1600x1124.jpeg"
+              alt="Sala d'attesa MediWell"
+              width="1600"
+              height="1124"
+              decoding="async"
+              fetchpriority="high"
+            >
           </div>
           <p class="mw-photo-label"><span>01</span> Spazi che lavorano per te</p>
           <div class="mw-hero-stamp">
@@ -1343,8 +1479,13 @@ body > aside a {
         </div>
         <div class="mw-price-card">
           <p>Le prenotazioni avvengono esclusivamente a giornata intera</p>
-          <strong><span>euro</span> 76<span>,00</span></strong>
-          <small>da euro 76,00 a euro 98,00 al giorno, IVA inclusa</small>
+          <div class="mw-price-main" aria-label="Da 76 euro al giorno">
+            <span class="mw-price-from">da</span>
+            <span class="mw-price-symbol">€</span>
+            <strong class="mw-price-euros">76</strong>
+            <span class="mw-price-cents">,00</span>
+          </div>
+          <small>Fino a €98,00 al giorno · IVA inclusa</small>
         </div>
       </div>
     </section>
@@ -1352,17 +1493,14 @@ body > aside a {
     <section id="studi" aria-labelledby="studi-title">
       <div class="mw-space-layout">
         <figure class="mw-space-photo mw-reveal mw-reveal-left">
-          <picture>
-            <source srcset="assets/mediwell/mediwell-studio-treatment-room.webp" type="image/webp">
-            <img
-              src="assets/mediwell/mediwell-studio-treatment-room.jpg"
-              alt="Studio sanitario luminoso con lettino elettrico e scrivania"
-              loading="lazy"
-              width="1600"
-              height="1067"
-              decoding="async"
-            >
-          </picture>
+          <img
+            src="https://mediwell.it/wp-content/uploads/2026/06/studio_overview_1024x1024.jpeg"
+            alt="Vista d'insieme di uno studio MediWell"
+            loading="lazy"
+            width="1024"
+            height="1024"
+            decoding="async"
+          >
           <figcaption><span>02</span> Pronto all'uso</figcaption>
         </figure>
         <div class="mw-space-copy mw-reveal mw-reveal-right">
@@ -1457,6 +1595,17 @@ body > aside a {
           </p>
         </article>
 
+        <article class="mw-benefits-photo mw-reveal" aria-label="Dettaglio attaccapanni MediWell">
+          <img
+            src="https://mediwell.it/wp-content/uploads/2026/06/attaccapanni_1500x1500.jpeg"
+            alt="Dettaglio attaccapanni nello studio MediWell"
+            loading="lazy"
+            width="1500"
+            height="1500"
+            decoding="async"
+          >
+        </article>
+
         <article class="mw-reveal">
           <span>03</span>
           <h3>Igiene e ordine</h3>
@@ -1491,19 +1640,15 @@ body > aside a {
           </p>
           <p class="mw-address">Via Fornarina 12/D <span>Faenza</span></p>
         </div>
-        <figure class="mw-location-photo mw-reveal mw-reveal-right">
-          <picture>
-            <source srcset="assets/mediwell/mediwell-location-waiting-room.webp" type="image/webp">
-            <img
-              src="assets/mediwell/mediwell-location-waiting-room.jpg"
-              alt="Sala d'attesa sanitaria luminosa con sedute e reception"
-              loading="lazy"
-              width="1600"
-              height="1067"
-              decoding="async"
-            >
-          </picture>
-          <figcaption><strong>100</strong><span>metri dal parcheggio gratuito</span></figcaption>
+        <figure class="mw-location-map mw-reveal mw-reveal-right">
+          <iframe
+            title="Mappa MediWell, Via Fornarina 12/D, Faenza"
+            src="https://www.google.com/maps?q=44.2810301,11.9034264&z=17&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+          ></iframe>
+          <figcaption>Via Fornarina 12/D, Faenza</figcaption>
         </figure>
       </div>
     </section>
@@ -1603,12 +1748,17 @@ body > aside a {
     </section>
   </main>
 
-  <aside aria-label="Contatto rapido">
+  <aside class="mw-floating-contact" aria-label="Contatto rapido">
     <a
       href="https://wa.me/393930593500?text=Ciao%2C%20vorrei%20informazioni%20su%20MediWell%20a%20Faenza"
       target="_blank"
       rel="noopener"
-    >WhatsApp</a>
+      aria-label="Contattaci su WhatsApp"
+    >
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884M20.463 3.49A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+      </svg>
+    </a>
   </aside>
 
   <script>
