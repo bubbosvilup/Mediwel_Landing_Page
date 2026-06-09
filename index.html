@@ -485,10 +485,115 @@ main > section {
     pointer-events: none;
   }
 
+  .mw-footer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: transparent;
+    pointer-events: none;
+  }
+
+  .mw-footer-bubbles {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .mw-bubble {
+    position: absolute;
+    border-radius: 50%;
+    mix-blend-mode: screen;
+    filter: blur(1px);
+  }
+
+  .mw-bubble-1 {
+    width: 180px;
+    height: 180px;
+    background: rgba(81, 193, 147, 0.2);
+    top: 10%;
+    left: 8%;
+    animation: float-bubble-1 15s ease-in-out infinite;
+  }
+
+  .mw-bubble-2 {
+    width: 140px;
+    height: 140px;
+    background: rgba(248, 209, 224, 0.18);
+    top: 5%;
+    right: 12%;
+    animation: float-bubble-2 18s ease-in-out infinite;
+  }
+
+  .mw-bubble-3 {
+    width: 160px;
+    height: 160px;
+    background: rgba(81, 193, 147, 0.15);
+    bottom: 15%;
+    left: 15%;
+    animation: float-bubble-3 20s ease-in-out infinite;
+  }
+
+  .mw-bubble-4 {
+    width: 120px;
+    height: 120px;
+    background: rgba(248, 209, 224, 0.16);
+    bottom: 20%;
+    right: 8%;
+    animation: float-bubble-4 16s ease-in-out infinite;
+  }
+
+  .mw-bubble-5 {
+    width: 100px;
+    height: 100px;
+    background: rgba(81, 193, 147, 0.12);
+    top: 40%;
+    left: 45%;
+    animation: float-bubble-5 22s ease-in-out infinite;
+  }
+
+  @keyframes float-bubble-1 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(30px, -20px); }
+    50% { transform: translate(-40px, 30px); }
+    75% { transform: translate(20px, 40px); }
+  }
+
+  @keyframes float-bubble-2 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-35px, 25px); }
+    50% { transform: translate(50px, -30px); }
+    75% { transform: translate(-20px, -40px); }
+  }
+
+  @keyframes float-bubble-3 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(40px, -35px); }
+    50% { transform: translate(-30px, -20px); }
+    75% { transform: translate(25px, 45px); }
+  }
+
+  @keyframes float-bubble-4 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-40px, 30px); }
+    50% { transform: translate(35px, 20px); }
+    75% { transform: translate(-25px, -35px); }
+  }
+
+  @keyframes float-bubble-5 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(20px, 40px); }
+    50% { transform: translate(-35px, -25px); }
+    75% { transform: translate(40px, 10px); }
+  }
+
   .mw-footer-inner {
     position: relative;
     display: grid;
     gap: 28px;
+    z-index: 1;
     width: min(100%, var(--mw-max));
     margin: 0 auto;
   }
@@ -1939,6 +2044,13 @@ form > p:nth-last-of-type(2) {
   </main>
 
   <footer class="mw-footer" aria-label="Footer MediWell">
+    <div class="mw-footer-bubbles">
+      <div class="mw-bubble mw-bubble-1"></div>
+      <div class="mw-bubble mw-bubble-2"></div>
+      <div class="mw-bubble mw-bubble-3"></div>
+      <div class="mw-bubble mw-bubble-4"></div>
+      <div class="mw-bubble mw-bubble-5"></div>
+    </div>
     <div class="mw-footer-inner">
       <div class="mw-footer-grid">
         <div class="mw-footer-block mw-footer-left">
@@ -1951,13 +2063,13 @@ form > p:nth-last-of-type(2) {
         <div class="mw-footer-block mw-footer-center">
           <div class="mw-footer-social">
             <a class="mw-social-link" href="https://www.facebook.com/people/Mediwellit/61589370824325/" target="_blank" rel="noopener">
-              <img class="mw-social-icon-image" src="https://mediwell.it/wp-content/uploads/2026/06/FB.png" alt="Facebook">
+              <img class="mw-social-icon-image" src="https://mediwell.it/wp-content/uploads/2026/06/FB_Colori.png" alt="Facebook">
             </a>
             <a class="mw-social-link" href="https://www.instagram.com/mediwell.it/" target="_blank" rel="noopener">
-              <img class="mw-social-icon-image" src="https://mediwell.it/wp-content/uploads/2026/06/IN.png" alt="Instagram">
+              <img class="mw-social-icon-image" src="https://mediwell.it/wp-content/uploads/2026/06/IN_colori.png" alt="Instagram">
             </a>
             <a class="mw-social-link" href="https://wa.me/393930593500" target="_blank" rel="noopener">
-              <img class="mw-social-icon-image" src="https://mediwell.it/wp-content/uploads/2026/06/WA.png" alt="WhatsApp">
+              <img class="mw-social-icon-image" src="https://mediwell.it/wp-content/uploads/2026/06/WA_colori.png" alt="WhatsApp">
             </a>
           </div>
         </div>
