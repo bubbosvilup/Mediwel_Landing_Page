@@ -485,108 +485,63 @@ main > section {
     pointer-events: none;
   }
 
-  .mw-footer::after {
-    content: "";
+  .mw-footer-orbits {
     position: absolute;
-    inset: 0;
+    inset: -18% -8%;
     z-index: 0;
-    background: transparent;
-    pointer-events: none;
-  }
-
-  .mw-footer-bubbles {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
     overflow: hidden;
+    pointer-events: none;
   }
 
-  .mw-bubble {
+  .mw-footer-orb {
     position: absolute;
+    border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 50%;
+    background:
+      radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.24), transparent 30%),
+      linear-gradient(135deg, var(--mw-orb-color), transparent 74%);
+    filter: blur(0.5px);
     mix-blend-mode: screen;
-    filter: blur(1px);
+    opacity: 0.74;
+    transform: translate3d(0, 0, 0) rotate(var(--mw-orb-rotate, 0deg));
   }
 
-  .mw-bubble-1 {
-    width: 180px;
-    height: 180px;
-    background: rgba(81, 193, 147, 0.2);
+  .mw-footer-orb-1 {
+    --mw-orb-color: rgba(81, 193, 147, 0.26);
+    --mw-orb-rotate: -12deg;
+    top: 2%;
+    left: 5%;
+    width: 210px;
+    height: 210px;
+  }
+
+  .mw-footer-orb-2 {
+    --mw-orb-color: rgba(193, 81, 127, 0.24);
+    --mw-orb-rotate: 18deg;
     top: 10%;
-    left: 8%;
-    animation: float-bubble-1 15s ease-in-out infinite;
+    right: 7%;
+    width: 240px;
+    height: 240px;
   }
 
-  .mw-bubble-2 {
+  .mw-footer-orb-3 {
+    --mw-orb-color: rgba(84, 151, 194, 0.2);
+    --mw-orb-rotate: 8deg;
+    right: 34%;
+    bottom: -5%;
+    width: 190px;
+    height: 190px;
+    opacity: 0.55;
+  }
+
+  .mw-footer-orb-4 {
+    --mw-orb-color: rgba(248, 209, 224, 0.2);
+    --mw-orb-rotate: -24deg;
+    bottom: 8%;
+    left: 19%;
     width: 140px;
     height: 140px;
-    background: rgba(248, 209, 224, 0.18);
-    top: 5%;
-    right: 12%;
-    animation: float-bubble-2 18s ease-in-out infinite;
-  }
-
-  .mw-bubble-3 {
-    width: 160px;
-    height: 160px;
-    background: rgba(81, 193, 147, 0.15);
-    bottom: 15%;
-    left: 15%;
-    animation: float-bubble-3 20s ease-in-out infinite;
-  }
-
-  .mw-bubble-4 {
-    width: 120px;
-    height: 120px;
-    background: rgba(248, 209, 224, 0.16);
-    bottom: 20%;
-    right: 8%;
-    animation: float-bubble-4 16s ease-in-out infinite;
-  }
-
-  .mw-bubble-5 {
-    width: 100px;
-    height: 100px;
-    background: rgba(81, 193, 147, 0.12);
-    top: 40%;
-    left: 45%;
-    animation: float-bubble-5 22s ease-in-out infinite;
-  }
-
-  @keyframes float-bubble-1 {
-    0%, 100% { transform: translate(0, 0); }
-    25% { transform: translate(30px, -20px); }
-    50% { transform: translate(-40px, 30px); }
-    75% { transform: translate(20px, 40px); }
-  }
-
-  @keyframes float-bubble-2 {
-    0%, 100% { transform: translate(0, 0); }
-    25% { transform: translate(-35px, 25px); }
-    50% { transform: translate(50px, -30px); }
-    75% { transform: translate(-20px, -40px); }
-  }
-
-  @keyframes float-bubble-3 {
-    0%, 100% { transform: translate(0, 0); }
-    25% { transform: translate(40px, -35px); }
-    50% { transform: translate(-30px, -20px); }
-    75% { transform: translate(25px, 45px); }
-  }
-
-  @keyframes float-bubble-4 {
-    0%, 100% { transform: translate(0, 0); }
-    25% { transform: translate(-40px, 30px); }
-    50% { transform: translate(35px, 20px); }
-    75% { transform: translate(-25px, -35px); }
-  }
-
-  @keyframes float-bubble-5 {
-    0%, 100% { transform: translate(0, 0); }
-    25% { transform: translate(20px, 40px); }
-    50% { transform: translate(-35px, -25px); }
-    75% { transform: translate(40px, 10px); }
+    opacity: 0.5;
   }
 
   .mw-footer-inner {
@@ -1669,6 +1624,44 @@ form > p:nth-last-of-type(2) {
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  .mw-footer-orb-1 {
+    animation: mw-footer-drift-a 18s ease-in-out infinite;
+  }
+
+  .mw-footer-orb-2 {
+    animation: mw-footer-drift-b 22s ease-in-out infinite;
+  }
+
+  .mw-footer-orb-3 {
+    animation: mw-footer-drift-c 26s ease-in-out infinite;
+  }
+
+  .mw-footer-orb-4 {
+    animation: mw-footer-drift-d 20s ease-in-out infinite;
+  }
+
+  @keyframes mw-footer-drift-a {
+    0%, 100% { transform: translate3d(0, 0, 0) rotate(-12deg) scale(1); }
+    45% { transform: translate3d(36px, -18px, 0) rotate(4deg) scale(1.05); }
+    70% { transform: translate3d(-18px, 28px, 0) rotate(-20deg) scale(0.98); }
+  }
+
+  @keyframes mw-footer-drift-b {
+    0%, 100% { transform: translate3d(0, 0, 0) rotate(18deg) scale(1); }
+    40% { transform: translate3d(-32px, 24px, 0) rotate(2deg) scale(1.04); }
+    72% { transform: translate3d(22px, -34px, 0) rotate(26deg) scale(0.96); }
+  }
+
+  @keyframes mw-footer-drift-c {
+    0%, 100% { transform: translate3d(0, 0, 0) rotate(8deg) scale(1); }
+    50% { transform: translate3d(26px, 22px, 0) rotate(-8deg) scale(1.06); }
+  }
+
+  @keyframes mw-footer-drift-d {
+    0%, 100% { transform: translate3d(0, 0, 0) rotate(-24deg) scale(1); }
+    48% { transform: translate3d(-24px, -20px, 0) rotate(-8deg) scale(1.08); }
+  }
+
   .mw-space-photo img,
   .mw-location-photo img {
     transition:
@@ -1818,7 +1811,7 @@ form > p:nth-last-of-type(2) {
             multifunzionali elettriche.
           </p>
           <p>
-            Ogni studio è dotato di lavabo con comandi a leva e pareti lavabili, per garantire praticità, igiene e massima versatilità d’uso. Contattaci per individuare lo spazio più adatto tra i 5 studi disponibili e trovare la soluzione più vicina alle tue esigenze professionali.
+            Ogni studio è dotato di lavabo con comandi a leva e pareti lavabili, per garantire praticità, igiene e massima versatilità d'uso. Contattaci per individuare lo spazio più adatto tra i 5 studi disponibili e trovare la soluzione più vicina alle tue esigenze professionali.
           </p>
           <p><a class="mw-text-link" href="#interesse">Scopri lo studio più adatto a te <span>→</span></a></p>
         </div>
@@ -2044,12 +2037,11 @@ form > p:nth-last-of-type(2) {
   </main>
 
   <footer class="mw-footer" aria-label="Footer MediWell">
-    <div class="mw-footer-bubbles">
-      <div class="mw-bubble mw-bubble-1"></div>
-      <div class="mw-bubble mw-bubble-2"></div>
-      <div class="mw-bubble mw-bubble-3"></div>
-      <div class="mw-bubble mw-bubble-4"></div>
-      <div class="mw-bubble mw-bubble-5"></div>
+    <div class="mw-footer-orbits" aria-hidden="true">
+      <span class="mw-footer-orb mw-footer-orb-1"></span>
+      <span class="mw-footer-orb mw-footer-orb-2"></span>
+      <span class="mw-footer-orb mw-footer-orb-3"></span>
+      <span class="mw-footer-orb mw-footer-orb-4"></span>
     </div>
     <div class="mw-footer-inner">
       <div class="mw-footer-grid">

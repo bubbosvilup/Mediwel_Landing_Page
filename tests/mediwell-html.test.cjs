@@ -7,8 +7,6 @@ const html = readFileSync(resolve(__dirname, '..', 'index.html'), 'utf8');
 const text = html.replace(/\s+/g, ' ');
 const cssPath = resolve(__dirname, '..', 'styles', 'mediwell-premium-balanced.css');
 const css = html.match(/<style id="mediwell-styles">([\s\S]*?)<\/style>/i)?.[1] || '';
-const assetsDir = resolve(__dirname, '..', 'assets', 'mediwell');
-const assetSourcesPath = resolve(assetsDir, 'README.md');
 const stylesDir = resolve(__dirname, '..', 'styles');
 
 function collectCssFiles(dir) {
@@ -40,7 +38,12 @@ test('keeps HTML CSS and safe JavaScript embedded in one WordPress-compatible pa
   assert.equal(existsSync(cssPath), false);
   assert.deepEqual(collectCssFiles(stylesDir), []);
   assert.doesNotMatch(html, /<nav[\s>]/i);
-  assert.doesNotMatch(html, /<footer[\s>]/i);
+  assert.match(html, /<footer class="mw-footer" aria-label="Footer MediWell">/i);
+  assert.match(html, /<div class="mw-footer-orbits" aria-hidden="true">/i);
+  assert.match(css, /\.mw-footer-orb-1\s*\{[\s\S]*--mw-orb-color:\s*rgba\(81,\s*193,\s*147,\s*0\.26\)/i);
+  assert.match(css, /@keyframes\s+mw-footer-drift-a/i);
+  assert.doesNotMatch(html, /mw-footer-bubbles|mw-bubble|float-bubble/i);
+  assert.doesNotMatch(html, /Ã|Â|â|�/);
   assert.match(html, /COLORI PRINCIPALI DEL DESIGN PRECEDENTE/);
 });
 
@@ -55,14 +58,14 @@ test('uses the client hero and pricing copy without forbidden wording or individ
   assert.match(text, /Studi sanitari pronti all'uso, prenotabili a giornata\./i);
   assert.match(html, /class="mw-kicker"[\s\S]*?<strong>Nuova apertura a Faenza<\/strong>/i);
   assert.doesNotMatch(text, /: ottimizza i costi, azzera gli sprechi e blocca la tua giornata ideale prima del lancio ufficiale/i);
-  assert.match(text, /Il modello: condivisione intelligente e tariffe trasparenti/);
+  assert.match(html, /<p class="mw-section-index"><span>01<\/span> Il modello<\/p>[\s\S]*?<h2 id="costi-title">Condivisione intelligente e tariffe trasparenti<\/h2>/);
   assert.match(text, /Fino a €98,00 al giorno · IVA inclusa/i);
   assert.match(text, /prenotazioni avvengono esclusivamente a giornata intera/i);
   assert.match(text, /non è richiesto alcun investimento iniziale/i);
 });
 
 test('presents the client studios overview once', () => {
-  assert.match(text, /Gli spazi: arredi a regolazione elettrica in un contesto esclusivo/);
+  assert.match(html, /<p class="mw-section-index"><span>02<\/span> Gli spazi<\/p>[\s\S]*?<h2 id="studi-title">Arredi a regolazione elettrica in un contesto esclusivo<\/h2>/);
   assert.match(text, /metrature da 12 a 15 mq/);
   assert.match(text, /scrivanie regolabili motorizzate/i);
   assert.match(text, /sedie comfort per pazienti o clienti/i);
@@ -74,7 +77,7 @@ test('presents the client studios overview once', () => {
 });
 
 test('explains the three-step technology flow with the client details', () => {
-  assert.match(text, /La tecnologia: indipendenza operativa e tutela della privacy/i);
+  assert.match(html, /<p class="mw-section-index"><span>03<\/span> Sistema smart<\/p>[\s\S]*?<h2 id="tecnologia-title">Indipendenza operativa e tutela della privacy<\/h2>/i);
   assert.match(text, /Prenotazione online:/i);
   assert.match(text, /www\.mediwell\.it/i);
   assert.match(text, /disponibilità in tempo reale/i);
@@ -125,7 +128,7 @@ test('keeps the inline premium variant responsive and accessible', () => {
   assert.match(css, /--mw-blue:\s*#0c4b80/i);
   assert.match(css, /--mw-pink:\s*#c1517f/i);
   assert.match(css, /--mw-green:\s*#51c193/i);
-  assert.match(css, /aside\s*\{[\s\S]*position:\s*fixed/i);
+  assert.match(css, /\.mw-floating-contact\s*\{[\s\S]*position:\s*fixed/i);
   assert.match(css, /#costi\s*\{[^}]*overflow:\s*hidden/i);
   assert.match(css, /:focus-visible/i);
   assert.match(css, /@media\s*\(min-width:\s*768px\)/i);
@@ -133,17 +136,15 @@ test('keeps the inline premium variant responsive and accessible', () => {
   assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)/i);
 });
 
-test('uses local documented photography and progressive reveal hooks', () => {
-  for (const asset of [
-    'mediwell-hero-designed-waiting-room.jpg',
-    'mediwell-studio-treatment-room.jpg',
-    'mediwell-location-waiting-room.jpg'
+test('uses remote MediWell photography and progressive reveal hooks', () => {
+  for (const source of [
+    'https://mediwell.it/wp-content/uploads/2026/06/sala_attesa_1600x1124.jpeg',
+    'https://mediwell.it/wp-content/uploads/2026/06/studio_overview_1024x1024.jpeg',
+    'https://mediwell.it/wp-content/uploads/2026/06/attaccapanni_1500x1500.jpeg'
   ]) {
-    assert.ok(existsSync(resolve(assetsDir, asset)), `expected ${asset}`);
-    assert.match(html, new RegExp(`assets/mediwell/${asset}`));
+    assert.match(html, new RegExp(source.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   }
 
-  assert.ok(existsSync(assetSourcesPath), 'expected documented photo sources');
   assert.match(html, /class="[^"]*mw-hero-visual/i);
   assert.match(html, /class="[^"]*mw-reveal/i);
   assert.match(html, /IntersectionObserver/);
@@ -160,7 +161,7 @@ test('adds selective motion while preserving reduced-motion support', () => {
   assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)/i);
 });
 
-test('uses the official logo and modern responsive photography markup', () => {
+test('uses the official logo and optimized remote photography markup', () => {
   assert.match(
     html,
     /<img class="mw-brand-logo" src="https:\/\/mediwell\.it\/wp-content\/uploads\/2026\/06\/logoMedi_Centrato\.png"/
@@ -168,33 +169,23 @@ test('uses the official logo and modern responsive photography markup', () => {
   assert.doesNotMatch(html, /class="mw-brand-mark"/);
   const heroShell = html.match(/<div class="mw-photo-shell">[\s\S]*?<\/div>/)?.[0] || '';
   assert.ok(heroShell, 'expected hero image shell');
-  const heroPicture = heroShell.match(
-    /<picture>[\s\S]*?<source srcset="assets\/mediwell\/mediwell-hero-designed-waiting-room\.webp" type="image\/webp">[\s\S]*?<img[\s\S]*?src="assets\/mediwell\/mediwell-hero-designed-waiting-room\.jpg"[\s\S]*?alt="Sala d'attesa contemporanea con sedute rosa, parete verde e rivestimento in legno"[\s\S]*?decoding="async"[\s\S]*?fetchpriority="high"[\s\S]*?<\/picture>/
+  const heroImage = heroShell.match(
+    /<img[\s\S]*?src="https:\/\/mediwell\.it\/wp-content\/uploads\/2026\/06\/sala_attesa_1600x1124\.jpeg"[\s\S]*?alt="Sala d'attesa MediWell"[\s\S]*?width="1600"[\s\S]*?height="1124"[\s\S]*?decoding="async"[\s\S]*?fetchpriority="high"[\s\S]*?>/
   )?.[0] || '';
-  assert.ok(heroPicture, 'expected hero picture block');
-  assert.doesNotMatch(heroPicture, /loading="lazy"/);
+  assert.ok(heroImage, 'expected hero image block');
+  assert.doesNotMatch(heroImage, /loading="lazy"/);
 
   const studioFigure = html.match(/<figure class="[^"]*\bmw-space-photo\b[^"]*">[\s\S]*?<\/figure>/)?.[0] || '';
   assert.ok(studioFigure, 'expected studio figure');
-  const studioPicture = studioFigure.match(
-    /<picture>[\s\S]*?<source srcset="assets\/mediwell\/mediwell-studio-treatment-room\.webp" type="image\/webp">[\s\S]*?<img[\s\S]*?src="assets\/mediwell\/mediwell-studio-treatment-room\.jpg"[\s\S]*?alt="Studio sanitario luminoso con lettino elettrico e scrivania"[\s\S]*?loading="lazy"[\s\S]*?decoding="async"[\s\S]*?<\/picture>/
+  const studioImage = studioFigure.match(
+    /<img[\s\S]*?src="https:\/\/mediwell\.it\/wp-content\/uploads\/2026\/06\/studio_overview_1024x1024\.jpeg"[\s\S]*?alt="Vista d'insieme di uno studio MediWell"[\s\S]*?loading="lazy"[\s\S]*?width="1024"[\s\S]*?height="1024"[\s\S]*?decoding="async"[\s\S]*?>/
   )?.[0] || '';
-  assert.ok(studioPicture, 'expected studio picture block');
-  assert.doesNotMatch(studioPicture, /fetchpriority="high"/);
+  assert.ok(studioImage, 'expected studio image block');
+  assert.doesNotMatch(studioImage, /fetchpriority="high"/);
 
-  const locationFigure = html.match(/<figure class="[^"]*\bmw-location-photo\b[^"]*">[\s\S]*?<\/figure>/)?.[0] || '';
-  assert.ok(locationFigure, 'expected location figure');
-  const locationPicture = locationFigure.match(
-    /<picture>[\s\S]*?<source srcset="assets\/mediwell\/mediwell-location-waiting-room\.webp" type="image\/webp">[\s\S]*?<img[\s\S]*?src="assets\/mediwell\/mediwell-location-waiting-room\.jpg"[\s\S]*?alt="Sala d'attesa sanitaria luminosa con sedute e reception"[\s\S]*?loading="lazy"[\s\S]*?decoding="async"[\s\S]*?<\/picture>/
-  )?.[0] || '';
-  assert.ok(locationPicture, 'expected location picture block');
-  assert.doesNotMatch(locationPicture, /fetchpriority="high"/);
-
-  for (const asset of [
-    'mediwell-hero-designed-waiting-room.webp',
-    'mediwell-studio-treatment-room.webp',
-    'mediwell-location-waiting-room.webp'
-  ]) {
-    assert.ok(existsSync(resolve(assetsDir, asset)), `expected ${asset}`);
-  }
+  const benefitsPhoto = html.match(/<article class="[^"]*\bmw-benefits-photo\b[^"]*"[\s\S]*?<\/article>/)?.[0] || '';
+  assert.ok(benefitsPhoto, 'expected benefits photo');
+  assert.match(benefitsPhoto, /src="https:\/\/mediwell\.it\/wp-content\/uploads\/2026\/06\/attaccapanni_1500x1500\.jpeg"/);
+  assert.match(benefitsPhoto, /loading="lazy"/);
+  assert.match(benefitsPhoto, /decoding="async"/);
 });
