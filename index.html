@@ -464,147 +464,167 @@ main > section {
   border-right: 1px solid rgba(255, 255, 255, 0.84);
 }
 
-.mw-scroll-cue {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: min(100%, var(--mw-max));
-    max-width: 420px;
-    gap: 12px;
-    margin: 28px auto 0;
-    padding: 16px 20px;
-    border: 1px solid rgba(12, 75, 128, 0.16);
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 18px 38px rgba(12, 75, 128, 0.08);
-    color: var(--mw-blue);
-    font-size: 0.78rem;
-    font-weight: 800;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: transform 220ms ease, box-shadow 220ms ease, background-color 220ms ease;
-    animation: mw-scroll-cue-pulse 2.6s ease-in-out infinite;
-  }
 
-  .mw-scroll-cue:hover,
-  .mw-scroll-cue:focus-visible {
-    transform: translateY(-2px);
-    background: rgba(255, 255, 255, 1);
-    box-shadow: 0 22px 46px rgba(12, 75, 128, 0.12);
-  }
-
-  .mw-scroll-cue span {
-    display: block;
-    width: 44px;
-    height: 1px;
-    background: var(--mw-pink);
-  }
 
   .mw-footer {
-    padding: 60px 20px 36px;
-    background: linear-gradient(180deg, rgba(248, 249, 250, 0.92), rgba(255, 255, 255, 0.98));
-    color: var(--mw-blue-dark);
+    position: relative;
+    padding: 68px 20px 32px;
+    background:
+      radial-gradient(circle at top left, rgba(81, 193, 147, 0.18), transparent 24%),
+      radial-gradient(circle at 92% 12%, rgba(193, 81, 127, 0.18), transparent 22%),
+      linear-gradient(180deg, #0c4b80 0%, #05243e 100%);
+    color: #eef3f8;
+    overflow: hidden;
+  }
+
+  .mw-footer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.08), transparent 35%);
+    pointer-events: none;
   }
 
   .mw-footer-inner {
+    position: relative;
     display: grid;
-    gap: 26px;
+    gap: 32px;
     width: min(100%, var(--mw-max));
     margin: 0 auto;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.85fr);
     align-items: start;
   }
 
-  .mw-footer-brand {
+  .mw-footer-brand,
+  .mw-footer-panel {
+    position: relative;
+    z-index: 1;
     display: grid;
-    gap: 6px;
+    gap: 18px;
+  }
+
+  .mw-footer-brand p:first-child {
+    margin: 0;
+    font-size: clamp(1.05rem, 2.2vw, 1.6rem);
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #f8d1e0;
+  }
+
+  .mw-footer-brand p:nth-child(2) {
+    margin: 0;
+    max-width: 620px;
+    color: rgba(238, 243, 248, 0.88);
+    font-size: 0.97rem;
+    line-height: 1.9;
+  }
+
+  .mw-footer-panel {
+    padding: 32px;
+    border-radius: 32px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 30px 60px rgba(2, 19, 46, 0.18);
+  }
+
+  .mw-footer-section {
+    display: grid;
+    gap: 12px;
+  }
+
+  .mw-footer-section h3 {
+    margin: 0;
+    font-size: 0.92rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #fdf8ff;
+  }
+
+  .mw-footer-section p,
+  .mw-footer-section a {
+    margin: 0;
+    color: rgba(238, 243, 248, 0.92);
     font-size: 0.95rem;
     line-height: 1.8;
   }
 
-  .mw-footer-brand p:first-child {
-    font-size: 1rem;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--mw-pink-dark);
-  }
-
-  .mw-footer-links,
-  .mw-footer-social {
-    display: grid;
-    gap: 12px;
-  }
-
-  .mw-footer-links a,
-  .mw-footer-social a {
-    color: var(--mw-blue-dark);
+  .mw-footer-section a {
+    display: inline-block;
     text-decoration: none;
-    font-size: 0.92rem;
+    transition: color 200ms ease, transform 200ms ease;
   }
 
-  .mw-footer-links a:hover,
-  .mw-footer-social a:hover {
-    color: var(--mw-pink-dark);
+  .mw-footer-section a:hover {
+    color: #f8d1e0;
+    transform: translateX(2px);
+  }
+
+  .mw-footer-location p {
+    max-width: 320px;
+  }
+
+  .mw-footer-social-row {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 24px;
+    margin-top: 18px;
+    align-items: center;
   }
 
   .mw-footer-social {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
   }
 
   .mw-social-link {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    min-height: 46px;
     gap: 10px;
-    padding: 0 14px;
+    padding: 14px 18px;
     border-radius: 999px;
-    background: rgba(12, 75, 128, 0.06);
-    color: var(--mw-blue-dark);
+    background: rgba(255, 255, 255, 0.11);
+    color: #fdf8ff;
+    font-size: 0.88rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    text-decoration: none;
+    transition: transform 220ms ease, background-color 220ms ease;
   }
 
   .mw-social-link::before {
     content: attr(data-icon);
     display: inline-flex;
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: var(--mw-pink);
-    color: var(--mw-white);
-    font-size: 0.82rem;
+    background: rgba(255, 255, 255, 0.16);
+    font-size: 0.92rem;
+  }
+
+  .mw-social-link:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.18);
   }
 
   .mw-footer-note {
-    max-width: min(100%, var(--mw-max));
-    margin: 26px auto 0;
-    color: var(--mw-muted);
-    font-size: 0.8rem;
+    margin: 0;
+    color: rgba(238, 243, 248, 0.72);
+    font-size: 0.82rem;
     letter-spacing: 0.08em;
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .mw-footer a,
-    .mw-scroll-cue {
+    .mw-footer a {
       transition: transform 240ms ease, color 240ms ease, background-color 240ms ease;
     }
 
     .mw-footer-social a:hover {
       transform: translateY(-2px);
-    }
-  }
-
-  @keyframes mw-scroll-cue-pulse {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(3px);
     }
   }
 #costi {
@@ -1355,21 +1375,6 @@ form > p:nth-last-of-type(2) {
     height: 142px;
   }
 
-  .mw-scroll-cue {
-    position: static;
-    width: min(100%, var(--mw-max));
-    max-width: 420px;
-    margin-top: 42px;
-  }
-
-  .mw-footer-inner {
-    grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.7fr);
-  }
-
-  .mw-footer-social {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
   .mw-editorial-grid {
     grid-template-columns: minmax(0, 720px) minmax(340px, 390px);
     align-items: center;
@@ -1620,7 +1625,6 @@ form > p:nth-last-of-type(2) {
           <span class="mw-hero-line" aria-hidden="true"></span>
         </div>
       </div>
-      <a class="mw-scroll-cue" href="#costi" aria-label="Vai alla sezione Il modello"><span></span> Scorri per esplorare</a>
     </section>
 
     <section id="costi" aria-labelledby="costi-title">
@@ -1916,25 +1920,41 @@ form > p:nth-last-of-type(2) {
     <div class="mw-footer-inner">
       <div class="mw-footer-brand">
         <p id="footer-title">MediWell Polistudio</p>
-        <p>Via Fornarina, 12/D, 48018 Faenza RA, Italia</p>
-        <p>P.IVA 02550260398 · R.Imprese RA212065S</p>
+        <p>Studi sanitari imponenti, prenotabili a giornata e pensati per medici e professionisti che vogliono operare senza spese fisse.</p>
       </div>
 
-      <div class="mw-footer-links">
-        <a href="mailto:info@mediwell.it">Email: info@mediwell.it</a>
-        <a href="mailto:meeby@pec.it">Pec: meeby@pec.it</a>
-        <a href="tel:+393930593500">Servizio Clienti: +39 393 059 3500</a>
-        <a href="https://mediwell.it/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a>
-        <a href="https://mediwell.it/cookie-policy/" target="_blank" rel="noopener">Cookie Policy</a>
-      </div>
+      <div class="mw-footer-panel">
+        <div class="mw-footer-section">
+          <h3>Contatti</h3>
+          <a href="mailto:info@mediwell.it">info@mediwell.it</a>
+          <a href="mailto:meeby@pec.it">meeby@pec.it</a>
+          <a href="tel:+393930593500">+39 393 059 3500</a>
+        </div>
 
+        <div class="mw-footer-section">
+          <h3>Legale</h3>
+          <a href="https://mediwell.it/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a>
+          <a href="https://mediwell.it/cookie-policy/" target="_blank" rel="noopener">Cookie Policy</a>
+          <p>P.IVA 02550260398</p>
+          <p>R.Imprese RA212065S</p>
+        </div>
+
+        <div class="mw-footer-section mw-footer-location">
+          <h3>Sede operativa</h3>
+          <p>Via Fornarina, 12/D</p>
+          <p>48018 Faenza RA, Italia</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mw-footer-social-row">
       <div class="mw-footer-social">
         <a class="mw-social-link" href="https://www.facebook.com/people/Mediwellit/61589370824325/" target="_blank" rel="noopener" data-icon="f">Facebook</a>
         <a class="mw-social-link" href="https://www.instagram.com/mediwell.it/" target="_blank" rel="noopener" data-icon="i">Instagram</a>
         <a class="mw-social-link" href="https://wa.me/393930593500" target="_blank" rel="noopener" data-icon="w">WhatsApp</a>
       </div>
+      <p class="mw-footer-note">© 2026 MediWell. Tutti i diritti riservati.</p>
     </div>
-    <p class="mw-footer-note">© 2026 MediWell. Tutti i diritti riservati.</p>
   </footer>
 
   <aside class="mw-floating-contact" aria-label="Contatto rapido">
