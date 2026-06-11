@@ -127,6 +127,20 @@ test('keeps floorplan modal content data ready for future images', () => {
   assert.match(html, /href="#interesse"/);
 });
 
+test('adds premium floorplan motion hooks with branded pulse colors', () => {
+  assert.match(css, /\.mw-floorplan-is-active/i);
+  assert.match(css, /\.mw-floorplan-stage::before/i);
+  assert.match(css, /\.mw-floorplan-stage::after/i);
+  assert.match(css, /@keyframes\s+mw-floorplan-scan/i);
+  assert.match(css, /@keyframes\s+mw-floorplan-ignite/i);
+  assert.match(css, /@keyframes\s+mw-hotspot-arrive/i);
+  assert.match(css, /@keyframes\s+mw-hotspot-ambient/i);
+  assert.match(css, /\.mw-floorplan-hotspot\.is-selected/i);
+  assert.match(css, /rgba\(193,\s*81,\s*127/i);
+  assert.match(css, /rgba\(81,\s*193,\s*147/i);
+  assert.match(html, /style="--x:\s*13\.7%;\s*--y:\s*58\.4%;\s*--i:\s*0;"/);
+});
+
 test('explains the three-step technology flow with the client details', () => {
   assert.match(html, /<p class="mw-section-index"><span>03<\/span> Sistema smart<\/p>[\s\S]*?<h2 id="tecnologia-title">Indipendenza operativa e tutela della privacy<\/h2>/i);
   assert.match(text, /Prenotazione online:/i);

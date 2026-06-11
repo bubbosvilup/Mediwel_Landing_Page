@@ -292,6 +292,10 @@ main > section {
   margin: 0 auto;
 }
 
+.mw-floorplan-is-active .mw-floorplan-stage {
+  animation: mw-floorplan-ignite 900ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
 .mw-floorplan-copy {
   max-width: 760px;
 }
@@ -312,9 +316,48 @@ main > section {
   box-shadow: var(--mw-shadow-soft);
 }
 
+.mw-floorplan-stage::before,
+.mw-floorplan-stage::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  content: "";
+}
+
+.mw-floorplan-stage::before {
+  background:
+    linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.72) 47%, rgba(193, 81, 127, 0.18) 50%, transparent 63%);
+  opacity: 0;
+  transform: translateX(-120%);
+}
+
+.mw-floorplan-is-active .mw-floorplan-stage::before {
+  animation: mw-floorplan-scan 1450ms cubic-bezier(0.2, 0.7, 0.2, 1) 260ms both;
+}
+
+.mw-floorplan-stage::after {
+  background:
+    radial-gradient(circle at 18% 22%, rgba(193, 81, 127, 0.13), transparent 22%),
+    radial-gradient(circle at 76% 68%, rgba(81, 193, 147, 0.14), transparent 24%);
+  opacity: 0;
+  mix-blend-mode: screen;
+}
+
+.mw-floorplan-is-active .mw-floorplan-stage::after {
+  opacity: 1;
+  transition: opacity 900ms ease 340ms;
+}
+
 .mw-floorplan-stage img {
   width: 100%;
   height: auto;
+  filter: saturate(0.94) contrast(0.98);
+}
+
+.mw-floorplan-is-active .mw-floorplan-stage img {
+  filter: saturate(1.03) contrast(1.03);
+  transition: filter 900ms ease;
 }
 
 .mw-floorplan-hotspot {
@@ -328,10 +371,22 @@ main > section {
   place-items: center;
   border: 0;
   border-radius: 50%;
-  background: var(--mw-blue);
-  box-shadow: 0 12px 26px rgba(12, 75, 128, 0.32);
+  background:
+    radial-gradient(circle at 38% 30%, rgba(255, 255, 255, 0.34), transparent 28%),
+    var(--mw-blue);
+  box-shadow:
+    0 0 0 7px rgba(193, 81, 127, 0.13),
+    0 12px 26px rgba(12, 75, 128, 0.32),
+    0 0 24px rgba(81, 193, 147, 0.22);
   cursor: pointer;
-  transform: translate(-50%, -50%);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.mw-floorplan-is-active .mw-floorplan-hotspot {
+  animation:
+    mw-hotspot-arrive 620ms cubic-bezier(0.19, 1, 0.22, 1) calc(520ms + (var(--i, 0) * 95ms)) both,
+    mw-hotspot-ambient 3.8s ease-in-out calc(1250ms + (var(--i, 0) * 115ms)) infinite;
 }
 
 .mw-floorplan-hotspot::before,
@@ -342,9 +397,13 @@ main > section {
 }
 
 .mw-floorplan-hotspot::before {
-  inset: -8px;
-  border: 2px solid rgba(12, 75, 128, 0.18);
-  animation: mw-hotspot-pulse 2.4s ease-out infinite;
+  inset: -11px;
+  border: 2px solid rgba(193, 81, 127, 0.52);
+  box-shadow: 0 0 26px rgba(193, 81, 127, 0.28);
+}
+
+.mw-floorplan-is-active .mw-floorplan-hotspot::before {
+  animation: mw-hotspot-pulse 2.15s ease-out calc(950ms + (var(--i, 0) * 105ms)) infinite;
 }
 
 .mw-floorplan-hotspot::after {
@@ -356,13 +415,26 @@ main > section {
 }
 
 .mw-floorplan-hotspot:hover {
-  background: var(--mw-pink);
-  transform: translate(-50%, -50%) scale(1.08);
+  background:
+    radial-gradient(circle at 38% 30%, rgba(255, 255, 255, 0.36), transparent 28%),
+    var(--mw-pink);
+  box-shadow:
+    0 0 0 9px rgba(193, 81, 127, 0.16),
+    0 14px 34px rgba(155, 52, 94, 0.34),
+    0 0 32px rgba(81, 193, 147, 0.28);
+  transform: translate(-50%, -50%) scale(1.1);
 }
 
 .mw-floorplan-hotspot:focus-visible {
   outline: 3px solid var(--mw-orange);
   outline-offset: 5px;
+}
+
+.mw-floorplan-hotspot.is-selected {
+  animation: mw-hotspot-lock 520ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  background:
+    radial-gradient(circle at 38% 30%, rgba(255, 255, 255, 0.42), transparent 28%),
+    var(--mw-pink);
 }
 
 .mw-floorplan-modal {
@@ -396,6 +468,14 @@ main > section {
   border-radius: 24px;
   background: var(--mw-white);
   box-shadow: 0 34px 90px rgba(5, 36, 62, 0.36);
+  animation: mw-floorplan-dialog-in 420ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.mw-floorplan-dialog::before {
+  display: block;
+  height: 6px;
+  background: linear-gradient(90deg, var(--mw-blue), var(--mw-pink), var(--mw-green));
+  content: "";
 }
 
 .mw-floorplan-modal-close {
@@ -479,15 +559,113 @@ main > section {
   content: "";
 }
 
-@keyframes mw-hotspot-pulse {
+@keyframes mw-floorplan-ignite {
   0% {
-    opacity: 0.8;
-    transform: scale(0.72);
+    opacity: 0.72;
+    transform: translate3d(0, 18px, 0) scale(0.985);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes mw-floorplan-scan {
+  0% {
+    opacity: 0;
+    transform: translateX(-120%);
+  }
+
+  18%,
+  68% {
+    opacity: 1;
   }
 
   100% {
     opacity: 0;
-    transform: scale(1.45);
+    transform: translateX(120%);
+  }
+}
+
+@keyframes mw-hotspot-arrive {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.42);
+  }
+
+  72% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.18);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes mw-hotspot-pulse {
+  0% {
+    opacity: 0.72;
+    transform: scale(0.58);
+    border-color: rgba(193, 81, 127, 0.58);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.85);
+    border-color: rgba(193, 81, 127, 0);
+  }
+}
+
+@keyframes mw-hotspot-ambient {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 7px rgba(193, 81, 127, 0.13),
+      0 12px 26px rgba(12, 75, 128, 0.32),
+      0 0 24px rgba(81, 193, 147, 0.22);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 10px rgba(193, 81, 127, 0.18),
+      0 14px 32px rgba(12, 75, 128, 0.38),
+      0 0 42px rgba(81, 193, 147, 0.36);
+  }
+}
+
+@keyframes mw-hotspot-lock {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  48% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2);
+    box-shadow:
+      0 0 0 14px rgba(193, 81, 127, 0.2),
+      0 18px 42px rgba(155, 52, 94, 0.36),
+      0 0 50px rgba(81, 193, 147, 0.44);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes mw-floorplan-dialog-in {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0) scale(0.98);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
   }
 }
 
@@ -1988,15 +2166,15 @@ form button {
               loading="lazy"
               decoding="async"
             >
-            <button class="mw-floorplan-hotspot" type="button" style="--x: 13.7%; --y: 58.4%;" data-floorplan-area="studio-1" aria-label="Apri dettagli: Studio 1"></button>
-            <button class="mw-floorplan-hotspot" type="button" style="--x: 13.8%; --y: 20.4%;" data-floorplan-area="studio-2" aria-label="Apri dettagli: Studio 2"></button>
-            <button class="mw-floorplan-hotspot" type="button" style="--x: 34.5%; --y: 20.4%;" data-floorplan-area="sala-aspetto" aria-label="Apri dettagli: Sala aspetto"></button>
-            <button class="mw-floorplan-hotspot" type="button" style="--x: 57.2%; --y: 15.2%;" data-floorplan-area="studio-3" aria-label="Apri dettagli: Studio 3"></button>
-            <button class="mw-floorplan-hotspot" type="button" style="--x: 83.2%; --y: 25.5%;" data-floorplan-area="studio-4" aria-label="Apri dettagli: Studio 4"></button>
-            <button class="mw-floorplan-hotspot" type="button" style="--x: 78.1%; --y: 61.1%;" data-floorplan-area="studio-5" aria-label="Apri dettagli: Studio 5"></button>
-            <button class="mw-floorplan-hotspot" type="button" style="--x: 88.9%; --y: 70.5%;" data-floorplan-area="entrata-disabili" aria-label="Apri dettagli: Entrata disabili"></button>
-            <button class="mw-floorplan-hotspot" type="button" style="--x: 9.0%; --y: 84.7%;" data-floorplan-area="ingresso" aria-label="Apri dettagli: Ingresso"></button>
-            <button class="mw-floorplan-hotspot" type="button" style="--x: 44.1%; --y: 85.3%;" data-floorplan-area="spogliatoi" aria-label="Apri dettagli: Spogliatoi"></button>
+            <button class="mw-floorplan-hotspot" type="button" style="--x: 13.7%; --y: 58.4%; --i: 0;" data-floorplan-area="studio-1" aria-label="Apri dettagli: Studio 1"></button>
+            <button class="mw-floorplan-hotspot" type="button" style="--x: 13.8%; --y: 20.4%; --i: 1;" data-floorplan-area="studio-2" aria-label="Apri dettagli: Studio 2"></button>
+            <button class="mw-floorplan-hotspot" type="button" style="--x: 34.5%; --y: 20.4%; --i: 2;" data-floorplan-area="sala-aspetto" aria-label="Apri dettagli: Sala aspetto"></button>
+            <button class="mw-floorplan-hotspot" type="button" style="--x: 57.2%; --y: 15.2%; --i: 3;" data-floorplan-area="studio-3" aria-label="Apri dettagli: Studio 3"></button>
+            <button class="mw-floorplan-hotspot" type="button" style="--x: 83.2%; --y: 25.5%; --i: 4;" data-floorplan-area="studio-4" aria-label="Apri dettagli: Studio 4"></button>
+            <button class="mw-floorplan-hotspot" type="button" style="--x: 78.1%; --y: 61.1%; --i: 5;" data-floorplan-area="studio-5" aria-label="Apri dettagli: Studio 5"></button>
+            <button class="mw-floorplan-hotspot" type="button" style="--x: 88.9%; --y: 70.5%; --i: 6;" data-floorplan-area="entrata-disabili" aria-label="Apri dettagli: Entrata disabili"></button>
+            <button class="mw-floorplan-hotspot" type="button" style="--x: 9.0%; --y: 84.7%; --i: 7;" data-floorplan-area="ingresso" aria-label="Apri dettagli: Ingresso"></button>
+            <button class="mw-floorplan-hotspot" type="button" style="--x: 44.1%; --y: 85.3%; --i: 8;" data-floorplan-area="spogliatoi" aria-label="Apri dettagli: Spogliatoi"></button>
           </figure>
         </div>
       </div>
@@ -2461,9 +2639,28 @@ form button {
       var description = document.getElementById('floorplan-modal-description');
       var features = document.getElementById('floorplan-modal-features');
       var lastTrigger = null;
+      var floorplanLayout = document.querySelector('.mw-floorplan-layout');
+      var selectedTimer = null;
 
       if (!modal || !media || !title || !description || !features) {
         return;
+      }
+
+      if (floorplanLayout) {
+        if (!('IntersectionObserver' in window)) {
+          floorplanLayout.classList.add('mw-floorplan-is-active');
+        } else {
+          var floorplanObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                floorplanLayout.classList.add('mw-floorplan-is-active');
+                floorplanObserver.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.28 });
+
+          floorplanObserver.observe(floorplanLayout);
+        }
       }
 
       function renderImage(image) {
@@ -2491,6 +2688,19 @@ form button {
         }
 
         lastTrigger = trigger;
+        document.querySelectorAll('.mw-floorplan-hotspot.is-selected').forEach(function (button) {
+          button.classList.remove('is-selected');
+        });
+
+        if (selectedTimer) {
+          clearTimeout(selectedTimer);
+        }
+
+        trigger.classList.add('is-selected');
+        selectedTimer = setTimeout(function () {
+          trigger.classList.remove('is-selected');
+        }, 620);
+
         title.textContent = area.title;
         description.textContent = area.description;
         features.innerHTML = '';

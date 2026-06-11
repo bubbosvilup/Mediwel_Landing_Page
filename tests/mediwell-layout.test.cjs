@@ -213,6 +213,28 @@ test('keeps the floorplan responsive on mobile', async () => {
   assert.ok(metrics.minHotspotHeight >= 38);
 });
 
+test('activates the floorplan motion sequence when scrolled into view', async () => {
+  const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  await page.goto(baseUrl, { waitUntil: 'networkidle' });
+
+  await page.locator('#piantina').scrollIntoViewIfNeeded();
+  await page.waitForTimeout(150);
+
+  const motionState = await page.evaluate(() => {
+    const layout = document.querySelector('.mw-floorplan-layout');
+    const hotspot = document.querySelector('.mw-floorplan-hotspot');
+    return {
+      active: layout.classList.contains('mw-floorplan-is-active'),
+      hotspotAnimation: getComputedStyle(hotspot).animationName
+    };
+  });
+
+  await page.close();
+
+  assert.equal(motionState.active, true);
+  assert.match(motionState.hotspotAnimation, /mw-hotspot-arrive|none/);
+});
+
 test('keeps footer social icons centered inside the mobile card', async () => {
   const page = await browser.newPage({ viewport: { width: 360, height: 900 } });
   await page.goto(baseUrl, { waitUntil: 'networkidle' });
