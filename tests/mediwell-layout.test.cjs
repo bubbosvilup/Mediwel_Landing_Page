@@ -168,6 +168,51 @@ test('keeps hero and launch typography within the refined layout bounds', async 
   );
 });
 
+test('opens and closes the floorplan modal from a hotspot', async () => {
+  const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  await page.goto(baseUrl, { waitUntil: 'networkidle' });
+
+  await page.locator('[data-floorplan-area="studio-1"]').click();
+  assert.equal(await page.locator('#floorplan-modal').isVisible(), true);
+  assert.equal(await page.locator('#floorplan-modal-title').innerText(), 'Studio 1');
+  assert.match(await page.locator('#floorplan-modal-description').innerText(), /pronto all'uso/i);
+
+  await page.keyboard.press('Escape');
+  assert.equal(await page.locator('#floorplan-modal').isHidden(), true);
+
+  await page.close();
+});
+
+test('keeps the floorplan responsive on mobile', async () => {
+  const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  await page.goto(baseUrl, { waitUntil: 'networkidle' });
+
+  const metrics = await page.evaluate(() => {
+    const section = document.querySelector('#piantina').getBoundingClientRect();
+    const image = document.querySelector('.mw-floorplan-stage img').getBoundingClientRect();
+    const hotspots = Array.from(document.querySelectorAll('.mw-floorplan-hotspot')).map((hotspot) => {
+      const box = hotspot.getBoundingClientRect();
+      return { width: box.width, height: box.height };
+    });
+
+    return {
+      viewportWidth: window.innerWidth,
+      documentWidth: document.documentElement.scrollWidth,
+      sectionWidth: section.width,
+      imageWidth: image.width,
+      minHotspotWidth: Math.min(...hotspots.map((box) => box.width)),
+      minHotspotHeight: Math.min(...hotspots.map((box) => box.height))
+    };
+  });
+
+  await page.close();
+
+  assert.equal(metrics.documentWidth, metrics.viewportWidth);
+  assert.ok(metrics.imageWidth <= metrics.sectionWidth);
+  assert.ok(metrics.minHotspotWidth >= 38);
+  assert.ok(metrics.minHotspotHeight >= 38);
+});
+
 test('keeps footer social icons centered inside the mobile card', async () => {
   const page = await browser.newPage({ viewport: { width: 360, height: 900 } });
   await page.goto(baseUrl, { waitUntil: 'networkidle' });
