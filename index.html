@@ -279,6 +279,218 @@ main > section {
   margin: 28px 0;
 }
 
+.mw-floorplan-section {
+  background:
+    radial-gradient(circle at 12% 16%, rgba(81, 193, 147, 0.14), transparent 24rem),
+    linear-gradient(180deg, #ffffff 0%, #f3f8fa 100%);
+}
+
+.mw-floorplan-layout {
+  display: grid;
+  width: min(100%, var(--mw-max));
+  gap: 28px;
+  margin: 0 auto;
+}
+
+.mw-floorplan-copy {
+  max-width: 760px;
+}
+
+.mw-floorplan-copy p:last-child {
+  max-width: 680px;
+  color: var(--mw-muted);
+  font-size: clamp(1rem, 2vw, 1.08rem);
+}
+
+.mw-floorplan-stage {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(12, 75, 128, 0.14);
+  border-radius: 24px;
+  background: #e7e2dc;
+  box-shadow: var(--mw-shadow-soft);
+}
+
+.mw-floorplan-stage img {
+  width: 100%;
+  height: auto;
+}
+
+.mw-floorplan-hotspot {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  z-index: 2;
+  display: grid;
+  width: clamp(38px, 4.8vw, 58px);
+  height: clamp(38px, 4.8vw, 58px);
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: var(--mw-blue);
+  box-shadow: 0 12px 26px rgba(12, 75, 128, 0.32);
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+}
+
+.mw-floorplan-hotspot::before,
+.mw-floorplan-hotspot::after {
+  position: absolute;
+  border-radius: 50%;
+  content: "";
+}
+
+.mw-floorplan-hotspot::before {
+  inset: -8px;
+  border: 2px solid rgba(12, 75, 128, 0.18);
+  animation: mw-hotspot-pulse 2.4s ease-out infinite;
+}
+
+.mw-floorplan-hotspot::after {
+  width: 38%;
+  height: 38%;
+  border: 2px solid var(--mw-white);
+  background: var(--mw-white);
+  box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.18);
+}
+
+.mw-floorplan-hotspot:hover {
+  background: var(--mw-pink);
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.mw-floorplan-hotspot:focus-visible {
+  outline: 3px solid var(--mw-orange);
+  outline-offset: 5px;
+}
+
+.mw-floorplan-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  min-height: 100dvh;
+  place-items: center;
+  padding: 20px;
+}
+
+.mw-floorplan-modal[hidden] {
+  display: none;
+}
+
+.mw-floorplan-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 36, 62, 0.62);
+  backdrop-filter: blur(8px);
+}
+
+.mw-floorplan-dialog {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: min(100%, 720px);
+  max-height: min(86dvh, 760px);
+  overflow: auto;
+  border-radius: 24px;
+  background: var(--mw-white);
+  box-shadow: 0 34px 90px rgba(5, 36, 62, 0.36);
+}
+
+.mw-floorplan-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(12, 75, 128, 0.08);
+  color: var(--mw-blue-dark);
+  cursor: pointer;
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.mw-floorplan-modal-close:hover {
+  background: var(--mw-blue);
+  color: var(--mw-white);
+}
+
+.mw-floorplan-modal-media {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--mw-blue-pale);
+}
+
+.mw-floorplan-modal-media[hidden] {
+  display: none;
+}
+
+.mw-floorplan-modal-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mw-floorplan-modal-body {
+  padding: 34px;
+}
+
+.mw-floorplan-modal-kicker {
+  margin-bottom: 10px;
+  color: var(--mw-pink-dark);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.mw-floorplan-modal-body h3 {
+  padding-right: 40px;
+}
+
+.mw-floorplan-modal-body ul {
+  display: grid;
+  gap: 10px;
+  margin: 22px 0 24px;
+  padding: 0;
+  list-style: none;
+}
+
+.mw-floorplan-modal-body li {
+  position: relative;
+  padding-left: 24px;
+  color: #405056;
+}
+
+.mw-floorplan-modal-body li::before {
+  position: absolute;
+  top: 0.72em;
+  left: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--mw-green);
+  content: "";
+}
+
+@keyframes mw-hotspot-pulse {
+  0% {
+    opacity: 0.8;
+    transform: scale(0.72);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.45);
+  }
+}
+
 #hero {
   min-height: 100svh;
   padding-top: 112px;
@@ -1571,6 +1783,11 @@ form button {
     opacity: 1 !important;
     transform: none !important;
   }
+
+  .mw-floorplan-hotspot,
+  .mw-floorplan-hotspot::before {
+    animation: none !important;
+  }
 }
 
 .mw-motion-ready .mw-reveal:not(.mw-reveal-stagger) {
@@ -1749,6 +1966,38 @@ form button {
             <span>Polistudio sanitario</span>
           </div>
           <span class="mw-hero-line" aria-hidden="true"></span>
+        </div>
+      </div>
+    </section>
+
+    <section id="piantina" class="mw-floorplan-section" aria-labelledby="piantina-title">
+      <div class="mw-section-shell">
+        <div class="mw-floorplan-layout mw-reveal">
+          <div class="mw-floorplan-copy">
+            <p class="mw-section-index"><span>00</span> Esplora gli spazi</p>
+            <h2 id="piantina-title">Esplora gli spazi MediWell</h2>
+            <p>Clicca sui punti della piantina per scoprire studi, aree di accesso e spazi di supporto del polistudio.</p>
+          </div>
+
+          <figure class="mw-floorplan-stage" aria-label="Piantina interattiva degli spazi MediWell">
+            <img
+              src="assets/mediwell/senza-puntini-blu.png"
+              alt="Piantina dall'alto degli spazi MediWell"
+              width="1672"
+              height="941"
+              loading="lazy"
+              decoding="async"
+            >
+            <button class="mw-floorplan-hotspot" type="button" style="--x: 13.7%; --y: 58.4%;" data-floorplan-area="studio-1" aria-label="Apri dettagli: Studio 1"></button>
+            <button class="mw-floorplan-hotspot" type="button" style="--x: 13.8%; --y: 20.4%;" data-floorplan-area="studio-2" aria-label="Apri dettagli: Studio 2"></button>
+            <button class="mw-floorplan-hotspot" type="button" style="--x: 34.5%; --y: 20.4%;" data-floorplan-area="sala-aspetto" aria-label="Apri dettagli: Sala aspetto"></button>
+            <button class="mw-floorplan-hotspot" type="button" style="--x: 57.2%; --y: 15.2%;" data-floorplan-area="studio-3" aria-label="Apri dettagli: Studio 3"></button>
+            <button class="mw-floorplan-hotspot" type="button" style="--x: 83.2%; --y: 25.5%;" data-floorplan-area="studio-4" aria-label="Apri dettagli: Studio 4"></button>
+            <button class="mw-floorplan-hotspot" type="button" style="--x: 78.1%; --y: 61.1%;" data-floorplan-area="studio-5" aria-label="Apri dettagli: Studio 5"></button>
+            <button class="mw-floorplan-hotspot" type="button" style="--x: 88.9%; --y: 70.5%;" data-floorplan-area="entrata-disabili" aria-label="Apri dettagli: Entrata disabili"></button>
+            <button class="mw-floorplan-hotspot" type="button" style="--x: 9.0%; --y: 84.7%;" data-floorplan-area="ingresso" aria-label="Apri dettagli: Ingresso"></button>
+            <button class="mw-floorplan-hotspot" type="button" style="--x: 44.1%; --y: 85.3%;" data-floorplan-area="spogliatoi" aria-label="Apri dettagli: Spogliatoi"></button>
+          </figure>
         </div>
       </div>
     </section>
@@ -2008,6 +2257,21 @@ form button {
         </div>
       </div>
     </section>
+
+    <div class="mw-floorplan-modal" id="floorplan-modal" role="dialog" aria-modal="true" aria-labelledby="floorplan-modal-title" hidden>
+      <div class="mw-floorplan-backdrop" data-floorplan-close></div>
+      <article class="mw-floorplan-dialog">
+        <button class="mw-floorplan-modal-close" type="button" aria-label="Chiudi dettagli" data-floorplan-close>&times;</button>
+        <div class="mw-floorplan-modal-media" id="floorplan-modal-media" hidden></div>
+        <div class="mw-floorplan-modal-body">
+          <p class="mw-floorplan-modal-kicker" id="floorplan-modal-kicker">Spazio MediWell</p>
+          <h3 id="floorplan-modal-title"></h3>
+          <p id="floorplan-modal-description"></p>
+          <ul id="floorplan-modal-features"></ul>
+          <a class="mw-text-link" href="#interesse" data-floorplan-close>Richiedi informazioni <span>→</span></a>
+        </div>
+      </article>
+    </div>
   </main>
 
   <footer class="mw-footer" aria-label="Footer MediWell">
@@ -2095,6 +2359,182 @@ form button {
 
       updateCountdown();
       setInterval(updateCountdown, 1000);
+    })();
+
+    (function () {
+      var floorplanAreas = {
+        'studio-1': {
+          title: 'Studio 1',
+          description: 'Uno spazio riservato e pronto all\'uso, pensato per visite, consulenze e attività professionali a giornata.',
+          features: [
+            'Ambiente ordinato e igienizzato prima dell\'utilizzo',
+            'Lavabo e superfici pratiche per il lavoro quotidiano',
+            'Privacy per professionista e paziente'
+          ],
+          image: null
+        },
+        'studio-2': {
+          title: 'Studio 2',
+          description: 'Studio indipendente e silenzioso, ideale per accogliere il paziente in un contesto curato e professionale.',
+          features: [
+            'Spazio pronto all\'uso senza investimento iniziale',
+            'Pareti lavabili e dotazioni essenziali già previste',
+            'Configurazione pensata per attività sanitarie e benessere'
+          ],
+          image: null
+        },
+        'sala-aspetto': {
+          title: 'Sala aspetto',
+          description: 'Area comune dedicata all\'accoglienza, pensata per dare al paziente un primo contatto ordinato e tranquillo.',
+          features: [
+            'Punto di attesa comodo prima della visita',
+            'Flusso semplice verso gli studi',
+            'Immagine professionale fin dall\'arrivo'
+          ],
+          image: null
+        },
+        'studio-3': {
+          title: 'Studio 3',
+          description: 'Ambiente operativo pronto per prenotazioni a giornata, con impostazione flessibile per diverse specializzazioni.',
+          features: [
+            'Uso autonomo nella giornata prenotata',
+            'Spazio riservato per visite e consulenze',
+            'Gestione smart collegata al sistema MediWell'
+          ],
+          image: null
+        },
+        'studio-4': {
+          title: 'Studio 4',
+          description: 'Studio separato dagli spazi comuni, progettato per lavorare con discrezione e continuita durante la giornata.',
+          features: [
+            'Privacy e separazione dagli altri ambienti',
+            'Lavabo integrato nella stanza',
+            'Ambiente consegnato ordinato e pronto all\'uso'
+          ],
+          image: null
+        },
+        'studio-5': {
+          title: 'Studio 5',
+          description: 'Stanza ampia e funzionale, collegata al percorso di accesso e adatta a una gestione professionale indipendente.',
+          features: [
+            'Accesso pratico dagli spazi di distribuzione',
+            'Dotazioni essenziali incluse nella formula',
+            'Contesto curato per professionista e paziente'
+          ],
+          image: null
+        },
+        'entrata-disabili': {
+          title: 'Entrata disabili',
+          description: 'Accesso dedicato per semplificare l\'arrivo delle persone con esigenze di mobilità e rendere più diretto il percorso interno.',
+          features: [
+            'Ingresso funzionale al percorso di accesso',
+            'Orientamento immediato verso gli spazi interni',
+            'Maggiore comodità per pazienti e accompagnatori'
+          ],
+          image: null
+        },
+        'ingresso': {
+          title: 'Ingresso',
+          description: 'Il punto di arrivo principale del polistudio, pensato per indirizzare in modo chiaro verso sala aspetto, studi e aree di servizio.',
+          features: [
+            'Ingresso riconoscibile e ordinato',
+            'Collegamento diretto con il percorso interno',
+            'Primo contatto coerente con l\'immagine MediWell'
+          ],
+          image: null
+        },
+        'spogliatoi': {
+          title: 'Spogliatoi',
+          description: 'Area di supporto utile per preparazione, cambio e organizzazione delle attività legate alla giornata di lavoro.',
+          features: [
+            'Spazio funzionale a supporto degli studi',
+            'Percorso separato dalle stanze principali',
+            'Maggiore ordine nella gestione della giornata'
+          ],
+          image: null
+        }
+      };
+
+      var modal = document.getElementById('floorplan-modal');
+      var media = document.getElementById('floorplan-modal-media');
+      var title = document.getElementById('floorplan-modal-title');
+      var description = document.getElementById('floorplan-modal-description');
+      var features = document.getElementById('floorplan-modal-features');
+      var lastTrigger = null;
+
+      if (!modal || !media || !title || !description || !features) {
+        return;
+      }
+
+      function renderImage(image) {
+        media.innerHTML = '';
+
+        if (!image || !image.src || !image.alt) {
+          media.hidden = true;
+          return;
+        }
+
+        var img = document.createElement('img');
+        img.src = image.src;
+        img.alt = image.alt;
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        media.appendChild(img);
+        media.hidden = false;
+      }
+
+      function openModal(areaKey, trigger) {
+        var area = floorplanAreas[areaKey];
+
+        if (!area) {
+          return;
+        }
+
+        lastTrigger = trigger;
+        title.textContent = area.title;
+        description.textContent = area.description;
+        features.innerHTML = '';
+
+        area.features.forEach(function (feature) {
+          var item = document.createElement('li');
+          item.textContent = feature;
+          features.appendChild(item);
+        });
+
+        renderImage(area.image);
+        modal.hidden = false;
+        document.body.style.overflow = 'hidden';
+        modal.querySelector('.mw-floorplan-modal-close').focus();
+      }
+
+      function closeModal() {
+        if (modal.hidden) {
+          return;
+        }
+
+        modal.hidden = true;
+        document.body.style.overflow = '';
+
+        if (lastTrigger && typeof lastTrigger.focus === 'function') {
+          lastTrigger.focus();
+        }
+      }
+
+      document.querySelectorAll('[data-floorplan-area]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          openModal(button.getAttribute('data-floorplan-area'), button);
+        });
+      });
+
+      modal.querySelectorAll('[data-floorplan-close]').forEach(function (control) {
+        control.addEventListener('click', closeModal);
+      });
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+          closeModal();
+        }
+      });
     })();
 
     (function () {

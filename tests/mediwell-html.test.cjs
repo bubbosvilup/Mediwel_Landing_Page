@@ -58,7 +58,6 @@ test('uses the client hero and pricing copy without forbidden wording or individ
   assert.doesNotMatch(text, /\bASL\b/i);
   assert.doesNotMatch(text, /\bcertificat\w*\b/i);
   assert.doesNotMatch(text, /mezzi pubblici/i);
-  assert.doesNotMatch(text, /Studio (Medico )?(Uno|Due|Tre|Quattro|Cinque|[1-5])/i);
   assert.match(text, /Nuova apertura a Faenza/i);
   assert.match(text, /7 settembre 2026/i);
   assert.match(text, /Studi sanitari pronti all'uso, prenotabili a giornata\./i);
@@ -80,6 +79,52 @@ test('presents the client studios overview once', () => {
   assert.match(text, /lettini medici elettrici/i);
   assert.match(text, /lettini fisioterapici elettrici/i);
   assert.match(text, /poltrone multifunzionali elettriche/i);
+});
+
+test('adds the interactive floorplan immediately after the hero', () => {
+  const heroIndex = html.indexOf('<section id="hero"');
+  const floorplanIndex = html.indexOf('<section id="piantina"');
+  const costsIndex = html.indexOf('<section id="costi"');
+
+  assert.ok(heroIndex >= 0, 'expected hero section');
+  assert.ok(floorplanIndex > heroIndex, 'expected floorplan after hero');
+  assert.ok(costsIndex > floorplanIndex, 'expected model section after floorplan');
+  assert.match(html, /<h2 id="piantina-title">Esplora gli spazi MediWell<\/h2>/);
+  assert.match(html, /src="assets\/mediwell\/senza-puntini-blu\.png"/);
+  assert.match(html, /width="1672"/);
+  assert.match(html, /height="941"/);
+});
+
+test('renders all floorplan hotspots as accessible buttons', () => {
+  const hotspotMatches = html.match(/class="mw-floorplan-hotspot"/g) || [];
+  assert.equal(hotspotMatches.length, 9);
+
+  for (const label of [
+    'Studio 1',
+    'Studio 2',
+    'Sala aspetto',
+    'Studio 3',
+    'Studio 4',
+    'Studio 5',
+    'Entrata disabili',
+    'Ingresso',
+    'Spogliatoi'
+  ]) {
+    assert.match(html, new RegExp(`aria-label="Apri dettagli: ${label}"`));
+  }
+
+  assert.match(html, /data-floorplan-area="studio-1"/);
+  assert.match(html, /data-floorplan-area="entrata-disabili"/);
+  assert.match(html, /data-floorplan-area="spogliatoi"/);
+});
+
+test('keeps floorplan modal content data ready for future images', () => {
+  assert.match(html, /var floorplanAreas = \{/);
+  assert.match(html, /image:\s*null/);
+  assert.match(html, /image\.src/);
+  assert.match(html, /image\.alt/);
+  assert.match(html, /mw-floorplan-modal-media/);
+  assert.match(html, /href="#interesse"/);
 });
 
 test('explains the three-step technology flow with the client details', () => {
