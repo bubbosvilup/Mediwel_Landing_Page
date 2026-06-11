@@ -168,6 +168,57 @@ test('keeps hero and launch typography within the refined layout bounds', async 
   );
 });
 
+test('keeps footer social icons centered inside the mobile card', async () => {
+  const page = await browser.newPage({ viewport: { width: 360, height: 900 } });
+  await page.goto(baseUrl, { waitUntil: 'networkidle' });
+
+  const footer = await page.evaluate(() => {
+    const grid = document.querySelector('.mw-footer-grid').getBoundingClientRect();
+    const social = document.querySelector('.mw-footer-social').getBoundingClientRect();
+    const links = Array.from(document.querySelectorAll('.mw-social-link')).map((link) => {
+      const box = link.getBoundingClientRect();
+      return {
+        left: box.left,
+        right: box.right,
+        width: box.width
+      };
+    });
+
+    return {
+      viewportWidth: window.innerWidth,
+      documentWidth: document.documentElement.scrollWidth,
+      grid: {
+        left: grid.left,
+        right: grid.right,
+        center: grid.left + grid.width / 2
+      },
+      social: {
+        left: social.left,
+        right: social.right,
+        center: social.left + social.width / 2,
+        width: social.width
+      },
+      links
+    };
+  });
+
+  await page.close();
+
+  assert.equal(footer.documentWidth, footer.viewportWidth);
+  assert.ok(footer.social.left >= footer.grid.left, `social left ${footer.social.left} < grid left ${footer.grid.left}`);
+  assert.ok(footer.social.right <= footer.grid.right, `social right ${footer.social.right} > grid right ${footer.grid.right}`);
+  assert.ok(
+    Math.abs(footer.social.center - footer.grid.center) <= 1,
+    `social center ${footer.social.center} not aligned to grid center ${footer.grid.center}`
+  );
+
+  for (const link of footer.links) {
+    assert.ok(link.left >= footer.grid.left, `link left ${link.left} < grid left ${footer.grid.left}`);
+    assert.ok(link.right <= footer.grid.right, `link right ${link.right} > grid right ${footer.grid.right}`);
+    assert.equal(link.width, 46);
+  }
+});
+
 test('disables reveal transitions when reduced motion is requested', async () => {
   const page = await browser.newPage({
     viewport: { width: 390, height: 844 },

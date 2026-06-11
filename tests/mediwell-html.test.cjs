@@ -44,6 +44,12 @@ test('keeps HTML CSS and safe JavaScript embedded in one WordPress-compatible pa
   assert.match(css, /@keyframes\s+mw-footer-drift-a/i);
   assert.doesNotMatch(html, /mw-footer-bubbles|mw-bubble|float-bubble/i);
   assert.doesNotMatch(html, /Ã|Â|â|�/);
+  assert.match(html, /Email:\s*<a href="mailto:info@mediwell\.it">info@mediwell\.it<\/a>/);
+  assert.match(html, /Pec:\s*<a href="mailto:meeby@pec\.it">meeby@pec\.it<\/a>/);
+  assert.match(html, /Servizio Clienti:\s*<a href="tel:\+393930593500">\+39 393 059 3500<\/a>/);
+  assert.match(text, /P\.IVA: 02550260398/);
+  assert.match(text, /R\.Imprese: RA212065/);
+  assert.match(text, /Sede operativa Via Fornarina, 12\/D, 48018 Faenza RA, Italia/);
   assert.match(html, /COLORI PRINCIPALI DEL DESIGN PRECEDENTE/);
 });
 
@@ -54,7 +60,7 @@ test('uses the client hero and pricing copy without forbidden wording or individ
   assert.doesNotMatch(text, /mezzi pubblici/i);
   assert.doesNotMatch(text, /Studio (Medico )?(Uno|Due|Tre|Quattro|Cinque|[1-5])/i);
   assert.match(text, /Nuova apertura a Faenza/i);
-  assert.match(text, /2 settembre 2026/i);
+  assert.match(text, /7 settembre 2026/i);
   assert.match(text, /Studi sanitari pronti all'uso, prenotabili a giornata\./i);
   assert.match(html, /class="mw-kicker"[\s\S]*?<strong>Nuova apertura a Faenza<\/strong>/i);
   assert.doesNotMatch(text, /: ottimizza i costi, azzera gli sprechi e blocca la tua giornata ideale prima del lancio ufficiale/i);
@@ -89,30 +95,26 @@ test('explains the three-step technology flow with the client details', () => {
   assert.match(text, /citofono privato collegato alla tua stanza/i);
 });
 
-test('keeps the parking message and the September 2 2026 launch countdown', () => {
+test('keeps the parking message and the September 7 2026 launch countdown', () => {
   assert.match(text, /Dove siamo: posizione strategica a Faenza senza stress da parcheggio/i);
   assert.match(text, /Via Fornarina 12\/D a Faenza/i);
   assert.match(text, /100 metri/i);
   assert.match(text, /parcheggio ampio e completamente gratuito/i);
-  assert.match(text, /2 settembre 2026/i);
-  assert.match(html, /2026-09-02T07:00:00\+02:00/);
+  assert.match(text, /7 settembre 2026/i);
+  assert.match(html, /<p class="mw-header-meta">Faenza <span>07\.09\.26<\/span><\/p>/i);
+  assert.match(html, /<h2 id="lancio-title">07<span>\.<\/span>09<span>\.<\/span>26<\/h2>/i);
+  assert.match(html, /2026-09-07T07:00:00\+02:00/);
   assert.match(text, /all'Apertura Ufficiale/i);
 });
 
-test('keeps WhatsApp outside the demonstrative required-fields form', () => {
-  const form = html.match(/<form\b[\s\S]*?<\/form>/i)?.[0] || '';
-  assert.ok(form, 'expected a form element');
-  assert.doesNotMatch(form, /wa\.me/i);
+test('uses the Fluent Forms shortcode instead of the old demonstrative form', () => {
   assert.match(html, /wa\.me\/393930593500/i);
-  assert.match(form, /name="nome-cognome"[\s\S]*?required/i);
-  assert.match(form, /name="professione"[\s\S]*?required/i);
-  assert.match(form, /name="telefono"[\s\S]*?required/i);
-  assert.match(form, /name="email"[\s\S]*?required/i);
-  assert.match(form, /name="privacy"[\s\S]*?required/i);
-  assert.match(form, /Compila il modulo per bloccare la tua precedenza/i);
-  assert.match(form, /Professione o Specializzazione/i);
-  assert.match(form, /Numero di Telefono o WhatsApp/i);
-  assert.match(html, /data-demo="true"/);
+  assert.match(html, /<div class="mw-fluent-form-shell mw-reveal mw-reveal-right">\s*\[fluentform id="2"\]\s*<\/div>/i);
+  assert.match(css, /label\s*\{[\s\S]*text-transform:\s*uppercase[\s\S]*\}/i);
+  assert.match(css, /\.mw-fluent-form-shell\s+label\s*\{[\s\S]*text-transform:\s*none/i);
+  assert.doesNotMatch(html, /<form\b/i);
+  assert.doesNotMatch(html, /id="interest-form"|data-demo="true"|id="form-success"|nome-cognome/i);
+  assert.doesNotMatch(html, /document\.getElementById\('interest-form'\)/);
 });
 
 test('keeps the WhatsApp contact fixed when embedded inside WordPress content', () => {
