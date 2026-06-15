@@ -8,6 +8,7 @@ const text = html.replace(/\s+/g, ' ');
 const cssPath = resolve(__dirname, '..', 'styles', 'mediwell-premium-balanced.css');
 const css = html.match(/<style id="mediwell-styles">([\s\S]*?)<\/style>/i)?.[1] || '';
 const stylesDir = resolve(__dirname, '..', 'styles');
+const rootDir = resolve(__dirname, '..');
 
 function collectCssFiles(dir) {
   if (!existsSync(dir)) {
@@ -249,4 +250,60 @@ test('uses the official logo and optimized remote photography markup', () => {
   assert.match(benefitsPhoto, /src="https:\/\/mediwell\.it\/wp-content\/uploads\/2026\/06\/attaccapanni_1500x1500\.jpeg"/);
   assert.match(benefitsPhoto, /loading="lazy"/);
   assert.match(benefitsPhoto, /decoding="async"/);
+});
+
+test('keeps studio pages complete and internal page links normalized', () => {
+  const pageSlugs = [
+    'chi-siamo',
+    'come-funziona',
+    'contatti',
+    'cookie-policy',
+    'faq',
+    'homepage',
+    'prenota',
+    'privacy-policy',
+    'studi-medici',
+    'studio-uno',
+    'studio-due',
+    'studio-tre',
+    'studio-quattro',
+    'studio-cinque',
+    'termini-e-condizioni'
+  ];
+
+  const allHtmlFiles = [
+    'index.html',
+    ...pageSlugs.map((slug) => `${slug}.html`)
+  ];
+
+  for (const fileName of allHtmlFiles) {
+    const pageHtml = readFileSync(resolve(rootDir, fileName), 'utf8');
+    assert.doesNotMatch(
+      pageHtml,
+      new RegExp(`href="/(?:${pageSlugs.join('|')})"`),
+      `${fileName} has an internal page link without trailing slash`
+    );
+    assert.doesNotMatch(
+      pageHtml,
+      /https:\/\/mediwell\.it\/wp-content\/uploads\/2026\/04\/https:\/\//,
+      `${fileName} has a duplicated remote image URL`
+    );
+  }
+
+  for (const [fileName, studioName, studioNumber] of [
+    ['studio-due.html', 'Studio Due', '02'],
+    ['studio-tre.html', 'Studio Tre', '03'],
+    ['studio-quattro.html', 'Studio Quattro', '04'],
+    ['studio-cinque.html', 'Studio Cinque', '05']
+  ]) {
+    const studioHtml = readFileSync(resolve(rootDir, fileName), 'utf8');
+    assert.match(studioHtml, /<div class="mw-studio-product">/);
+    assert.match(studioHtml, new RegExp(`<h1>${studioName}</h1>`));
+    assert.match(studioHtml, new RegExp(`Calendario Studio ${studioNumber}`));
+    assert.match(studioHtml, /<section id="prenota-studio" class="mw-booking-section">/);
+    assert.match(studioHtml, /<button class="mw-tab active" type="button" data-tab="descrizione">Descrizione<\/button>/);
+    assert.match(studioHtml, /<footer class="mw-footer" aria-label="Footer MediWell">/);
+    assert.match(studioHtml, /document\.addEventListener\("DOMContentLoaded"/);
+    assert.equal((studioHtml.match(/class="mw-related-card"/g) || []).length, 4);
+  }
 });
