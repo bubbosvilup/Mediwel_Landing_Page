@@ -1,0 +1,961 @@
+<section class="mw-policy-page">
+  <style>
+    .mw-policy-page {
+      --mw-blue: #0c4b80;
+      --mw-blue-dark: #062d52;
+      --mw-blue-ink: #05243e;
+      --mw-blue-pale: #eaf3f7;
+      --mw-white: #ffffff;
+      --mw-green: #51c193;
+      --mw-pink-dark: #9b345e;
+      --mw-pink: #c1517f;
+      --mw-mint: #51c193;
+      --mw-orange: #e67e22;
+      --mw-purple: #715fa3;
+      --mw-bg: #f8f9fa;
+      --mw-text: #2d3436;
+      --mw-muted: #636e72;
+      --mw-border: rgba(12, 75, 128, 0.12);
+      --mw-shadow: 0 18px 45px rgba(12, 75, 128, 0.08);
+      --mw-max: 1240px;
+
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--mw-bg);
+      color: var(--mw-text);
+      line-height: 1.65;
+      padding: 0;
+      margin: 0;
+    }
+
+    .mw-policy-page * {
+      box-sizing: border-box;
+    }
+
+    .mw-policy-hero {
+      background:
+        radial-gradient(circle at top left, rgba(193, 81, 127, 0.16), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(81, 193, 147, 0.18), transparent 34%),
+        linear-gradient(135deg, #ffffff 0%, #f8f9fa 55%, #edf6fb 100%);
+      padding: 86px 20px 58px;
+      border-bottom: 1px solid var(--mw-border);
+    }
+
+    .mw-policy-container {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .mw-policy-kicker {
+      color: var(--mw-pink);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .mw-policy-hero h1 {
+      color: var(--mw-blue);
+      font-size: clamp(38px, 6vw, 72px);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      margin: 0 0 22px;
+      font-weight: 900;
+      max-width: 850px;
+    }
+
+    .mw-policy-hero p {
+      max-width: 780px;
+      margin: 0;
+      font-size: clamp(17px, 2vw, 20px);
+      color: var(--mw-muted);
+    }
+
+    .mw-policy-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .mw-policy-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      background: #ffffff;
+      border: 1px solid var(--mw-border);
+      border-radius: 999px;
+      color: var(--mw-blue);
+      font-weight: 750;
+      font-size: 14px;
+      box-shadow: 0 8px 24px rgba(12, 75, 128, 0.06);
+    }
+
+    .mw-policy-layout {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      gap: 34px;
+      padding: 46px 0 80px;
+    }
+
+    .mw-policy-toc {
+      position: sticky;
+      top: 24px;
+      align-self: start;
+      background: #ffffff;
+      border: 1px solid var(--mw-border);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: var(--mw-shadow);
+    }
+
+    .mw-policy-toc-title {
+      color: var(--mw-blue);
+      font-size: 15px;
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    .mw-policy-toc a {
+      display: block;
+      color: var(--mw-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 650;
+      padding: 9px 0;
+      border-top: 1px solid rgba(12, 75, 128, 0.08);
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .mw-policy-toc a:hover {
+      color: var(--mw-pink);
+      transform: translateX(4px);
+    }
+
+    .mw-policy-content {
+      display: grid;
+      gap: 22px;
+    }
+
+    .mw-policy-card {
+      background: #ffffff;
+      border: 1px solid var(--mw-border);
+      border-radius: 26px;
+      padding: clamp(24px, 4vw, 38px);
+      box-shadow: var(--mw-shadow);
+    }
+
+    .mw-policy-card h2 {
+      color: var(--mw-blue);
+      font-size: clamp(25px, 3vw, 36px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin: 0 0 18px;
+      font-weight: 900;
+    }
+
+    .mw-policy-card h3 {
+      color: var(--mw-blue);
+      font-size: 20px;
+      margin: 28px 0 10px;
+      font-weight: 850;
+    }
+
+    .mw-policy-card p {
+      margin: 0 0 14px;
+      color: var(--mw-text);
+      font-size: 16px;
+    }
+
+    .mw-policy-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .mw-policy-card ul {
+      margin: 12px 0 0;
+      padding-left: 20px;
+    }
+
+    .mw-policy-card li {
+      margin: 8px 0;
+      color: var(--mw-text);
+      font-size: 16px;
+    }
+
+    .mw-policy-note {
+      border-left: 5px solid var(--mw-pink);
+      background: rgba(193, 81, 127, 0.07);
+      padding: 18px 20px;
+      border-radius: 18px;
+      margin-top: 18px;
+    }
+
+    .mw-policy-table-wrap {
+      overflow-x: auto;
+      margin-top: 18px;
+      border-radius: 18px;
+      border: 1px solid var(--mw-border);
+    }
+
+    .mw-policy-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+      background: #ffffff;
+    }
+
+    .mw-policy-table th,
+    .mw-policy-table td {
+      text-align: left;
+      padding: 15px 16px;
+      border-bottom: 1px solid rgba(12, 75, 128, 0.1);
+      vertical-align: top;
+      font-size: 15px;
+    }
+
+    .mw-policy-table th {
+      color: #ffffff;
+      background: var(--mw-blue);
+      font-weight: 850;
+    }
+
+    .mw-policy-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .mw-policy-badge {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: rgba(81, 193, 147, 0.14);
+      color: #267b5e;
+      font-weight: 800;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .mw-policy-badge.consent {
+      background: rgba(193, 81, 127, 0.13);
+      color: var(--mw-pink);
+    }
+
+    .mw-policy-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .mw-policy-button {
+      appearance: none;
+      border: 0;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-weight: 850;
+      font-size: 15px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .mw-policy-button.primary {
+      background: var(--mw-blue);
+      color: #ffffff;
+      box-shadow: 0 14px 28px rgba(12, 75, 128, 0.2);
+    }
+
+    .mw-policy-button.secondary {
+      background: rgba(12, 75, 128, 0.08);
+      color: var(--mw-blue);
+    }
+
+    .mw-policy-button:hover {
+      transform: translateY(-2px);
+    }
+    .mw-policy-footer {
+      background: #ffffff;
+      border-top: 1px solid var(--mw-border);
+      padding: 34px 20px;
+      color: var(--mw-muted);
+      font-size: 14px;
+    }
+
+    .mw-policy-footer strong {
+      color: var(--mw-blue);
+    }
+
+    @media (max-width: 920px) {
+      .mw-policy-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .mw-policy-toc {
+        position: relative;
+        top: auto;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .mw-policy-container {
+        width: min(100% - 32px, 1120px);
+      }
+
+      .mw-policy-hero {
+        padding: 64px 16px 42px;
+      }
+
+      .mw-policy-layout {
+        padding: 30px 0 58px;
+      }
+
+      .mw-policy-card {
+        border-radius: 22px;
+      }
+
+      .mw-policy-actions {
+        flex-direction: column;
+      }
+
+      .mw-policy-button {
+        width: 100%;
+      }
+    }
+  
+/* MediWell canonical animated footer */
+.mw-footer,
+.mw-footer * {
+  box-sizing: border-box;
+}
+
+.mw-footer {
+  font-family: "Aptos", "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+  position: relative;
+  padding: 68px 20px 32px;
+  background:
+    radial-gradient(circle at top left, rgba(81, 193, 147, 0.18), transparent 24%),
+    radial-gradient(circle at 92% 12%, rgba(193, 81, 127, 0.18), transparent 22%),
+    linear-gradient(180deg, #0c4b80 0%, #05243e 100%);
+  color: #eef3f8;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.mw-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), transparent 35%);
+  pointer-events: none;
+}
+
+.mw-footer-orbits {
+  position: absolute;
+  inset: -18% -8%;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.mw-footer-orb {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.24), transparent 30%),
+    linear-gradient(135deg, var(--mw-orb-color), transparent 74%);
+  filter: blur(0.5px);
+  mix-blend-mode: screen;
+  opacity: 0.74;
+  transform: translate3d(0, 0, 0) rotate(var(--mw-orb-rotate, 0deg));
+}
+
+.mw-footer-orb-1 {
+  --mw-orb-color: rgba(81, 193, 147, 0.26);
+  --mw-orb-rotate: -12deg;
+  top: 2%;
+  left: 5%;
+  width: 210px;
+  height: 210px;
+}
+
+.mw-footer-orb-2 {
+  --mw-orb-color: rgba(193, 81, 127, 0.24);
+  --mw-orb-rotate: 18deg;
+  top: 10%;
+  right: 7%;
+  width: 240px;
+  height: 240px;
+}
+
+.mw-footer-orb-3 {
+  --mw-orb-color: rgba(84, 151, 194, 0.2);
+  --mw-orb-rotate: 8deg;
+  right: 34%;
+  bottom: -5%;
+  width: 190px;
+  height: 190px;
+  opacity: 0.55;
+}
+
+.mw-footer-orb-4 {
+  --mw-orb-color: rgba(248, 209, 224, 0.2);
+  --mw-orb-rotate: -24deg;
+  bottom: 8%;
+  left: 19%;
+  width: 140px;
+  height: 140px;
+  opacity: 0.5;
+}
+
+.mw-footer-inner {
+  position: relative;
+  display: grid;
+  gap: 28px;
+  z-index: 1;
+  width: min(100%, var(--mw-max, 1120px));
+  max-width: var(--mw-max, 1120px);
+  margin: 0 auto;
+}
+
+.mw-footer-grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: minmax(240px, 1fr) auto minmax(240px, 1fr);
+  align-items: center;
+  padding: 36px 32px;
+  border-radius: 32px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 30px 60px rgba(2, 19, 46, 0.14);
+}
+
+.mw-footer-block {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+.mw-footer-right {
+  text-align: right;
+}
+
+.mw-footer-block h3 {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #fdf8ff;
+}
+
+.mw-footer-follow {
+  display: inline-block;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.mw-footer-block p,
+.mw-footer-block a {
+  margin: 0;
+  color: rgba(238, 243, 248, 0.92);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  word-break: break-word;
+}
+
+.mw-footer-block a {
+  display: inline-block;
+  text-decoration: none;
+  transition: color 200ms ease, transform 200ms ease;
+}
+
+.mw-footer-block a:hover {
+  color: #f8d1e0;
+  transform: translateX(2px);
+}
+
+.mw-footer-left p {
+  max-width: 320px;
+}
+
+.mw-footer-center {
+  text-align: center;
+}
+
+.mw-footer-social {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 18px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 10px auto 0;
+}
+
+.mw-social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  text-decoration: none;
+  transition: transform 220ms ease, opacity 220ms ease;
+}
+
+.mw-social-icon-image {
+  display: block;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.mw-social-link:hover {
+  transform: translateY(-2px);
+  opacity: 0.85;
+}
+
+.mw-footer-note {
+  margin: 0;
+  color: rgba(238, 243, 248, 0.72);
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .mw-footer {
+    padding: 54px 18px 28px;
+  }
+
+  .mw-footer-grid {
+    grid-template-columns: 1fr;
+    padding: 26px;
+  }
+
+  .mw-footer-center,
+  .mw-footer-right,
+  .mw-footer-left p {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .mw-social-link {
+    width: 46px;
+    min-width: 46px;
+    max-width: 46px;
+  }
+}
+
+@media (max-width: 560px) {
+  .mw-footer {
+    padding: 42px 14px 24px;
+  }
+
+  .mw-footer-grid {
+    gap: 18px;
+    padding: 24px 20px;
+  }
+
+  .mw-social-link {
+    padding: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mw-footer a {
+    transition: transform 240ms ease, color 240ms ease, background-color 240ms ease;
+  }
+
+  .mw-footer-social a:hover {
+    transform: translateY(-2px);
+  }
+
+  .mw-footer-orb-1 {
+    animation: mw-footer-drift-a 18s ease-in-out infinite;
+  }
+
+  .mw-footer-orb-2 {
+    animation: mw-footer-drift-b 22s ease-in-out infinite;
+  }
+
+  .mw-footer-orb-3 {
+    animation: mw-footer-drift-c 26s ease-in-out infinite;
+  }
+
+  .mw-footer-orb-4 {
+    animation: mw-footer-drift-d 20s ease-in-out infinite;
+  }
+
+  @keyframes mw-footer-drift-a {
+    0%, 100% { transform: translate3d(0, 0, 0) rotate(-12deg) scale(1); }
+    45% { transform: translate3d(36px, -18px, 0) rotate(4deg) scale(1.05); }
+    70% { transform: translate3d(-18px, 28px, 0) rotate(-20deg) scale(0.98); }
+  }
+
+  @keyframes mw-footer-drift-b {
+    0%, 100% { transform: translate3d(0, 0, 0) rotate(18deg) scale(1); }
+    40% { transform: translate3d(-32px, 24px, 0) rotate(2deg) scale(1.04); }
+    72% { transform: translate3d(22px, -34px, 0) rotate(26deg) scale(0.96); }
+  }
+
+  @keyframes mw-footer-drift-c {
+    0%, 100% { transform: translate3d(0, 0, 0) rotate(8deg) scale(1); }
+    50% { transform: translate3d(26px, 22px, 0) rotate(-8deg) scale(1.06); }
+  }
+
+  @keyframes mw-footer-drift-d {
+    0%, 100% { transform: translate3d(0, 0, 0) rotate(-24deg) scale(1); }
+    48% { transform: translate3d(-24px, -20px, 0) rotate(-8deg) scale(1.08); }
+  }
+}
+/* End MediWell canonical animated footer */</style>
+
+  <header class="mw-policy-hero">
+    <div class="mw-policy-container">
+      <div class="mw-policy-kicker">Privacy e cookie</div>
+      <h1>Cookie Policy</h1>
+      <p>
+        Questa pagina spiega come MediWell utilizza cookie e tecnologie simili per far funzionare il sito,
+        migliorare i servizi, misurare il traffico e, solo con il consenso dell’utente, svolgere eventuali attività di marketing.
+      </p>
+
+      <div class="mw-policy-meta">
+        <span class="mw-policy-pill">Sito: mediwell.it</span>
+        <span class="mw-policy-pill">Ultimo aggiornamento: 13/06/2026</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="mw-policy-container">
+    <div class="mw-policy-layout">
+      <aside class="mw-policy-toc" aria-label="Indice Cookie Policy">
+        <div class="mw-policy-toc-title">Indice</div>
+        <a href="#cosa-sono">1. Cosa sono i cookie</a>
+        <a href="#categorie">2. Cookie utilizzati</a>
+        <a href="#servizi">3. Servizi e terze parti</a>
+        <a href="#consenso">4. Gestione del consenso</a>
+        <a href="#browser">5. Gestione da browser</a>
+        <a href="#aggiornamenti">6. Aggiornamenti</a>
+        <a href="#contatti">7. Contatti</a>
+      </aside>
+
+      <main class="mw-policy-content">
+        <article class="mw-policy-card" id="cosa-sono">
+          <h2>1. Cosa sono i cookie</h2>
+          <p>
+            I cookie sono piccoli file di testo che un sito può salvare sul dispositivo dell’utente durante la navigazione.
+            Tecnologie simili possono includere, ad esempio, pixel, tag, identificatori online, local storage e strumenti analoghi.
+          </p>
+          <p>
+            Questi strumenti possono servire a far funzionare correttamente il sito, ricordare preferenze,
+            raccogliere statistiche sull’utilizzo dei servizi o supportare attività di marketing, quando previste.
+          </p>
+        </article>
+
+        <article class="mw-policy-card" id="categorie">
+          <h2>2. Tipologie di cookie utilizzati</h2>
+          <p>
+            MediWell può utilizzare diverse categorie di cookie e tecnologie simili, in base alle funzionalità attive sul sito.
+          </p>
+
+          <div class="mw-policy-table-wrap">
+            <table class="mw-policy-table">
+              <thead>
+                <tr>
+                  <th>Categoria</th>
+                  <th>Finalità</th>
+                  <th>Consenso</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Cookie tecnici necessari</strong></td>
+                  <td>
+                    Permettono il corretto funzionamento del sito, la sicurezza, la navigazione tra le pagine,
+                    la gestione delle preferenze privacy e l’utilizzo delle funzioni essenziali.
+                  </td>
+                  <td><span class="mw-policy-badge">Non richiesto</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Cookie di funzionalità</strong></td>
+                  <td>
+                    Consentono di ricordare preferenze o impostazioni dell’utente e migliorare l’esperienza di navigazione.
+                  </td>
+                  <td><span class="mw-policy-badge consent">Richiesto se non necessari</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Cookie di misurazione e statistica</strong></td>
+                  <td>
+                    Aiutano a comprendere come viene utilizzato il sito, quali pagine vengono visitate,
+                    quali contenuti funzionano meglio e come migliorare i servizi offerti.
+                  </td>
+                  <td><span class="mw-policy-badge consent">Richiesto se non anonimizzati/tecnici</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Cookie di marketing</strong></td>
+                  <td>
+                    Possono essere usati per misurare campagne, proporre contenuti personalizzati,
+                    creare pubblici o supportare attività pubblicitarie.
+                  </td>
+                  <td><span class="mw-policy-badge consent">Richiesto</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="mw-policy-note">
+            <p>
+              I cookie non necessari vengono installati solo dopo il consenso dell’utente,
+              espresso tramite il banner o il pannello delle preferenze.
+            </p>
+          </div>
+        </article>
+
+        <article class="mw-policy-card" id="servizi">
+          <h2>3. Servizi e terze parti</h2>
+          <p>
+            Il sito MediWell può integrare servizi forniti da terze parti. Alcuni di questi servizi possono usare cookie,
+            tag, richieste a server esterni o tecnologie simili secondo le rispettive informative privacy e cookie.
+          </p>
+
+          <h3>Gestione consenso e preferenze cookie</h3>
+          <p>
+            Il sito utilizza iubenda Privacy Controls and Cookie Solution per mostrare il banner cookie,
+            raccogliere le preferenze dell’utente, registrare la prova tecnica del consenso e consentire la revoca o modifica delle scelte.
+            Questi strumenti sono necessari per adempiere agli obblighi relativi alla gestione del consenso.
+          </p>
+
+          <h3>Google Tag Manager</h3>
+          <p>
+            Google Tag Manager può essere utilizzato per gestire in modo centralizzato gli script presenti sul sito.
+            Il contenitore non dovrebbe attivare strumenti non necessari prima del consenso dell’utente, quando tale consenso è richiesto.
+          </p>
+
+          <h3>Google Analytics 4</h3>
+          <p>
+            Google Analytics 4 può essere utilizzato per statistiche aggregate sul traffico, sulle pagine visitate,
+            sulle interazioni e sulle prestazioni della landing. Quando non configurato come strumento tecnico/anonimizzato,
+            deve restare subordinato al consenso dell’utente.
+          </p>
+
+          <h3>Google Ads / Conversion Linker</h3>
+          <p>
+            Il sito può usare Google Ads, Google tag o Conversion Linker per misurare le conversioni derivanti dalle campagne,
+            collegando le interazioni dell’utente con le azioni compiute sul sito. Questi strumenti devono essere attivati solo previo consenso,
+            salvo configurazioni tecniche che non comportino tracciamento non necessario.
+          </p>
+
+          <h3>Google Maps</h3>
+          <p>
+            La landing può incorporare Google Maps per mostrare la posizione della struttura. Il caricamento della mappa può comportare
+            richieste ai server Google e il trattamento di dati tecnici, inclusi dati di utilizzo e informazioni sul dispositivo/browser.
+          </p>
+
+          <h3>Google Fonts</h3>
+          <p>
+            Google Fonts va indicato solo se il tema, WordPress, plugin o codice della pagina caricano caratteri dai domini
+            <strong>fonts.googleapis.com</strong> o <strong>fonts.gstatic.com</strong>. In tal caso il caricamento del font può comportare
+            richieste ai server Google e il trattamento di dati tecnici, come indirizzo IP e informazioni sul browser.
+          </p>
+          <div class="mw-policy-note">
+            <p>
+              Se i font sono locali o di sistema, questa voce può essere rimossa. Se restano font Google esterni,
+              valuta il caricamento locale per ridurre dipendenze e grattacapi privacy.
+            </p>
+          </div>
+
+          <h3>Fluent Forms / modulo contatto</h3>
+          <p>
+            Il modulo di contatto può raccogliere i dati inseriti dall’utente, come nome, email, telefono e messaggio,
+            per rispondere a richieste informative o commerciali. Eventuali cookie tecnici collegati al modulo devono essere limitati
+            al corretto funzionamento e alla sicurezza del form.
+          </p>
+
+          <h3>WhatsApp</h3>
+          <p>
+            Il sito può includere link o pulsanti verso WhatsApp. Finché l’utente non clicca il link, il semplice collegamento non dovrebbe
+            installare cookie di WhatsApp dal sito MediWell. Dopo il click, l’utente accede a un servizio esterno soggetto alle regole privacy di WhatsApp/Meta.
+          </p>
+
+          <h3>Facebook e Instagram</h3>
+          <p>
+            Il footer può includere link alle pagine social MediWell su Facebook e Instagram. Non è attualmente dichiarato alcun Meta Pixel nella landing;
+            pertanto questa Cookie Policy non include pixel Meta, remarketing Meta o eventi Facebook Ads. Se in futuro verrà installato un pixel,
+            la policy e il banner consenso dovranno essere aggiornati prima dell’attivazione.
+          </p>
+
+          <h3>Prenotazioni, WooCommerce e pagamenti futuri</h3>
+          <p>
+            Se verranno attivati sistemi di prenotazione, WooCommerce, calendari o pagamenti online, potranno essere usati cookie tecnici
+            necessari alla sessione, al carrello, al checkout, alla sicurezza e alla gestione dell’ordine. Eventuali servizi di pagamento esterni
+            dovranno essere indicati nella Privacy Policy e, se usano strumenti non necessari, anche nel pannello cookie.
+          </p>
+
+          <div class="mw-policy-note">
+            <p>
+              Mantieni questa pagina allineata alla scansione reale del sito: se un servizio viene rimosso, va tolto;
+              se un nuovo script di tracciamento viene aggiunto, va dichiarato prima di andare online.
+            </p>
+          </div>
+        </article>
+
+        <article class="mw-policy-card" id="consenso">
+          <h2>4. Gestione del consenso</h2>
+          <p>
+            Al primo accesso al sito, l’utente può accettare, rifiutare o personalizzare l’uso dei cookie non necessari
+            tramite il banner cookie.
+          </p>
+          <p>
+            L’utente può modificare o revocare il consenso in qualsiasi momento accedendo al pannello delle preferenze cookie.
+            Il rifiuto dei cookie non necessari non impedisce la navigazione, ma potrebbe rendere non disponibili alcune funzioni accessorie.
+          </p>
+
+          <div class="mw-policy-actions">
+            <button class="mw-policy-button primary" type="button" onclick="mwOpenCookiePreferences()">
+              Gestisci preferenze cookie
+            </button>
+            <a class="mw-policy-button secondary" href="/privacy-policy/">
+              Vai alla Privacy Policy
+            </a>
+          </div>
+
+          <div class="mw-policy-note">
+            <p>
+              Se il pulsante non apre il pannello, è possibile che lo script di gestione consenso non sia ancora caricato
+              o che debba essere configurato in iubenda.
+            </p>
+          </div>
+        </article>
+
+        <article class="mw-policy-card" id="browser">
+          <h2>5. Gestione dei cookie tramite browser</h2>
+          <p>
+            Oltre al pannello delle preferenze del sito, l’utente può gestire, bloccare o cancellare i cookie
+            anche tramite le impostazioni del proprio browser.
+          </p>
+          <ul>
+            <li>Google Chrome</li>
+            <li>Mozilla Firefox</li>
+            <li>Apple Safari</li>
+            <li>Microsoft Edge</li>
+            <li>Opera</li>
+          </ul>
+          <p>
+            La disabilitazione dei cookie tecnici potrebbe compromettere il corretto funzionamento del sito.
+          </p>
+        </article>
+
+        <article class="mw-policy-card" id="aggiornamenti">
+          <h2>6. Aggiornamenti della Cookie Policy</h2>
+          <p>
+            La presente Cookie Policy può essere aggiornata in caso di modifiche tecniche, normative,
+            organizzative o in seguito all’introduzione di nuovi servizi sul sito.
+          </p>
+          <p>
+            Gli utenti sono invitati a consultare periodicamente questa pagina.
+          </p>
+        </article>
+
+        <article class="mw-policy-card" id="contatti">
+          <h2>7. Contatti</h2>
+          <p>
+            Per informazioni relative alla presente Cookie Policy o al trattamento dei dati personali,
+            è possibile contattare MediWell tramite i recapiti indicati sul sito.
+          </p>
+          <p>
+            Email: <strong>info@mediwell.it</strong><br>
+            Sito web: <strong>mediwell.it</strong>
+          </p>
+        </article>
+      </main>
+    </div>
+  </div>
+
+  <footer class="mw-footer" aria-label="Footer MediWell">
+  <div class="mw-footer-orbits" aria-hidden="true">
+    <span class="mw-footer-orb mw-footer-orb-1"></span>
+    <span class="mw-footer-orb mw-footer-orb-2"></span>
+    <span class="mw-footer-orb mw-footer-orb-3"></span>
+    <span class="mw-footer-orb mw-footer-orb-4"></span>
+  </div>
+
+  <div class="mw-footer-inner">
+    <div class="mw-footer-grid">
+      <div class="mw-footer-block mw-footer-left">
+        <h3>Contatti</h3>
+        <p>Email: <a href="mailto:info@mediwell.it">info@mediwell.it</a></p>
+        <p>Pec: <a href="mailto:meeby@pec.it">meeby@pec.it</a></p>
+        <p>Servizio Clienti: <a href="tel:+393930593500">+39 393 059 3500</a></p>
+        <p>P.IVA: 02550260398</p>
+        <p>R.Imprese: RA212065</p>
+        <p>Sede operativa Via Fornarina, 12/D, 48018 Faenza RA, Italia</p>
+      </div>
+
+      <div class="mw-footer-block mw-footer-center">
+        <span class="mw-footer-follow">Seguici</span>
+        <div class="mw-footer-social">
+          <a class="mw-social-link" href="https://www.facebook.com/people/Mediwellit/61589370824325/" target="_blank" rel="noopener" aria-label="MediWell su Facebook">
+            <img class="mw-social-icon-image" src="https://mediwell.it/wp-content/uploads/2026/06/FB_Colori.png" alt="Facebook">
+          </a>
+          <a class="mw-social-link" href="https://www.instagram.com/mediwell.it/" target="_blank" rel="noopener" aria-label="MediWell su Instagram">
+            <img class="mw-social-icon-image" src="https://mediwell.it/wp-content/uploads/2026/06/IN_colori.png" alt="Instagram">
+          </a>
+          <a class="mw-social-link" href="https://wa.me/393930593500" target="_blank" rel="noopener" aria-label="Contatta MediWell su WhatsApp">
+            <img class="mw-social-icon-image" src="https://mediwell.it/wp-content/uploads/2026/06/WA_colori.png" alt="WhatsApp">
+          </a>
+        </div>
+      </div>
+
+      <div class="mw-footer-block mw-footer-right">
+        <h3>Privacy & Cookie</h3>
+        <a href="https://mediwell.it/privacy-policy/">Privacy Policy</a>
+        <a href="https://mediwell.it/cookie-policy/">Cookie Policy</a>
+      </div>
+    </div>
+
+    <p class="mw-footer-note">&copy; 2026 MediWell. Tutti i diritti riservati.</p>
+  </div>
+</footer>
+
+
+  <script>
+    function mwOpenCookiePreferences() {
+      try {
+        if (window._iub && window._iub.cs && typeof window._iub.cs.openPreferences === "function") {
+          window._iub.cs.openPreferences();
+          return;
+        }
+
+        if (window.Iubenda && window.Iubenda.CS && typeof window.Iubenda.CS.openPreferences === "function") {
+          window.Iubenda.CS.openPreferences();
+          return;
+        }
+
+        var iubendaPreferenceButton = document.querySelector(
+          ".iubenda-cs-preferences-link, .iubenda-cs-customize-btn, [data-iubenda-cs-customize]"
+        );
+
+        if (iubendaPreferenceButton) {
+          iubendaPreferenceButton.click();
+          return;
+        }
+
+        alert("Il pannello preferenze cookie non è ancora disponibile. Verifica la configurazione di iubenda.");
+      } catch (error) {
+        alert("Non è stato possibile aprire il pannello preferenze cookie.");
+      }
+    }
+  </script>
+</section>
