@@ -518,6 +518,7 @@ main > section {
 }
 
 .mw-floorplan-modal-body {
+  position: relative;
   padding: 34px;
 }
 
@@ -531,7 +532,48 @@ main > section {
 }
 
 .mw-floorplan-modal-body h3 {
-  padding-right: 40px;
+  padding-right: 150px;
+}
+
+.mw-floorplan-size-pill {
+  position: absolute;
+  top: 26px;
+  right: 78px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 9px 19px;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, var(--mw-blue), var(--mw-blue-dark)) padding-box,
+    linear-gradient(90deg, var(--mw-blue), var(--mw-pink), var(--mw-green)) border-box;
+  color: var(--mw-white);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow:
+    0 14px 30px rgba(5, 36, 62, 0.18),
+    0 0 18px rgba(81, 193, 147, 0.18),
+    0 0 22px rgba(193, 81, 127, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.mw-floorplan-size-pill[hidden] {
+  display: none;
+}
+
+@media (max-width: 560px) {
+  .mw-floorplan-modal-body h3 {
+    padding-right: 40px;
+  }
+
+  .mw-floorplan-size-pill {
+    position: static;
+    margin: 2px 0 16px;
+  }
 }
 
 .mw-floorplan-modal-body ul {
@@ -2090,7 +2132,7 @@ form button {
   <header class="mw-site-header">
     <div class="mw-header-inner">
       <a class="mw-brand" href="#hero" aria-label="MediWell, torna all'inizio">
-        <img class="mw-brand-logo" src="https://mediwell.it/wp-content/uploads/2026/06/logoMedi_Centrato.png" alt="MediWell Polistudio" width="250" height="100" decoding="async">
+        <img class="mw-brand-logo" src="https://mediwell.it/wp-content/uploads/2026/06/logoMedi_Centrato.png" alt="MediWell studi medici" width="250" height="100" decoding="async">
       </a>
       <p class="mw-header-meta">Faenza <span>07.09.26</span></p>
       <a class="mw-header-cta" href="#interesse">Riserva anteprima</a>
@@ -2141,7 +2183,7 @@ form button {
           <p class="mw-photo-label"><span>01</span> Spazi che lavorano per te</p>
           <div class="mw-hero-stamp">
             <strong>MEDIWELL</strong>
-            <span>Polistudio sanitario</span>
+            <span>Studi medici sanitari</span>
           </div>
           <span class="mw-hero-line" aria-hidden="true"></span>
         </div>
@@ -2152,29 +2194,104 @@ form button {
       <div class="mw-section-shell">
         <div class="mw-floorplan-layout mw-reveal">
           <div class="mw-floorplan-copy">
-            <p class="mw-section-index"><span>00</span> Esplora gli spazi</p>
+            <p class="mw-section-index"><span>00</span> Piantina interattiva</p>
             <h2 id="piantina-title">Esplora gli spazi MediWell</h2>
-            <p>Clicca sui punti della piantina per scoprire studi, aree di accesso e spazi di supporto del polistudio.</p>
+            <p>Clicca sui punti della piantina per scoprire studi, aree di accesso e spazi di supporto degli studi medici.</p>
           </div>
 
           <figure class="mw-floorplan-stage" aria-label="Piantina interattiva degli spazi MediWell">
             <img
-              src="assets/mediwell/senza-puntini-blu.png"
+              src="https://mediwell.it/wp-content/uploads/2026/06/senza-puntini-blu-1.png"
               alt="Piantina dall'alto degli spazi MediWell"
               width="1672"
               height="941"
               loading="lazy"
               decoding="async"
             >
-            <button class="mw-floorplan-hotspot" type="button" style="--x: 13.7%; --y: 58.4%; --i: 0;" data-floorplan-area="studio-1" aria-label="Apri dettagli: Studio 1"></button>
-            <button class="mw-floorplan-hotspot" type="button" style="--x: 13.8%; --y: 20.4%; --i: 1;" data-floorplan-area="studio-2" aria-label="Apri dettagli: Studio 2"></button>
-            <button class="mw-floorplan-hotspot" type="button" style="--x: 34.5%; --y: 20.4%; --i: 2;" data-floorplan-area="sala-aspetto" aria-label="Apri dettagli: Sala aspetto"></button>
-            <button class="mw-floorplan-hotspot" type="button" style="--x: 57.2%; --y: 15.2%; --i: 3;" data-floorplan-area="studio-3" aria-label="Apri dettagli: Studio 3"></button>
-            <button class="mw-floorplan-hotspot" type="button" style="--x: 83.2%; --y: 25.5%; --i: 4;" data-floorplan-area="studio-4" aria-label="Apri dettagli: Studio 4"></button>
-            <button class="mw-floorplan-hotspot" type="button" style="--x: 78.1%; --y: 61.1%; --i: 5;" data-floorplan-area="studio-5" aria-label="Apri dettagli: Studio 5"></button>
-            <button class="mw-floorplan-hotspot" type="button" style="--x: 88.9%; --y: 70.5%; --i: 6;" data-floorplan-area="entrata-disabili" aria-label="Apri dettagli: Entrata disabili"></button>
-            <button class="mw-floorplan-hotspot" type="button" style="--x: 9.0%; --y: 84.7%; --i: 7;" data-floorplan-area="ingresso" aria-label="Apri dettagli: Ingresso"></button>
-            <button class="mw-floorplan-hotspot" type="button" style="--x: 44.1%; --y: 85.3%; --i: 8;" data-floorplan-area="spogliatoi" aria-label="Apri dettagli: Spogliatoi"></button>
+            <!--
+              Fine tuning puntini:
+              - modifica solo --x e --y
+              - --x aumenta verso destra, diminuisce verso sinistra
+              - --y aumenta verso il basso, diminuisce verso l'alto
+              - usa piccoli passi, ad esempio 0.5% o 1%
+            -->
+            <button
+              class="mw-floorplan-hotspot"
+              type="button"
+              style="--x: 16.0%; --y: 60.4%; --i: 0;"
+              data-floorplan-area="studio-1"
+              aria-label="Apri dettagli: Studio 1"
+            ></button>
+            <button
+              class="mw-floorplan-hotspot"
+              type="button"
+              style="--x: 16.0%; --y: 20.0%; --i: 1;"
+              data-floorplan-area="studio-2"
+              aria-label="Apri dettagli: Studio 2"
+            ></button>
+            <button
+              class="mw-floorplan-hotspot"
+              type="button"
+              style="--x: 37.5%; --y: 20.0%; --i: 2;"
+              data-floorplan-area="sala-aspetto"
+              aria-label="Apri dettagli: Sala aspetto"
+            ></button>
+            <button
+              class="mw-floorplan-hotspot"
+              type="button"
+              style="--x: 63.5%; --y: 15.2%; --i: 3;"
+              data-floorplan-area="studio-3"
+              aria-label="Apri dettagli: Studio 3"
+            ></button>
+            <button
+              class="mw-floorplan-hotspot"
+              type="button"
+              style="--x: 88.0%; --y: 25.5%; --i: 4;"
+              data-floorplan-area="studio-4"
+              aria-label="Apri dettagli: Studio 4"
+            ></button>
+            <button
+              class="mw-floorplan-hotspot"
+              type="button"
+              style="--x: 83.1%; --y: 62.1%; --i: 5;"
+              data-floorplan-area="studio-5"
+              aria-label="Apri dettagli: Studio 5"
+            ></button>
+            <button
+              class="mw-floorplan-hotspot"
+              type="button"
+              style="--x: 96.0%; --y: 72.3%; --i: 6;"
+              data-floorplan-area="entrata-disabili"
+              aria-label="Apri dettagli: Entrata disabili"
+            ></button>
+            <button
+              class="mw-floorplan-hotspot"
+              type="button"
+              style="--x: 9.0%; --y: 90.7%; --i: 7;"
+              data-floorplan-area="ingresso"
+              aria-label="Apri dettagli: Ingresso"
+            ></button>
+            <button
+              class="mw-floorplan-hotspot"
+              type="button"
+              style="--x: 47.0%; --y: 90.7%; --i: 8;"
+              data-floorplan-area="area-privata"
+              aria-label="Apri dettagli: Area privata"
+            ></button>
+            <button
+              class="mw-floorplan-hotspot"
+              type="button"
+              style="--x: 41.0%; --y: 62.6%; --i: 9;"
+              data-floorplan-area="bagno-pazienti"
+              aria-label="Apri dettagli: Bagno pazienti"
+            ></button>
+            <button
+              class="mw-floorplan-hotspot"
+              type="button"
+              style="--x: 52.0%; --y: 62.6%; --i: 10;"
+              data-floorplan-area="bagno-medici"
+              aria-label="Apri dettagli: Bagno privato medici"
+            ></button>
           </figure>
         </div>
       </div>
@@ -2193,7 +2310,7 @@ form button {
             attività professionale.
           </p>
           <p>
-            Scegliendo il nostro Polistudio Sanitario MEDIWELL elimini ogni rischio
+            Scegliendo gli studi medici MEDIWELL elimini ogni rischio
             finanziario: non è richiesto alcun investimento iniziale e sei libero da
             vincoli contrattuali a lungo termine. Trovi spazi pronti all'uso, rifiniti e
             completi di ogni comfort per te e per i tuoi pazienti. Contattaci ora per
@@ -2230,7 +2347,7 @@ form button {
           <p class="mw-section-index"><span>02</span> Gli spazi</p>
           <h2 id="studi-title">Arredi a regolazione elettrica in un contesto esclusivo</h2>
           <p>
-            Il Polistudio Sanitario MEDIWELL offre ambienti selezionati e interamente
+            Gli studi medici MEDIWELL offrono ambienti selezionati e interamente
             allestiti, con metrature da 12 a 15 mq. Questa dimensione è stata scelta per
             garantire un ambiente di lavoro silenzioso, riservato e altamente
             professionale, lontano dal caos delle strutture affollate.
@@ -2257,7 +2374,7 @@ form button {
         <h2 id="tecnologia-title">Indipendenza operativa e tutela della privacy</h2>
         <p>
           Libertà totale e gestione smart: la tecnologia sostituisce la segreteria
-          fisica e tutela la privacy. Il sistema di gestione del Polistudio Sanitario
+          fisica e tutela la privacy. Il sistema di gestione degli studi medici
           è progettato per garantirti la massima indipendenza in tre semplici passaggi:
         </p>
       </div>
@@ -2444,6 +2561,7 @@ form button {
         <div class="mw-floorplan-modal-body">
           <p class="mw-floorplan-modal-kicker" id="floorplan-modal-kicker">Spazio MediWell</p>
           <h3 id="floorplan-modal-title"></h3>
+          <span class="mw-floorplan-size-pill" id="floorplan-modal-size" hidden></span>
           <p id="floorplan-modal-description"></p>
           <ul id="floorplan-modal-features"></ul>
           <a class="mw-text-link" href="#interesse" data-floorplan-close>Richiedi informazioni <span>→</span></a>
@@ -2545,21 +2663,23 @@ form button {
       var floorplanAreas = {
         'studio-1': {
           title: 'Studio 1',
-          description: 'Uno spazio riservato e pronto all\'uso, pensato per visite, consulenze e attività professionali a giornata.',
+          size: '14,5 mq',
+          description: 'Studio riservato e pronto all\'uso, pensato per visite, consulenze e attività professionali a giornata.',
           features: [
             'Ambiente ordinato e igienizzato prima dell\'utilizzo',
-            'Lavabo e superfici pratiche per il lavoro quotidiano',
+            'Accesso autonomo con tastierino numerico e codice fornito alla prenotazione',
             'Privacy per professionista e paziente'
           ],
           image: null
         },
         'studio-2': {
           title: 'Studio 2',
-          description: 'Studio indipendente e silenzioso, ideale per accogliere il paziente in un contesto curato e professionale.',
+          size: '15,2 mq',
+          description: 'Studio riservato e pronto all\'uso, pensato per visite, consulenze e attività professionali a giornata.',
           features: [
-            'Spazio pronto all\'uso senza investimento iniziale',
-            'Pareti lavabili e dotazioni essenziali già previste',
-            'Configurazione pensata per attività sanitarie e benessere'
+            'Ambiente ordinato e igienizzato prima dell\'utilizzo',
+            'Accesso autonomo con tastierino numerico e codice fornito alla prenotazione',
+            'Privacy per professionista e paziente'
           ],
           image: null
         },
@@ -2575,31 +2695,34 @@ form button {
         },
         'studio-3': {
           title: 'Studio 3',
-          description: 'Ambiente operativo pronto per prenotazioni a giornata, con impostazione flessibile per diverse specializzazioni.',
+          size: '12 mq',
+          description: 'Studio riservato e pronto all\'uso, pensato per visite, consulenze e attività professionali a giornata.',
           features: [
-            'Uso autonomo nella giornata prenotata',
-            'Spazio riservato per visite e consulenze',
-            'Gestione smart collegata al sistema MediWell'
+            'Ambiente ordinato e igienizzato prima dell\'utilizzo',
+            'Accesso autonomo con tastierino numerico e codice fornito alla prenotazione',
+            'Privacy per professionista e paziente'
           ],
           image: null
         },
         'studio-4': {
           title: 'Studio 4',
-          description: 'Studio separato dagli spazi comuni, progettato per lavorare con discrezione e continuita durante la giornata.',
+          size: '12,6 mq',
+          description: 'Studio riservato e pronto all\'uso, posizionato in un\'area più silenziosa per lavorare con discrezione durante la giornata.',
           features: [
-            'Privacy e separazione dagli altri ambienti',
-            'Lavabo integrato nella stanza',
-            'Ambiente consegnato ordinato e pronto all\'uso'
+            'Ambiente ordinato e igienizzato prima dell\'utilizzo',
+            'Accesso autonomo con tastierino numerico e codice fornito alla prenotazione',
+            'Maggiore silenziosità e privacy per professionista e paziente'
           ],
           image: null
         },
         'studio-5': {
           title: 'Studio 5',
-          description: 'Stanza ampia e funzionale, collegata al percorso di accesso e adatta a una gestione professionale indipendente.',
+          size: '12,2 mq',
+          description: 'Studio riservato e pronto all\'uso, posizionato in un\'area più silenziosa per lavorare con discrezione durante la giornata.',
           features: [
-            'Accesso pratico dagli spazi di distribuzione',
-            'Dotazioni essenziali incluse nella formula',
-            'Contesto curato per professionista e paziente'
+            'Ambiente ordinato e igienizzato prima dell\'utilizzo',
+            'Accesso autonomo con tastierino numerico e codice fornito alla prenotazione',
+            'Maggiore silenziosità e privacy per professionista e paziente'
           ],
           image: null
         },
@@ -2615,21 +2738,41 @@ form button {
         },
         'ingresso': {
           title: 'Ingresso',
-          description: 'Il punto di arrivo principale del polistudio, pensato per indirizzare in modo chiaro verso sala aspetto, studi e aree di servizio.',
+          description: 'Il punto di arrivo principale degli studi medici, pensato per indirizzare in modo chiaro verso sala aspetto, studi e aree di servizio.',
           features: [
-            'Ingresso riconoscibile e ordinato',
+            'Tastiera numerica esterna per accedere senza problemi dalle 7 alle 20',
             'Collegamento diretto con il percorso interno',
             'Primo contatto coerente con l\'immagine MediWell'
           ],
           image: null
         },
-        'spogliatoi': {
-          title: 'Spogliatoi',
-          description: 'Area di supporto utile per preparazione, cambio e organizzazione delle attività legate alla giornata di lavoro.',
+        'area-privata': {
+          title: 'Area privata',
+          description: 'Area privata di supporto utile per preparazione, cambio e organizzazione delle attività legate alla giornata di lavoro.',
           features: [
-            'Spazio funzionale a supporto degli studi',
+            'Ingresso dedicato al bagno privato per medici',
             'Percorso separato dalle stanze principali',
             'Maggiore ordine nella gestione della giornata'
+          ],
+          image: null
+        },
+        'bagno-pazienti': {
+          title: 'Bagno pazienti',
+          description: 'Servizio dedicato ai pazienti, collocato in posizione centrale per essere raggiunto facilmente dagli spazi comuni.',
+          features: [
+            'Accesso pratico dalla sala aspetto e dal percorso interno',
+            'Ambiente riservato e ordinato per gli ospiti',
+            'Supporto funzionale all\'accoglienza quotidiana'
+          ],
+          image: null
+        },
+        'bagno-medici': {
+          title: 'Bagno privato medici',
+          description: 'Servizio riservato a medici, operatori sanitari e professionisti che utilizzano gli studi MediWell.',
+          features: [
+            'Accesso separato rispetto al bagno pazienti',
+            'Area privata pensata per la giornata di lavoro',
+            'Maggiore comfort per professionisti e operatori'
           ],
           image: null
         }
@@ -2638,13 +2781,14 @@ form button {
       var modal = document.getElementById('floorplan-modal');
       var media = document.getElementById('floorplan-modal-media');
       var title = document.getElementById('floorplan-modal-title');
+      var size = document.getElementById('floorplan-modal-size');
       var description = document.getElementById('floorplan-modal-description');
       var features = document.getElementById('floorplan-modal-features');
       var lastTrigger = null;
       var floorplanLayout = document.querySelector('.mw-floorplan-layout');
       var selectedTimer = null;
 
-      if (!modal || !media || !title || !description || !features) {
+      if (!modal || !media || !title || !size || !description || !features) {
         return;
       }
 
@@ -2704,6 +2848,13 @@ form button {
         }, 620);
 
         title.textContent = area.title;
+        if (area.size) {
+          size.textContent = area.size;
+          size.hidden = false;
+        } else {
+          size.textContent = '';
+          size.hidden = true;
+        }
         description.textContent = area.description;
         features.innerHTML = '';
 

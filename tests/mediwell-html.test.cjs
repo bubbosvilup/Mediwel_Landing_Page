@@ -91,14 +91,14 @@ test('adds the interactive floorplan immediately after the hero', () => {
   assert.ok(floorplanIndex > heroIndex, 'expected floorplan after hero');
   assert.ok(costsIndex > floorplanIndex, 'expected model section after floorplan');
   assert.match(html, /<h2 id="piantina-title">Esplora gli spazi MediWell<\/h2>/);
-  assert.match(html, /src="assets\/mediwell\/senza-puntini-blu\.png"/);
+  assert.match(html, /src="https:\/\/mediwell\.it\/wp-content\/uploads\/2026\/06\/senza-puntini-blu-1\.png"/);
   assert.match(html, /width="1672"/);
   assert.match(html, /height="941"/);
 });
 
 test('renders all floorplan hotspots as accessible buttons', () => {
   const hotspotMatches = html.match(/class="mw-floorplan-hotspot"/g) || [];
-  assert.equal(hotspotMatches.length, 9);
+  assert.equal(hotspotMatches.length, 11);
 
   for (const label of [
     'Studio 1',
@@ -109,14 +109,18 @@ test('renders all floorplan hotspots as accessible buttons', () => {
     'Studio 5',
     'Entrata disabili',
     'Ingresso',
-    'Spogliatoi'
+    'Area privata',
+    'Bagno pazienti',
+    'Bagno privato medici'
   ]) {
     assert.match(html, new RegExp(`aria-label="Apri dettagli: ${label}"`));
   }
 
   assert.match(html, /data-floorplan-area="studio-1"/);
   assert.match(html, /data-floorplan-area="entrata-disabili"/);
-  assert.match(html, /data-floorplan-area="spogliatoi"/);
+  assert.match(html, /data-floorplan-area="area-privata"/);
+  assert.match(html, /data-floorplan-area="bagno-pazienti"/);
+  assert.match(html, /data-floorplan-area="bagno-medici"/);
 });
 
 test('keeps floorplan modal content data ready for future images', () => {
@@ -139,7 +143,7 @@ test('adds premium floorplan motion hooks with branded pulse colors', () => {
   assert.match(css, /\.mw-floorplan-hotspot\.is-selected/i);
   assert.match(css, /rgba\(193,\s*81,\s*127/i);
   assert.match(css, /rgba\(81,\s*193,\s*147/i);
-  assert.match(html, /style="--x:\s*13\.7%;\s*--y:\s*58\.4%;\s*--i:\s*0;"/);
+  assert.match(html, /style="--x:\s*16\.0%;\s*--y:\s*60\.4%;\s*--i:\s*0;"/);
 });
 
 test('explains the three-step technology flow with the client details', () => {
