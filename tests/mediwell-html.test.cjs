@@ -1,6 +1,6 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { existsSync, readFileSync } = require('node:fs');
+const { existsSync, readdirSync, readFileSync } = require('node:fs');
 const { resolve } = require('node:path');
 
 const html = readFileSync(resolve(__dirname, '..', 'index.html'), 'utf8');
@@ -230,7 +230,7 @@ test('adds selective motion while preserving reduced-motion support', () => {
 test('uses the official logo and optimized remote photography markup', () => {
   assert.match(
     html,
-    /<img class="mw-brand-logo" src="https:\/\/mediwell\.it\/wp-content\/uploads\/2026\/06\/logoMedi_Centrato\.png"/
+    /<img class="mw-brand-logo" src="https:\/\/mediwell\.it\/wp-content\/uploads\/2026\/06\/Nuovomediwell_NoSfondo\.png"/
   );
   assert.doesNotMatch(html, /class="mw-brand-mark"/);
   const heroShell = html.match(/<div class="mw-photo-shell">[\s\S]*?<\/div>/)?.[0] || '';
@@ -266,7 +266,6 @@ test('keeps studio pages complete and internal page links normalized', () => {
     'homepage',
     'prenota',
     'privacy-policy',
-    'studi-medici',
     'studio-uno',
     'studio-due',
     'studio-tre',
@@ -309,5 +308,18 @@ test('keeps studio pages complete and internal page links normalized', () => {
     assert.match(studioHtml, /<footer class="mw-footer" aria-label="Footer MediWell">/);
     assert.match(studioHtml, /document\.addEventListener\("DOMContentLoaded"/);
     assert.equal((studioHtml.match(/class="mw-related-card"/g) || []).length, 4);
+  }
+});
+
+test('removes the redundant studios listing page and stale links to it', () => {
+  assert.equal(existsSync(resolve(rootDir, 'studi-medici.html')), false);
+
+  const publicHtmlFiles = readdirSync(rootDir)
+    .filter((fileName) => fileName.endsWith('.html'));
+
+  for (const fileName of publicHtmlFiles) {
+    const pageHtml = readFileSync(resolve(rootDir, fileName), 'utf8');
+    assert.doesNotMatch(pageHtml, /href="\/studi-medici\/"/, `${fileName} links to deleted studios listing`);
+    assert.doesNotMatch(pageHtml, /href="studi-medici\.html"/, `${fileName} links to deleted studios listing`);
   }
 });
