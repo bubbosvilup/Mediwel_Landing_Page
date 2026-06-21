@@ -69,6 +69,20 @@ for (const viewport of [
       true
     );
 
+    const spacing = await page.evaluate(() => {
+      const grid = document.querySelector('.mw-contact-grid').getBoundingClientRect();
+      const location = document.querySelector('.mw-contact-location').getBoundingClientRect();
+      const footer = document.querySelector('.mw-footer').getBoundingClientRect();
+      return {
+        above: Math.round(location.top - grid.bottom),
+        below: Math.round(footer.top - location.bottom)
+      };
+    });
+    assert.ok(
+      Math.abs(spacing.above - spacing.below) <= 2,
+      `location card spacing is unbalanced: ${spacing.above}px above, ${spacing.below}px below`
+    );
+
     await page.close();
   });
 }
