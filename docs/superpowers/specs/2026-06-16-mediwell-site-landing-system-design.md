@@ -58,3 +58,9 @@ Run the existing Node tests with `npm test`. Use browser/screenshot inspection f
 - mobile stacking;
 - no text overlap;
 - no broken links to `studi-medici.html`.
+
+Every visual change must also verify proportional vertical spacing, complete text visibility, absence of text/image or pseudo-element overlap, and absence of horizontal overflow at both 1440×1000 and 390×844. A visual pass of the complete page in Google Chrome is required in addition to automated assertions.
+
+## Current implementation note — 21 June 2026
+
+The shared portrait pseudo-element was removed specifically from the `come-funziona.html` and `prenota.html` heroes after it was found to obscure text and create excessive vertical height. Both pages now use compact, page-scoped hero sizing with dedicated desktop/mobile regression tests. The contact page now uses the approved no-form WhatsApp hub and a balanced location card immediately before the footer.

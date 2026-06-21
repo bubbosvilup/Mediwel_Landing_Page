@@ -1,7 +1,6 @@
-# MediWell Temporary Photo Sources
+# MediWell Photo Sources
 
-These local images are temporary stock placeholders for the visual-design phase.
-Replace them with real MediWell photography before the final WordPress launch.
+These local images are documented stock placeholders retained for development and fallback use. Current page templates primarily use MediWell-hosted WordPress photography. Confirm that no placeholder is visible before the final WordPress launch.
 
 Pexels permits free website and commercial use under its license:
 https://www.pexels.com/license/
@@ -36,5 +35,4 @@ The GitHub Pages preview references the supplied WordPress logo:
 
 `https://mediwell.it/wp-content/uploads/2026/06/logoMedi_Centrato.png`
 
-During WordPress integration, upload a cropped and resized derivative and replace
-the preview URL with the Media Library URL.
+The current templates use the WordPress Media Library URL. If the logo asset is replaced, preserve its accessible name, aspect ratio and responsive dimensions, then repeat the desktop/mobile visual checks defined in `AGENTS.md`.

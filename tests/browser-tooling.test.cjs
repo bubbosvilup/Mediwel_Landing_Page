@@ -42,3 +42,12 @@ test('repository guidance enables the visual companion without confirmation', ()
   assert.match(guidance, /visual companion/i);
   assert.match(guidance, /non chiedere conferma preventiva/i);
 });
+
+test('repository guidance requires responsive overlap and vertical-spacing checks', () => {
+  const guidance = fs.readFileSync(path.join(root, 'AGENTS.md'), 'utf8');
+  assert.match(guidance, /spazio verticale/i);
+  assert.match(guidance, /sovrappos/i);
+  assert.match(guidance, /desktop e mobile/i);
+  assert.match(guidance, /testi e immagini/i);
+  assert.match(guidance, /overflow orizzontale/i);
+});

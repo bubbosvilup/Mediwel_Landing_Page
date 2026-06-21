@@ -8,6 +8,8 @@
 
 **Tech Stack:** HTML5, scoped CSS, Node.js test runner, Playwright, Google Chrome
 
+**Implementation status (21 June 2026):** Completed and verified. The location card was subsequently repositioned between the four contact cards and the footer to remove excessive empty space. Persistent responsive layout checks are now defined in `AGENTS.md`.
+
 ---
 
 ### Task 1: Lock the approved contact-page contract

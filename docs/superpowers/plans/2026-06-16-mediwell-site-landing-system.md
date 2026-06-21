@@ -8,6 +8,8 @@
 
 **Tech Stack:** Static HTML, CSS, minimal inline JavaScript already present in the site, Node test runner via `npm test`, Playwright for visual inspection.
 
+**Implementation status (21 June 2026):** Completed. Subsequent responsive corrections removed the portrait overlay from the Come funziona and Prenota heroes, compacted their vertical spacing, and added page-specific Playwright regression tests. The current mandatory QA rules are documented in `AGENTS.md`.
+
 ---
 
 ## File Structure
@@ -156,6 +158,8 @@ studio-uno.html
 ```
 
 Expected: No overlap, no clipped buttons, good mobile stacking, visible CTAs, images render.
+
+Also confirm that vertical spacing is proportional, no text intersects images or decorative pseudo-elements, all copy remains fully visible, and there is no horizontal overflow at 1440×1000 or 390×844.
 
 ## Self-Review
 

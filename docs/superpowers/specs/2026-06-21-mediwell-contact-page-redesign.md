@@ -59,4 +59,6 @@ Su desktop, i recapiti sono disposti in una griglia 2×2. Su mobile diventano un
 
 ## Istruzioni persistenti
 
+> Stato finale: implementazione completata e verificata il 21 giugno 2026. Il form e i contenuti dimostrativi sono stati rimossi; recapiti, WhatsApp, Google Maps e footer canonico sono verificati. La scheda “Vieni a conoscere MediWell” è collocata tra le quattro schede dei recapiti e il footer per bilanciare lo spazio verticale. I test coprono struttura, destinazioni reali e assenza di overflow su desktop e mobile.
+
 `AGENTS.md` verrà aggiornato affinché, per attività di progettazione visuale, il companion visuale venga usato direttamente senza chiedere conferma preventiva. La regola esistente che vieta il browser integrato resta valida.
