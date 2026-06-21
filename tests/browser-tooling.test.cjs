@@ -29,3 +29,10 @@ test('package exposes an opt-in Chrome smoke test', () => {
   const pkg = require(path.join(root, 'package.json'));
   assert.equal(pkg.scripts['test:chrome'], 'node --test tests/browser/chrome-smoke.cjs');
 });
+
+test('repository guidance names Playwright MCP and the local server command', () => {
+  const guidance = fs.readFileSync(path.join(root, 'AGENTS.md'), 'utf8');
+  assert.match(guidance, /Playwright MCP/);
+  assert.match(guidance, /npm run serve/);
+  assert.match(guidance, /non usare il browser integrato/i);
+});
