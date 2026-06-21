@@ -36,3 +36,9 @@ test('repository guidance names Playwright MCP and the local server command', ()
   assert.match(guidance, /npm run serve/);
   assert.match(guidance, /non usare il browser integrato/i);
 });
+
+test('repository guidance enables the visual companion without confirmation', () => {
+  const guidance = fs.readFileSync(path.join(root, 'AGENTS.md'), 'utf8');
+  assert.match(guidance, /visual companion/i);
+  assert.match(guidance, /non chiedere conferma preventiva/i);
+});

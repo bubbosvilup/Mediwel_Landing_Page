@@ -6,3 +6,8 @@
 - Il browser deve usare il profilo isolato configurato in `.codex/config.toml`; non usare il profilo Chrome personale.
 - Dopo ogni modifica frontend, ricarica la pagina interessata e verifica lo stato richiesto.
 - Se Chrome o Playwright MCP non sono disponibili, fermati e segnala il problema.
+
+## Progettazione visuale
+
+- Per attività che richiedono confronti visuali, mockup o valutazioni di layout usa direttamente il visual companion.
+- Non chiedere conferma preventiva prima di avviare il visual companion.
