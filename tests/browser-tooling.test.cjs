@@ -24,3 +24,8 @@ test('package exposes a stable localhost server command', () => {
     'python -m http.server 4173 --bind 127.0.0.1'
   );
 });
+
+test('package exposes an opt-in Chrome smoke test', () => {
+  const pkg = require(path.join(root, 'package.json'));
+  assert.equal(pkg.scripts['test:chrome'], 'node --test tests/browser/chrome-smoke.cjs');
+});
