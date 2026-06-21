@@ -213,6 +213,50 @@ test('keeps the floorplan responsive on mobile', async () => {
   assert.ok(metrics.minHotspotHeight >= 38);
 });
 
+test('keeps floorplan hotspots visible when WordPress does not run inline scripts', async () => {
+  const context = await browser.newContext({
+    javaScriptEnabled: false,
+    viewport: { width: 1280, height: 900 }
+  });
+  const page = await context.newPage();
+  await page.goto(baseUrl, { waitUntil: 'domcontentloaded' });
+
+  const hotspotState = await page.locator('.mw-floorplan-hotspot').first().evaluate((hotspot) => {
+    const style = getComputedStyle(hotspot);
+    const box = hotspot.getBoundingClientRect();
+
+    return {
+      opacity: style.opacity,
+      width: box.width,
+      height: box.height
+    };
+  });
+
+  await context.close();
+
+  assert.equal(hotspotState.opacity, '1');
+  assert.ok(hotspotState.width >= 38);
+  assert.ok(hotspotState.height >= 38);
+});
+
+test('opens a floorplan detail card without inline JavaScript', async () => {
+  const context = await browser.newContext({
+    javaScriptEnabled: false,
+    viewport: { width: 1280, height: 900 }
+  });
+  const page = await context.newPage();
+  await page.goto(baseUrl, { waitUntil: 'domcontentloaded' });
+
+  await page.locator('[data-floorplan-area="studio-1"]').click();
+
+  assert.equal(new URL(page.url()).hash, '#floorplan-card-studio-1');
+  assert.equal(await page.locator('#floorplan-card-studio-1').isVisible(), true);
+  assert.equal(await page.locator('#floorplan-card-studio-1 h3').innerText(), 'Studio 1');
+  assert.match(await page.locator('#floorplan-card-studio-1').innerText(), /14,5 mq/);
+
+  await context.close();
+});
+
 test('activates the floorplan motion sequence when scrolled into view', async () => {
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
   await page.goto(baseUrl, { waitUntil: 'networkidle' });

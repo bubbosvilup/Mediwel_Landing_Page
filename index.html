@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8">
@@ -378,9 +378,15 @@ main > section {
     0 0 0 7px rgba(193, 81, 127, 0.13),
     0 12px 26px rgba(12, 75, 128, 0.32),
     0 0 24px rgba(81, 193, 147, 0.22);
+  color: var(--mw-white);
   cursor: pointer;
-  opacity: 0;
+  opacity: 1;
+  text-decoration: none;
   transform: translate(-50%, -50%) scale(1);
+}
+
+.mw-motion-ready .mw-floorplan-hotspot {
+  opacity: 0;
 }
 
 .mw-floorplan-is-active .mw-floorplan-hotspot {
@@ -451,6 +457,20 @@ main > section {
   display: none;
 }
 
+.mw-floorplan-fallback-card {
+  position: fixed;
+  inset: 0;
+  z-index: 1001;
+  display: none;
+  min-height: 100dvh;
+  place-items: center;
+  padding: 20px;
+}
+
+.mw-floorplan-fallback-card:target {
+  display: grid;
+}
+
 .mw-floorplan-backdrop {
   position: absolute;
   inset: 0;
@@ -499,6 +519,10 @@ main > section {
 .mw-floorplan-modal-close:hover {
   background: var(--mw-blue);
   color: var(--mw-white);
+}
+
+a.mw-floorplan-modal-close {
+  text-decoration: none;
 }
 
 .mw-floorplan-modal-media {
@@ -2215,84 +2239,299 @@ form button {
               - --y aumenta verso il basso, diminuisce verso l'alto
               - usa piccoli passi, ad esempio 0.5% o 1%
             -->
-            <button
+            <a
               class="mw-floorplan-hotspot"
-              type="button"
+              href="#floorplan-card-studio-1"
+              role="button"
               style="--x: 16.0%; --y: 60.4%; --i: 0;"
               data-floorplan-area="studio-1"
               aria-label="Apri dettagli: Studio 1"
-            ></button>
-            <button
+            ></a>
+            <a
               class="mw-floorplan-hotspot"
-              type="button"
+              href="#floorplan-card-studio-2"
+              role="button"
               style="--x: 16.0%; --y: 20.0%; --i: 1;"
               data-floorplan-area="studio-2"
               aria-label="Apri dettagli: Studio 2"
-            ></button>
-            <button
+            ></a>
+            <a
               class="mw-floorplan-hotspot"
-              type="button"
+              href="#floorplan-card-sala-aspetto"
+              role="button"
               style="--x: 37.5%; --y: 20.0%; --i: 2;"
               data-floorplan-area="sala-aspetto"
               aria-label="Apri dettagli: Sala aspetto"
-            ></button>
-            <button
+            ></a>
+            <a
               class="mw-floorplan-hotspot"
-              type="button"
+              href="#floorplan-card-studio-3"
+              role="button"
               style="--x: 63.5%; --y: 15.2%; --i: 3;"
               data-floorplan-area="studio-3"
               aria-label="Apri dettagli: Studio 3"
-            ></button>
-            <button
+            ></a>
+            <a
               class="mw-floorplan-hotspot"
-              type="button"
+              href="#floorplan-card-studio-4"
+              role="button"
               style="--x: 88.0%; --y: 25.5%; --i: 4;"
               data-floorplan-area="studio-4"
               aria-label="Apri dettagli: Studio 4"
-            ></button>
-            <button
+            ></a>
+            <a
               class="mw-floorplan-hotspot"
-              type="button"
+              href="#floorplan-card-studio-5"
+              role="button"
               style="--x: 83.1%; --y: 62.1%; --i: 5;"
               data-floorplan-area="studio-5"
               aria-label="Apri dettagli: Studio 5"
-            ></button>
-            <button
+            ></a>
+            <a
               class="mw-floorplan-hotspot"
-              type="button"
+              href="#floorplan-card-entrata-disabili"
+              role="button"
               style="--x: 96.0%; --y: 72.3%; --i: 6;"
               data-floorplan-area="entrata-disabili"
               aria-label="Apri dettagli: Entrata disabili"
-            ></button>
-            <button
+            ></a>
+            <a
               class="mw-floorplan-hotspot"
-              type="button"
+              href="#floorplan-card-ingresso"
+              role="button"
               style="--x: 9.0%; --y: 90.7%; --i: 7;"
               data-floorplan-area="ingresso"
               aria-label="Apri dettagli: Ingresso"
-            ></button>
-            <button
+            ></a>
+            <a
               class="mw-floorplan-hotspot"
-              type="button"
+              href="#floorplan-card-area-privata"
+              role="button"
               style="--x: 47.0%; --y: 90.7%; --i: 8;"
               data-floorplan-area="area-privata"
               aria-label="Apri dettagli: Area privata"
-            ></button>
-            <button
+            ></a>
+            <a
               class="mw-floorplan-hotspot"
-              type="button"
+              href="#floorplan-card-bagno-pazienti"
+              role="button"
               style="--x: 41.0%; --y: 62.6%; --i: 9;"
               data-floorplan-area="bagno-pazienti"
               aria-label="Apri dettagli: Bagno pazienti"
-            ></button>
-            <button
+            ></a>
+            <a
               class="mw-floorplan-hotspot"
-              type="button"
+              href="#floorplan-card-bagno-medici"
+              role="button"
               style="--x: 52.0%; --y: 62.6%; --i: 10;"
               data-floorplan-area="bagno-medici"
               aria-label="Apri dettagli: Bagno privato medici"
-            ></button>
+            ></a>
           </figure>
+          <div class="mw-floorplan-fallback-cards" aria-label="Dettagli piantina MediWell">
+            <article class="mw-floorplan-fallback-card" id="floorplan-card-studio-1" role="dialog" aria-modal="true" aria-labelledby="floorplan-card-studio-1-title">
+              <a class="mw-floorplan-backdrop" href="#piantina" aria-label="Chiudi dettagli Studio 1"></a>
+              <div class="mw-floorplan-dialog">
+                <a class="mw-floorplan-modal-close" href="#piantina" aria-label="Chiudi dettagli">&times;</a>
+                <div class="mw-floorplan-modal-body">
+                  <p class="mw-floorplan-modal-kicker">Spazio MediWell</p>
+                  <h3 id="floorplan-card-studio-1-title">Studio 1</h3>
+                  <span class="mw-floorplan-size-pill">14,5 mq</span>
+                  <p>Studio riservato e pronto all'uso, pensato per visite, consulenze e attività professionali a giornata.</p>
+                  <ul>
+                    <li>Ambiente ordinato e igienizzato prima dell'utilizzo</li>
+                    <li>Accesso autonomo con tastierino numerico e codice fornito alla prenotazione</li>
+                    <li>Privacy per professionista e paziente</li>
+                  </ul>
+                  <a class="mw-text-link" href="#interesse">Richiedi informazioni <span>→</span></a>
+                </div>
+              </div>
+            </article>
+
+            <article class="mw-floorplan-fallback-card" id="floorplan-card-studio-2" role="dialog" aria-modal="true" aria-labelledby="floorplan-card-studio-2-title">
+              <a class="mw-floorplan-backdrop" href="#piantina" aria-label="Chiudi dettagli Studio 2"></a>
+              <div class="mw-floorplan-dialog">
+                <a class="mw-floorplan-modal-close" href="#piantina" aria-label="Chiudi dettagli">&times;</a>
+                <div class="mw-floorplan-modal-body">
+                  <p class="mw-floorplan-modal-kicker">Spazio MediWell</p>
+                  <h3 id="floorplan-card-studio-2-title">Studio 2</h3>
+                  <span class="mw-floorplan-size-pill">15,2 mq</span>
+                  <p>Studio riservato e pronto all'uso, pensato per visite, consulenze e attività professionali a giornata.</p>
+                  <ul>
+                    <li>Ambiente ordinato e igienizzato prima dell'utilizzo</li>
+                    <li>Accesso autonomo con tastierino numerico e codice fornito alla prenotazione</li>
+                    <li>Privacy per professionista e paziente</li>
+                  </ul>
+                  <a class="mw-text-link" href="#interesse">Richiedi informazioni <span>→</span></a>
+                </div>
+              </div>
+            </article>
+
+            <article class="mw-floorplan-fallback-card" id="floorplan-card-sala-aspetto" role="dialog" aria-modal="true" aria-labelledby="floorplan-card-sala-aspetto-title">
+              <a class="mw-floorplan-backdrop" href="#piantina" aria-label="Chiudi dettagli Sala aspetto"></a>
+              <div class="mw-floorplan-dialog">
+                <a class="mw-floorplan-modal-close" href="#piantina" aria-label="Chiudi dettagli">&times;</a>
+                <div class="mw-floorplan-modal-body">
+                  <p class="mw-floorplan-modal-kicker">Spazio MediWell</p>
+                  <h3 id="floorplan-card-sala-aspetto-title">Sala aspetto</h3>
+                  <p>Area comune dedicata all'accoglienza, pensata per dare al paziente un primo contatto ordinato e tranquillo.</p>
+                  <ul>
+                    <li>Punto di attesa comodo prima della visita</li>
+                    <li>Flusso semplice verso gli studi</li>
+                    <li>Immagine professionale fin dall'arrivo</li>
+                  </ul>
+                  <a class="mw-text-link" href="#interesse">Richiedi informazioni <span>→</span></a>
+                </div>
+              </div>
+            </article>
+
+            <article class="mw-floorplan-fallback-card" id="floorplan-card-studio-3" role="dialog" aria-modal="true" aria-labelledby="floorplan-card-studio-3-title">
+              <a class="mw-floorplan-backdrop" href="#piantina" aria-label="Chiudi dettagli Studio 3"></a>
+              <div class="mw-floorplan-dialog">
+                <a class="mw-floorplan-modal-close" href="#piantina" aria-label="Chiudi dettagli">&times;</a>
+                <div class="mw-floorplan-modal-body">
+                  <p class="mw-floorplan-modal-kicker">Spazio MediWell</p>
+                  <h3 id="floorplan-card-studio-3-title">Studio 3</h3>
+                  <span class="mw-floorplan-size-pill">12 mq</span>
+                  <p>Studio riservato e pronto all'uso, pensato per visite, consulenze e attività professionali a giornata.</p>
+                  <ul>
+                    <li>Ambiente ordinato e igienizzato prima dell'utilizzo</li>
+                    <li>Accesso autonomo con tastierino numerico e codice fornito alla prenotazione</li>
+                    <li>Privacy per professionista e paziente</li>
+                  </ul>
+                  <a class="mw-text-link" href="#interesse">Richiedi informazioni <span>→</span></a>
+                </div>
+              </div>
+            </article>
+
+            <article class="mw-floorplan-fallback-card" id="floorplan-card-studio-4" role="dialog" aria-modal="true" aria-labelledby="floorplan-card-studio-4-title">
+              <a class="mw-floorplan-backdrop" href="#piantina" aria-label="Chiudi dettagli Studio 4"></a>
+              <div class="mw-floorplan-dialog">
+                <a class="mw-floorplan-modal-close" href="#piantina" aria-label="Chiudi dettagli">&times;</a>
+                <div class="mw-floorplan-modal-body">
+                  <p class="mw-floorplan-modal-kicker">Spazio MediWell</p>
+                  <h3 id="floorplan-card-studio-4-title">Studio 4</h3>
+                  <span class="mw-floorplan-size-pill">12,6 mq</span>
+                  <p>Studio riservato e pronto all'uso, posizionato in un'area più silenziosa per lavorare con discrezione durante la giornata.</p>
+                  <ul>
+                    <li>Ambiente ordinato e igienizzato prima dell'utilizzo</li>
+                    <li>Accesso autonomo con tastierino numerico e codice fornito alla prenotazione</li>
+                    <li>Maggiore silenziosità e privacy per professionista e paziente</li>
+                  </ul>
+                  <a class="mw-text-link" href="#interesse">Richiedi informazioni <span>→</span></a>
+                </div>
+              </div>
+            </article>
+
+            <article class="mw-floorplan-fallback-card" id="floorplan-card-studio-5" role="dialog" aria-modal="true" aria-labelledby="floorplan-card-studio-5-title">
+              <a class="mw-floorplan-backdrop" href="#piantina" aria-label="Chiudi dettagli Studio 5"></a>
+              <div class="mw-floorplan-dialog">
+                <a class="mw-floorplan-modal-close" href="#piantina" aria-label="Chiudi dettagli">&times;</a>
+                <div class="mw-floorplan-modal-body">
+                  <p class="mw-floorplan-modal-kicker">Spazio MediWell</p>
+                  <h3 id="floorplan-card-studio-5-title">Studio 5</h3>
+                  <span class="mw-floorplan-size-pill">12,2 mq</span>
+                  <p>Studio riservato e pronto all'uso, posizionato in un'area più silenziosa per lavorare con discrezione durante la giornata.</p>
+                  <ul>
+                    <li>Ambiente ordinato e igienizzato prima dell'utilizzo</li>
+                    <li>Accesso autonomo con tastierino numerico e codice fornito alla prenotazione</li>
+                    <li>Maggiore silenziosità e privacy per professionista e paziente</li>
+                  </ul>
+                  <a class="mw-text-link" href="#interesse">Richiedi informazioni <span>→</span></a>
+                </div>
+              </div>
+            </article>
+
+            <article class="mw-floorplan-fallback-card" id="floorplan-card-entrata-disabili" role="dialog" aria-modal="true" aria-labelledby="floorplan-card-entrata-disabili-title">
+              <a class="mw-floorplan-backdrop" href="#piantina" aria-label="Chiudi dettagli Entrata disabili"></a>
+              <div class="mw-floorplan-dialog">
+                <a class="mw-floorplan-modal-close" href="#piantina" aria-label="Chiudi dettagli">&times;</a>
+                <div class="mw-floorplan-modal-body">
+                  <p class="mw-floorplan-modal-kicker">Spazio MediWell</p>
+                  <h3 id="floorplan-card-entrata-disabili-title">Entrata disabili</h3>
+                  <p>Accesso dedicato per semplificare l'arrivo delle persone con esigenze di mobilità e rendere più diretto il percorso interno.</p>
+                  <ul>
+                    <li>Ingresso funzionale al percorso di accesso</li>
+                    <li>Orientamento immediato verso gli spazi interni</li>
+                    <li>Maggiore comodità per pazienti e accompagnatori</li>
+                  </ul>
+                  <a class="mw-text-link" href="#interesse">Richiedi informazioni <span>→</span></a>
+                </div>
+              </div>
+            </article>
+
+            <article class="mw-floorplan-fallback-card" id="floorplan-card-ingresso" role="dialog" aria-modal="true" aria-labelledby="floorplan-card-ingresso-title">
+              <a class="mw-floorplan-backdrop" href="#piantina" aria-label="Chiudi dettagli Ingresso"></a>
+              <div class="mw-floorplan-dialog">
+                <a class="mw-floorplan-modal-close" href="#piantina" aria-label="Chiudi dettagli">&times;</a>
+                <div class="mw-floorplan-modal-body">
+                  <p class="mw-floorplan-modal-kicker">Spazio MediWell</p>
+                  <h3 id="floorplan-card-ingresso-title">Ingresso</h3>
+                  <p>Il punto di arrivo principale degli studi medici, pensato per indirizzare in modo chiaro verso sala aspetto, studi e aree di servizio.</p>
+                  <ul>
+                    <li>Tastiera numerica esterna per accedere senza problemi dalle 7 alle 20</li>
+                    <li>Fornito di 5 citofoni dedicati ad ogni studio medico</li>
+                    <li>Primo contatto coerente con l'immagine MediWell</li>
+                  </ul>
+                  <a class="mw-text-link" href="#interesse">Richiedi informazioni <span>→</span></a>
+                </div>
+              </div>
+            </article>
+
+            <article class="mw-floorplan-fallback-card" id="floorplan-card-area-privata" role="dialog" aria-modal="true" aria-labelledby="floorplan-card-area-privata-title">
+              <a class="mw-floorplan-backdrop" href="#piantina" aria-label="Chiudi dettagli Area privata"></a>
+              <div class="mw-floorplan-dialog">
+                <a class="mw-floorplan-modal-close" href="#piantina" aria-label="Chiudi dettagli">&times;</a>
+                <div class="mw-floorplan-modal-body">
+                  <p class="mw-floorplan-modal-kicker">Spazio MediWell</p>
+                  <h3 id="floorplan-card-area-privata-title">Area privata</h3>
+                  <p>Area privata per i medici in entrata ed uscita.</p>
+                  <ul>
+                    <li>Ingresso dedicato al bagno privato per medici</li>
+                    <li>Percorso separato dalle stanze principali</li>
+                    <li>Maggiore ordine nella gestione della giornata</li>
+                  </ul>
+                  <a class="mw-text-link" href="#interesse">Richiedi informazioni <span>→</span></a>
+                </div>
+              </div>
+            </article>
+
+            <article class="mw-floorplan-fallback-card" id="floorplan-card-bagno-pazienti" role="dialog" aria-modal="true" aria-labelledby="floorplan-card-bagno-pazienti-title">
+              <a class="mw-floorplan-backdrop" href="#piantina" aria-label="Chiudi dettagli Bagno pazienti"></a>
+              <div class="mw-floorplan-dialog">
+                <a class="mw-floorplan-modal-close" href="#piantina" aria-label="Chiudi dettagli">&times;</a>
+                <div class="mw-floorplan-modal-body">
+                  <p class="mw-floorplan-modal-kicker">Spazio MediWell</p>
+                  <h3 id="floorplan-card-bagno-pazienti-title">Bagno pazienti</h3>
+                  <p>Servizio dedicato ai pazienti, collocato in posizione centrale per essere raggiunto facilmente dagli spazi comuni.</p>
+                  <ul>
+                    <li>Accesso pratico dalla sala aspetto e dal percorso interno</li>
+                    <li>Ambiente riservato e ordinato per gli ospiti</li>
+                    <li>Supporto funzionale all'accoglienza quotidiana</li>
+                  </ul>
+                  <a class="mw-text-link" href="#interesse">Richiedi informazioni <span>→</span></a>
+                </div>
+              </div>
+            </article>
+
+            <article class="mw-floorplan-fallback-card" id="floorplan-card-bagno-medici" role="dialog" aria-modal="true" aria-labelledby="floorplan-card-bagno-medici-title">
+              <a class="mw-floorplan-backdrop" href="#piantina" aria-label="Chiudi dettagli Bagno privato medici"></a>
+              <div class="mw-floorplan-dialog">
+                <a class="mw-floorplan-modal-close" href="#piantina" aria-label="Chiudi dettagli">&times;</a>
+                <div class="mw-floorplan-modal-body">
+                  <p class="mw-floorplan-modal-kicker">Spazio MediWell</p>
+                  <h3 id="floorplan-card-bagno-medici-title">Bagno privato medici</h3>
+                  <p>Servizio riservato a medici, operatori sanitari e professionisti che utilizzano gli studi MediWell.</p>
+                  <ul>
+                    <li>Accesso separato rispetto al bagno pazienti</li>
+                    <li>Area privata pensata per la giornata di lavoro</li>
+                    <li>Maggiore comfort per professionisti e operatori</li>
+                  </ul>
+                  <a class="mw-text-link" href="#interesse">Richiedi informazioni <span>→</span></a>
+                </div>
+              </div>
+            </article>
+          </div>
         </div>
       </div>
     </section>
@@ -2359,6 +2598,15 @@ form button {
             delle esigenze della tua specializzazione, le stanze sono configurate con
             lettini medici elettrici, lettini fisioterapici elettrici o poltrone
             multifunzionali elettriche.
+          </p>
+          <p>
+            MediWell organizza studi differenziati nel rispetto della D.G.R. 
+            Emilia-Romagna n. 1919/2023 e della Nota interpretativa regionale P.G. 
+            30/09/2024.1090990.U, anche con riferimento alla corretta rotazione dei 
+            professionisti sanitari negli ambienti.
+            In prenotazione il professionista indica la propria attività.
+            Resta a carico del professionista, secondo la normativa suddetta, la comunicazione 
+            (modello 8) per l’avvio dell’attività sanitaria.
           </p>
           <p>
             Ogni studio è dotato di lavabo con comandi a leva e pareti lavabili, per garantire praticità, igiene e massima versatilità d'uso. Contattaci per individuare lo spazio più adatto tra i 5 studi disponibili e trovare la soluzione più vicina alle tue esigenze professionali.
@@ -2741,14 +2989,14 @@ form button {
           description: 'Il punto di arrivo principale degli studi medici, pensato per indirizzare in modo chiaro verso sala aspetto, studi e aree di servizio.',
           features: [
             'Tastiera numerica esterna per accedere senza problemi dalle 7 alle 20',
-            'Collegamento diretto con il percorso interno',
+            'Fornito di 5 citofoni dedicati ad ogni studio medico',
             'Primo contatto coerente con l\'immagine MediWell'
           ],
           image: null
         },
         'area-privata': {
           title: 'Area privata',
-          description: 'Area privata di supporto utile per preparazione, cambio e organizzazione delle attività legate alla giornata di lavoro.',
+          description: 'Area privata per i medici in entrata ed uscita.',
           features: [
             'Ingresso dedicato al bagno privato per medici',
             'Percorso separato dalle stanze principali',
@@ -2884,7 +3132,8 @@ form button {
       }
 
       document.querySelectorAll('[data-floorplan-area]').forEach(function (button) {
-        button.addEventListener('click', function () {
+        button.addEventListener('click', function (event) {
+          event.preventDefault();
           openModal(button.getAttribute('data-floorplan-area'), button);
         });
       });
