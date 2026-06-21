@@ -54,6 +54,20 @@ test('keeps HTML CSS and safe JavaScript embedded in one WordPress-compatible pa
   assert.match(html, /COLORI PRINCIPALI DEL DESIGN PRECEDENTE/);
 });
 
+test('keeps the countdown script valid after WordPress entity conversion', () => {
+  const appScript = [...html.matchAll(/<script>([\s\S]*?)<\/script>/gi)]
+    .map((match) => match[1])
+    .find((script) => script.includes('updateCountdown'));
+
+  assert.ok(appScript, 'countdown script is required');
+  const wordpressScript = appScript
+    .replaceAll('&', '&#038;')
+    .replaceAll('è', '&#232;');
+
+  assert.doesNotThrow(() => new (require('node:vm').Script)(wordpressScript));
+  assert.match(appScript, /MediWell \\u00e8 aperto\./);
+});
+
 test('uses the client hero and pricing copy without forbidden wording or individual studio cards', () => {
   assert.doesNotMatch(text, /\bambulatori?\b/i);
   assert.doesNotMatch(text, /\bASL\b/i);

@@ -2893,7 +2893,7 @@ form button {
         var difference = target - Date.now();
 
         if (difference <= 0) {
-          document.getElementById('countdown').textContent = 'MediWell è aperto.';
+          document.getElementById('countdown').textContent = 'MediWell \u00e8 aperto.';
           return;
         }
 
@@ -3126,8 +3126,10 @@ form button {
         modal.hidden = true;
         document.body.style.overflow = '';
 
-        if (lastTrigger && typeof lastTrigger.focus === 'function') {
-          lastTrigger.focus();
+        if (lastTrigger) {
+          if (typeof lastTrigger.focus === 'function') {
+            lastTrigger.focus();
+          }
         }
       }
 
