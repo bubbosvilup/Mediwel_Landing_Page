@@ -137,11 +137,11 @@ test('renders all floorplan hotspots as accessible buttons', () => {
   assert.match(html, /data-floorplan-area="bagno-medici"/);
 });
 
-test('keeps floorplan modal content data ready for future images', () => {
-  assert.match(html, /var floorplanAreas = \{/);
-  assert.match(html, /image:\s*null/);
-  assert.match(html, /image\.src/);
-  assert.match(html, /image\.alt/);
+test('uses fallback floorplan cards as the single modal content source', () => {
+  assert.doesNotMatch(html, /var floorplanAreas = \{/);
+  assert.match(html, /document\.getElementById\('floorplan-card-' \+ areaKey\)/);
+  assert.match(html, /sourceTitle\.textContent/);
+  assert.match(html, /sourceDescription\.textContent/);
   assert.match(html, /mw-floorplan-modal-media/);
   assert.match(html, /href="#interesse"/);
 });

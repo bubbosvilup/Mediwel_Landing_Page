@@ -2908,124 +2908,6 @@ form button {
     })();
 
     (function () {
-      var floorplanAreas = {
-        'studio-1': {
-          title: 'Studio 1',
-          size: '14,5 mq',
-          description: 'Studio riservato e pronto all\'uso, pensato per visite, consulenze e attività professionali a giornata.',
-          features: [
-            'Ambiente ordinato e igienizzato prima dell\'utilizzo',
-            'Accesso autonomo con tastierino numerico e codice fornito alla prenotazione',
-            'Privacy per professionista e paziente'
-          ],
-          image: null
-        },
-        'studio-2': {
-          title: 'Studio 2',
-          size: '15,2 mq',
-          description: 'Studio riservato e pronto all\'uso, pensato per visite, consulenze e attività professionali a giornata.',
-          features: [
-            'Ambiente ordinato e igienizzato prima dell\'utilizzo',
-            'Accesso autonomo con tastierino numerico e codice fornito alla prenotazione',
-            'Privacy per professionista e paziente'
-          ],
-          image: null
-        },
-        'sala-aspetto': {
-          title: 'Sala aspetto',
-          description: 'Area comune dedicata all\'accoglienza, pensata per dare al paziente un primo contatto ordinato e tranquillo.',
-          features: [
-            'Punto di attesa comodo prima della visita',
-            'Flusso semplice verso gli studi',
-            'Immagine professionale fin dall\'arrivo'
-          ],
-          image: null
-        },
-        'studio-3': {
-          title: 'Studio 3',
-          size: '12 mq',
-          description: 'Studio riservato e pronto all\'uso, pensato per visite, consulenze e attività professionali a giornata.',
-          features: [
-            'Ambiente ordinato e igienizzato prima dell\'utilizzo',
-            'Accesso autonomo con tastierino numerico e codice fornito alla prenotazione',
-            'Privacy per professionista e paziente'
-          ],
-          image: null
-        },
-        'studio-4': {
-          title: 'Studio 4',
-          size: '12,6 mq',
-          description: 'Studio riservato e pronto all\'uso, posizionato in un\'area più silenziosa per lavorare con discrezione durante la giornata.',
-          features: [
-            'Ambiente ordinato e igienizzato prima dell\'utilizzo',
-            'Accesso autonomo con tastierino numerico e codice fornito alla prenotazione',
-            'Maggiore silenziosità e privacy per professionista e paziente'
-          ],
-          image: null
-        },
-        'studio-5': {
-          title: 'Studio 5',
-          size: '12,2 mq',
-          description: 'Studio riservato e pronto all\'uso, posizionato in un\'area più silenziosa per lavorare con discrezione durante la giornata.',
-          features: [
-            'Ambiente ordinato e igienizzato prima dell\'utilizzo',
-            'Accesso autonomo con tastierino numerico e codice fornito alla prenotazione',
-            'Maggiore silenziosità e privacy per professionista e paziente'
-          ],
-          image: null
-        },
-        'entrata-disabili': {
-          title: 'Entrata disabili',
-          description: 'Accesso dedicato per semplificare l\'arrivo delle persone con esigenze di mobilità e rendere più diretto il percorso interno.',
-          features: [
-            'Ingresso funzionale al percorso di accesso',
-            'Orientamento immediato verso gli spazi interni',
-            'Maggiore comodità per pazienti e accompagnatori'
-          ],
-          image: null
-        },
-        'ingresso': {
-          title: 'Ingresso',
-          description: 'Il punto di arrivo principale degli studi medici, pensato per indirizzare in modo chiaro verso sala aspetto, studi e aree di servizio.',
-          features: [
-            'Tastiera numerica esterna per accedere senza problemi dalle 7 alle 20',
-            'Fornito di 5 citofoni dedicati ad ogni studio medico',
-            'Primo contatto coerente con l\'immagine MediWell'
-          ],
-          image: null
-        },
-        'area-privata': {
-          title: 'Area privata',
-          description: 'Area privata per i medici in entrata ed uscita.',
-          features: [
-            'Ingresso dedicato al bagno privato per medici',
-            'Percorso separato dalle stanze principali',
-            'Maggiore ordine nella gestione della giornata'
-          ],
-          image: null
-        },
-        'bagno-pazienti': {
-          title: 'Bagno pazienti',
-          description: 'Servizio dedicato ai pazienti, collocato in posizione centrale per essere raggiunto facilmente dagli spazi comuni.',
-          features: [
-            'Accesso pratico dalla sala aspetto e dal percorso interno',
-            'Ambiente riservato e ordinato per gli ospiti',
-            'Supporto funzionale all\'accoglienza quotidiana'
-          ],
-          image: null
-        },
-        'bagno-medici': {
-          title: 'Bagno privato medici',
-          description: 'Servizio riservato a medici, operatori sanitari e professionisti che utilizzano gli studi MediWell.',
-          features: [
-            'Accesso separato rispetto al bagno pazienti',
-            'Area privata pensata per la giornata di lavoro',
-            'Maggiore comfort per professionisti e operatori'
-          ],
-          image: null
-        }
-      };
-
       var modal = document.getElementById('floorplan-modal');
       var media = document.getElementById('floorplan-modal-media');
       var title = document.getElementById('floorplan-modal-title');
@@ -3057,27 +2939,27 @@ form button {
         }
       }
 
-      function renderImage(image) {
-        media.innerHTML = '';
+      function findDescription(sourceBody) {
+        var paragraphs = sourceBody.querySelectorAll('p');
 
-        if (!image || !image.src || !image.alt) {
-          media.hidden = true;
-          return;
+        for (var index = 0; index < paragraphs.length; index += 1) {
+          if (!paragraphs[index].classList.contains('mw-floorplan-modal-kicker')) {
+            return paragraphs[index];
+          }
         }
 
-        var img = document.createElement('img');
-        img.src = image.src;
-        img.alt = image.alt;
-        img.loading = 'lazy';
-        img.decoding = 'async';
-        media.appendChild(img);
-        media.hidden = false;
+        return null;
       }
 
       function openModal(areaKey, trigger) {
-        var area = floorplanAreas[areaKey];
+        var sourceCard = document.getElementById('floorplan-card-' + areaKey);
+        var sourceBody = sourceCard ? sourceCard.querySelector('.mw-floorplan-modal-body') : null;
+        var sourceTitle = sourceBody ? sourceBody.querySelector('h3') : null;
+        var sourceSize = sourceBody ? sourceBody.querySelector('.mw-floorplan-size-pill') : null;
+        var sourceDescription = sourceBody ? findDescription(sourceBody) : null;
+        var sourceFeatures = sourceBody ? sourceBody.querySelectorAll('li') : [];
 
-        if (!area) {
+        if (!sourceTitle || !sourceDescription) {
           return;
         }
 
@@ -3095,24 +2977,25 @@ form button {
           trigger.classList.remove('is-selected');
         }, 620);
 
-        title.textContent = area.title;
-        if (area.size) {
-          size.textContent = area.size;
+        title.textContent = sourceTitle.textContent;
+        if (sourceSize) {
+          size.textContent = sourceSize.textContent;
           size.hidden = false;
         } else {
           size.textContent = '';
           size.hidden = true;
         }
-        description.textContent = area.description;
+        description.textContent = sourceDescription.textContent;
         features.innerHTML = '';
 
-        area.features.forEach(function (feature) {
+        Array.prototype.forEach.call(sourceFeatures, function (feature) {
           var item = document.createElement('li');
-          item.textContent = feature;
+          item.textContent = feature.textContent;
           features.appendChild(item);
         });
 
-        renderImage(area.image);
+        media.innerHTML = '';
+        media.hidden = true;
         modal.hidden = false;
         document.body.style.overflow = 'hidden';
         modal.querySelector('.mw-floorplan-modal-close').focus();

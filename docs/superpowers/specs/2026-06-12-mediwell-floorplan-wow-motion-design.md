@@ -52,7 +52,7 @@ When a hotspot is clicked:
 
 - apply a brief selected/lock-on state to the triggering hotspot
 - open the modal with a more premium motion
-- keep the existing modal data structure and future image support
+- keep the fallback HTML cards as the single source for modal copy
 
 Do not implement room zoom or precise area masks in this iteration. That requires more exact room geometry and would be better handled later with SVG overlays or image masks.
 
@@ -60,7 +60,9 @@ Do not implement room zoom or precise area masks in this iteration. That require
 
 Modify the existing `index.html` and tests only where needed.
 
-Keep the current section placement, floorplan image, hotspot data, and modal content.
+Keep the current section placement, floorplan image, hotspot positions, and modal content.
+
+Do not move Italian copy back into inline JavaScript data. WordPress can encode accents in inline scripts and expose numeric entities in the rendered modal.
 
 No new dependencies.
 

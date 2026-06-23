@@ -1,5 +1,7 @@
 # MediWell Interactive Floorplan Implementation Plan
 
+> **Superseded note (2026-06-23):** Do not follow the original `floorplanAreas` JavaScript data-object approach for modal copy. WordPress/Hostinger can encode accents inside inline scripts and make strings like `pi&#249;` visible in the modal. The current architecture keeps modal copy in the fallback `#floorplan-card-*` HTML cards and has JavaScript read from those cards as the single source of truth.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Add a polished interactive floorplan section below the hero, with 9 CSS hotspots opening a reusable modal.

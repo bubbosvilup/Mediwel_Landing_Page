@@ -183,6 +183,33 @@ test('opens and closes the floorplan modal from a hotspot', async () => {
   await page.close();
 });
 
+test('decodes HTML entities in dynamic floorplan modal copy', async () => {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  const page = await context.newPage();
+  const originalHtml = await readFile(resolve(root, 'index.html'), 'utf8');
+  const encodedHtml = originalHtml
+    .replaceAll('area più silenziosa', 'area pi&#249; silenziosa')
+    .replaceAll('Maggiore silenziosità', 'Maggiore silenziosit&#224;');
+
+  await page.route(baseUrl + '/', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'text/html; charset=utf-8',
+      body: encodedHtml
+    });
+  });
+
+  await page.goto(baseUrl, { waitUntil: 'networkidle' });
+  await page.locator('[data-floorplan-area="studio-4"]').click();
+
+  const modalText = await page.locator('#floorplan-modal').innerText();
+  assert.match(modalText, /area più silenziosa/);
+  assert.match(modalText, /Maggiore silenziosità/);
+  assert.doesNotMatch(modalText, /&#\d+;/);
+
+  await context.close();
+});
+
 test('keeps the floorplan responsive on mobile', async () => {
   const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
   await page.goto(baseUrl, { waitUntil: 'networkidle' });

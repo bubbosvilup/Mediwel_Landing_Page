@@ -45,17 +45,16 @@ On desktop, the floorplan should display large enough to inspect the rooms. On m
 
 ## Modal
 
-Use one reusable modal component driven by data for the selected area.
+Use one reusable modal component populated from the selected area's fallback HTML card.
 
 The modal supports:
 
 - title
 - short description
 - 2-3 feature/value bullets
-- optional future image metadata
 - optional call to action linking to `#interesse`
 
-For the first implementation, the modal is text-only. The data structure must still reserve a simple way to add images later, for example an optional `image` object with `src`, `alt`, and optional caption fields. The modal layout should handle both states:
+For the first implementation, the modal is text-only. Keep copy in the fallback card HTML, not in inline JavaScript data. If images are added later, add the image markup or metadata to the same fallback card so the HTML remains the single source of truth. The modal layout should handle both states:
 
 - without image: clean text-focused panel
 - with image in the future: image area plus the same title, description, bullets, and CTA
@@ -97,8 +96,10 @@ Recommended structure:
 - store the clean floorplan image under `assets/mediwell/`
 - use a `figure` or dedicated wrapper with `position: relative`
 - render hotspot buttons as absolutely positioned children using CSS custom properties or data attributes
-- keep area content in one JavaScript array/object so future edits are localized
-- use one modal container populated from the selected area data
+- keep area content in the fallback `#floorplan-card-*` HTML cards so WordPress can safely decode entities
+- use one modal container populated from the selected fallback card
+
+Do not duplicate Italian copy inside inline JavaScript objects. WordPress/Hostinger may convert accents in script text to numeric HTML entities such as `&#249;`; when JavaScript later assigns that string with `textContent`, the entity is displayed literally. The floorplan modal should read `textContent` from the existing HTML card instead.
 
 Use semantic buttons for hotspots rather than an HTML image map. This gives better styling, keyboard behavior, focus handling, and future flexibility.
 
@@ -125,6 +126,7 @@ Verification should cover:
 - the new section exists after the hero
 - all 9 hotspots render with accessible labels
 - modal opens with the expected content when a hotspot is activated
+- modal still shows real accented characters if WordPress converts fallback HTML accents to numeric entities
 - modal can close
 - existing HTML/layout tests still pass
 

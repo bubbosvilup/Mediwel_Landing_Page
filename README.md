@@ -35,6 +35,12 @@ Il sito locale è disponibile su `http://127.0.0.1:4173`. Per la verifica visiva
 
 Ogni modifica frontend deve essere controllata almeno a 1440×1000 e 390×844. Devono essere verificati altezza e spazio verticale delle sezioni, leggibilità completa dei testi, assenza di sovrapposizioni tra testi e immagini, assenza di contenuti tagliati e assenza di overflow orizzontale.
 
+## Compatibilita WordPress
+
+WordPress/Hostinger puo convertire gli accenti dentro script inline in entita HTML, per esempio `piu` in `pi&#249;`. Se quel testo viene poi inserito da JavaScript con `textContent`, l'entita resta visibile nel sito.
+
+Per la piantina interattiva, i testi delle card devono restare in una sola sorgente HTML: le card fallback `#floorplan-card-*`. La modale dinamica deve leggere titolo, metratura, descrizione e punti elenco da quelle card, non da un oggetto JavaScript duplicato. Non reintrodurre dataset JS con copy testuale per la piantina.
+
 ## Documentazione
 
 Le specifiche e i piani storici sono in `docs/superpowers`. Lo stato consolidato delle ultime correzioni responsive è descritto in `docs/superpowers/specs/2026-06-21-mediwell-responsive-layout-guardrails.md`.
