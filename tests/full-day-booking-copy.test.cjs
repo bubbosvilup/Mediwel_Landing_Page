@@ -13,7 +13,10 @@ const bookingCopyFiles = [
   'studio-quattro.html',
   'studio-cinque.html',
   'chi-siamo.html',
-  'homepage.html'
+  'homepage.html',
+  'carrello.html',
+  'checkout.html',
+  'mio-account.html'
 ];
 
 const misleadingBookingPatterns = [

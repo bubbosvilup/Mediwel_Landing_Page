@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Checkout | MediWell</title>
+  <style>
+    :root {
+      --mw-blue: #0c4b80;
+      --mw-blue-dark: #062d52;
+      --mw-blue-ink: #05243e;
+      --mw-blue-pale: #eaf3f7;
+      --mw-pink: #c1517f;
+      --mw-bg: #f8f9fa;
+      --mw-text: #2d3436;
+      --mw-green: #51c193;
+      --mw-white: #ffffff;
+      --mw-muted: #68757a;
+      --mw-shadow-soft: 0 16px 40px rgba(5, 36, 62, 0.11);
+      --mw-max: 1120px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(81, 193, 147, 0.13), transparent 28rem),
+        radial-gradient(circle at 92% 12%, rgba(193, 81, 127, 0.12), transparent 24rem),
+        var(--mw-bg);
+      color: var(--mw-text);
+      font-family: "Aptos", "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+      line-height: 1.65;
+    }
+
+    a { color: inherit; }
+    a:focus-visible, button:focus-visible { outline: 3px solid #e67e22; outline-offset: 4px; }
+
+    .mw-woocommerce-page { min-height: 100vh; }
+    .mw-woo-topbar { position: relative; z-index: 2; padding: 18px 18px 0; }
+    .mw-woo-nav {
+      display: flex;
+      width: min(100%, var(--mw-max));
+      min-height: 58px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 0 auto;
+      padding: 9px 10px 9px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: 0 12px 34px rgba(5, 36, 62, 0.08);
+      backdrop-filter: blur(18px);
+    }
+
+    .mw-woo-brand img { display: block; width: 132px; height: auto; }
+    .mw-woo-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+    .mw-woo-links a {
+      display: inline-flex;
+      min-height: 42px;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: var(--mw-blue);
+      font-size: 0.78rem;
+      font-weight: 850;
+      text-decoration: none;
+    }
+
+    .mw-woo-links a:last-child { background: var(--mw-blue); color: var(--mw-white); }
+    .mw-woo-hero { padding: clamp(74px, 10vw, 118px) 20px clamp(48px, 7vw, 76px); }
+    .mw-woo-hero-inner, .mw-woo-content { width: min(100% - 32px, var(--mw-max)); margin: 0 auto; }
+    .mw-woo-kicker {
+      display: inline-flex;
+      margin: 0 0 18px;
+      padding: 9px 13px;
+      border: 1px solid rgba(193, 81, 127, 0.22);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: 0 14px 32px rgba(5, 36, 62, 0.08);
+      color: var(--mw-blue-dark);
+      font-size: 0.74rem;
+      font-weight: 850;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 0;
+      color: var(--mw-blue-dark);
+      font-family: "Aptos Display", "Segoe UI Variable Display", "Segoe UI", Arial, sans-serif;
+      font-size: clamp(3rem, 8vw, 5.8rem);
+      font-weight: 760;
+      letter-spacing: -0.035em;
+      line-height: 0.98;
+    }
+
+    .mw-woo-lead {
+      max-width: 720px;
+      margin: 24px 0 0;
+      color: var(--mw-muted);
+      font-size: clamp(1.04rem, 2vw, 1.25rem);
+    }
+
+    .mw-woo-content { display: grid; gap: 24px; padding: 0 0 clamp(70px, 9vw, 112px); }
+    .mw-woocommerce-shortcode-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 320px;
+      padding: clamp(24px, 5vw, 48px);
+      border: 1px solid rgba(12, 75, 128, 0.14);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: var(--mw-shadow-soft);
+      backdrop-filter: blur(18px);
+    }
+
+    .mw-woocommerce-shortcode-card::before {
+      position: absolute;
+      inset: 0 0 auto;
+      height: 5px;
+      background: linear-gradient(90deg, var(--mw-blue), var(--mw-pink), var(--mw-green));
+      content: "";
+    }
+
+    .mw-woo-shortcode { margin: 0; color: var(--mw-blue-ink); font: inherit; white-space: normal; }
+    .mw-woo-note { max-width: 820px; margin: 0; color: var(--mw-muted); font-size: 0.98rem; }
+
+    .mw-footer, .mw-footer * { box-sizing: border-box; }
+    .mw-footer {
+      position: relative;
+      padding: 68px 20px 32px;
+      background:
+        radial-gradient(circle at top left, rgba(81, 193, 147, 0.18), transparent 24%),
+        radial-gradient(circle at 92% 12%, rgba(193, 81, 127, 0.18), transparent 22%),
+        linear-gradient(180deg, #0c4b80 0%, #05243e 100%);
+      color: #eef3f8;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .mw-footer::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,255,255,0.08), transparent 35%); pointer-events: none; }
+    .mw-footer-orbits { position: absolute; inset: -18% -8%; z-index: 0; overflow: hidden; pointer-events: none; }
+    .mw-footer-orb { position: absolute; border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 50%; background: linear-gradient(135deg, var(--mw-orb-color), transparent 74%); opacity: 0.74; }
+    .mw-footer-orb-1 { --mw-orb-color: rgba(81, 193, 147, 0.26); top: 2%; left: 5%; width: 210px; height: 210px; }
+    .mw-footer-orb-2 { --mw-orb-color: rgba(193, 81, 127, 0.24); top: 10%; right: 7%; width: 240px; height: 240px; }
+    .mw-footer-orb-3 { --mw-orb-color: rgba(84, 151, 194, 0.2); right: 34%; bottom: -5%; width: 190px; height: 190px; opacity: 0.55; }
+    .mw-footer-orb-4 { --mw-orb-color: rgba(248, 209, 224, 0.2); bottom: 8%; left: 19%; width: 140px; height: 140px; opacity: 0.5; }
+    .mw-footer-inner { position: relative; display: grid; gap: 28px; z-index: 1; width: min(100%, var(--mw-max)); margin: 0 auto; }
+    .mw-footer-grid {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: minmax(240px, 1fr) auto minmax(240px, 1fr);
+      align-items: center;
+      padding: 36px 32px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 32px;
+      background: rgba(255, 255, 255, 0.07);
+      box-shadow: 0 30px 60px rgba(2, 19, 46, 0.14);
+    }
+
+    .mw-footer-block { display: grid; gap: 12px; min-width: 0; }
+    .mw-footer-right { text-align: right; }
+    .mw-footer h3 { margin: 0; color: #fdf8ff; font-size: 0.92rem; font-weight: 850; letter-spacing: 0.16em; text-transform: uppercase; }
+    .mw-footer p, .mw-footer a { margin: 0; color: rgba(238, 243, 248, 0.92); font-size: 0.95rem; line-height: 1.8; text-decoration: none; word-break: break-word; }
+    .mw-footer-left p { max-width: 320px; }
+    .mw-footer-follow { color: rgba(255, 255, 255, 0.82); font-size: 0.95rem; font-weight: 750; letter-spacing: 0.12em; text-transform: uppercase; }
+    .mw-footer-center { text-align: center; }
+    .mw-footer-social { display: flex; justify-content: center; gap: 18px; margin: 10px auto 0; }
+    .mw-social-link { display: inline-flex; width: 46px; height: 46px; align-items: center; justify-content: center; }
+    .mw-social-icon-image { display: block; width: 28px; height: 28px; object-fit: contain; }
+    .mw-footer-note { margin: 0; color: rgba(238, 243, 248, 0.72); font-size: 0.82rem; letter-spacing: 0.08em; text-align: center; }
+
+    @media (max-width: 900px) {
+      .mw-woo-nav { align-items: flex-start; border-radius: 24px; }
+      .mw-woo-links a { min-height: 38px; padding: 8px 11px; }
+      .mw-footer { padding: 54px 18px 28px; }
+      .mw-footer-grid { grid-template-columns: 1fr; padding: 26px; }
+      .mw-footer-center, .mw-footer-right, .mw-footer-left p { max-width: 100%; text-align: center; }
+    }
+
+    @media (max-width: 560px) {
+      .mw-woo-topbar { padding-inline: 12px; }
+      .mw-woo-nav { display: grid; border-radius: 20px; }
+      .mw-woo-links { justify-content: flex-start; }
+      .mw-woo-hero-inner, .mw-woo-content { width: min(100% - 28px, var(--mw-max)); }
+      .mw-woocommerce-shortcode-card { border-radius: 18px; }
+      .mw-footer { padding: 42px 14px 24px; }
+      .mw-footer-grid { gap: 18px; padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="mw-woocommerce-page">
+    <header class="mw-woo-topbar" aria-label="Navigazione essenziale">
+      <nav class="mw-woo-nav">
+        <a class="mw-woo-brand" href="/" aria-label="MediWell, torna alla home">
+          <img src="https://mediwell.it/wp-content/uploads/2026/06/Nuovomediwell_NoSfondo.png" alt="MediWell">
+        </a>
+        <div class="mw-woo-links">
+          <a href="/prenota/">Studi</a>
+          <a href="/contatti/">Contatti</a>
+        </div>
+      </nav>
+    </header>
+
+    <section class="mw-woo-hero">
+      <div class="mw-woo-hero-inner">
+        <p class="mw-woo-kicker">Pagamento e conferma</p>
+        <h1>Checkout</h1>
+        <p class="mw-woo-lead">Completa la prenotazione e il pagamento sicuro per la tua richiesta di utilizzo dello studio. MediWell gestisce le prenotazioni come riserva della giornata intera.</p>
+      </div>
+    </section>
+
+    <section class="mw-woo-content" aria-label="Checkout WooCommerce">
+      <div class="mw-woocommerce-shortcode-card">
+        <p class="mw-woo-shortcode">[woocommerce_checkout]</p>
+      </div>
+      <p class="mw-woo-note">Prima di confermare, verifica i dati professionali, lo studio selezionato e il giorno di prenotazione. I dettagli definitivi saranno gestiti dal checkout WooCommerce.</p>
+    </section>
+  </main>
+
+  <footer class="mw-footer" aria-label="Footer MediWell">
+    <div class="mw-footer-orbits" aria-hidden="true">
+      <span class="mw-footer-orb mw-footer-orb-1"></span>
+      <span class="mw-footer-orb mw-footer-orb-2"></span>
+      <span class="mw-footer-orb mw-footer-orb-3"></span>
+      <span class="mw-footer-orb mw-footer-orb-4"></span>
+    </div>
+    <div class="mw-footer-inner">
+      <div class="mw-footer-grid">
+        <div class="mw-footer-block mw-footer-left">
+          <h3>Contatti</h3>
+          <p>Email: <a href="mailto:info@mediwell.it">info@mediwell.it</a></p>
+          <p>Pec: <a href="mailto:meeby@pec.it">meeby@pec.it</a></p>
+          <p>Servizio Clienti: <a href="tel:+393930593500">+39 393 059 3500</a></p>
+          <p>P.IVA: 02550260398</p>
+          <p>R.Imprese: RA212065</p>
+          <p>Sede operativa Via Fornarina, 12/D, 48018 Faenza RA, Italia</p>
+        </div>
+        <div class="mw-footer-block mw-footer-center">
+          <span class="mw-footer-follow">Seguici</span>
+          <div class="mw-footer-social">
+            <a class="mw-social-link" href="https://www.facebook.com/people/Mediwellit/61589370824325/" target="_blank" rel="noopener" aria-label="MediWell su Facebook"><img class="mw-social-icon-image" src="https://mediwell.it/wp-content/uploads/2026/06/FB_Colori.png" alt="Facebook"></a>
+            <a class="mw-social-link" href="https://www.instagram.com/mediwell.it/" target="_blank" rel="noopener" aria-label="MediWell su Instagram"><img class="mw-social-icon-image" src="https://mediwell.it/wp-content/uploads/2026/06/IN_colori.png" alt="Instagram"></a>
+            <a class="mw-social-link" href="https://wa.me/393930593500" target="_blank" rel="noopener" aria-label="Contatta MediWell su WhatsApp"><img class="mw-social-icon-image" src="https://mediwell.it/wp-content/uploads/2026/06/WA_colori.png" alt="WhatsApp"></a>
+          </div>
+        </div>
+        <div class="mw-footer-block mw-footer-right">
+          <h3>Privacy & Cookie</h3>
+          <a href="https://mediwell.it/privacy-policy/">Privacy Policy</a>
+          <a href="https://mediwell.it/cookie-policy/">Cookie Policy</a>
+        </div>
+      </div>
+      <p class="mw-footer-note">&copy; 2026 MediWell. Tutti i diritti riservati.</p>
+    </div>
+  </footer>
+</body>
+</html>
